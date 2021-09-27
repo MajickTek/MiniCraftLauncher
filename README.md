@@ -21,4 +21,5 @@ The SemanticVersion is often planted in the URL somewhere if the url contains th
 ## Roadmap
 - Add menu to open launcher folder
 - Add right-click menu on version to open version folder (to access saves and configs)
+- Add "cleaning" functionality (delete downloaded index files, jar files, and/or game folders)
 - (Future) Allow self-updating via GitHub Releases
