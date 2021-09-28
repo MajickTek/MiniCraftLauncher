@@ -32,7 +32,7 @@ public class LauncherWindow {
 
 	private JFrame frmLauncher;
 	private JList<VersionObject> list;
-
+public static LauncherWindow instance;
 	/**
 	 * Launch the application.
 	 */
@@ -67,6 +67,7 @@ public class LauncherWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		instance = this;
 		Initializer.touchFoldersAndFiles();
 		frmLauncher = new JFrame();
 		frmLauncher.setTitle("Launcher");
@@ -162,7 +163,7 @@ public class LauncherWindow {
 						if(selectedVersion.isDownloaded) {
 							String jarPath = Paths.get(Initializer.jarPath.toString(), selectedVersion.version + ".jar").toString();
 							try {
-								Util.launchJar(jarPath, selectedVersion.version);
+								Util.launchJar(jarPath, selectedVersion.version, instance);
 							} catch (IOException e1) {
 								Debug.callCrashDialog("ERROR", "Something went wrong launching the jar.\nPlease check the console output.", Debug.ERR);
 								e1.printStackTrace();
@@ -219,4 +220,7 @@ public class LauncherWindow {
 	}
 	
 	
+	public JFrame getFrmLauncher() {
+		return frmLauncher;
+	}
 }
