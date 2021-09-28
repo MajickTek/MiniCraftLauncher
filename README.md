@@ -10,7 +10,7 @@ Everything that the launcher downloads is in `<user folder>/Documents/MajickTek/
 - Double-click already downloaded version to launch it
 - The launcher keeps track of downloaded versions on restart
 - Under the Edit menu, go into the Select Channel submenu to switch between Release, Pre-Release, and Mod channels.
-
+- Insert/Add version profiles. These cannot be saved at the moment. GUI Options accessible via the Edit menu.
 ## How does it work?
 When a channel is selected, it downloads a `.index` file from https://github.com/MajickTek/MiniCraftLauncherIndex.
 Inside this file is a list of versions, and the format is like this:
@@ -20,6 +20,6 @@ Inside this file is a list of versions, and the format is like this:
 The SemanticVersion is often planted in the URL somewhere if the url contains the string `$version`.
 ## Roadmap
 - Add menu to open launcher folder
-- Add right-click menu on version to open version folder (to access saves and configs)
 - Add "cleaning" functionality (delete downloaded index files, jar files, and/or game folders)
+- Add config file to load the indexes (so they aren't hardcoded and the user can make their own)
 - (Future) Allow self-updating via GitHub Releases
