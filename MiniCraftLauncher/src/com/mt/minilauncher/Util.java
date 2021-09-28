@@ -16,7 +16,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.ListModel;
 
 public class Util {
-	public static Path launcherPath = Paths.get(System.getProperty("user.home"), "Documents", "MajickTek", "minilauncher");
+	
 	
 	
 	public static DefaultListModel<VersionObject> buildIndex(boolean isRelease, boolean modsFlag) {
@@ -28,19 +28,10 @@ public class Util {
 		}
 		String indexURL = baseURL + indexFileName;
 		
-		String targetPath = launcherPath.toString();
 		
-		File f = new File(targetPath);
-		f.mkdirs();
-		
-		f = Paths.get(targetPath, "index").toFile();
-		f.mkdirs();
-		
-		f = Paths.get(targetPath, "versions").toFile();
-		f.mkdirs();
 		
 		try {
-			downloadUsingNIO(indexURL, Paths.get(targetPath, "index", indexFileName).toString());
+			downloadUsingNIO(indexURL, Paths.get(Initializer.indexPath.toString(), indexFileName).toString());
 		} catch (IOException e) {
 			Debug.callCrashDialog("ERROR", "There was a problem downloading the files.\nCheck the console output.", Debug.ERR);
 			e.printStackTrace();
@@ -49,7 +40,7 @@ public class Util {
 		Properties props = new OrderedProperties();
 		FileInputStream fis;
 		try {
-			fis = new FileInputStream(Paths.get(targetPath, "index", indexFileName).toString());
+			fis = new FileInputStream(Paths.get(Initializer.indexPath.toString(), indexFileName).toString());
 			props.load(fis);
 			fis.close();
 		} catch (IOException e) {
@@ -87,11 +78,7 @@ public class Util {
     }
 	
 	public static void launchJar(String path, String version) throws IOException {
-		String gameDir = Paths.get(launcherPath.toString(), "saves", version).toString();
-		
-		File f = new File(gameDir);
-		f.mkdirs();
-		
-		Runtime.getRuntime().exec(new String[] {"java", "-jar", path, "--savedir", gameDir});
+		String vPath = Paths.get(Initializer.savesDir.toString(), version).toString();
+		Runtime.getRuntime().exec(new String[] {"java", "-jar", path, "--savedir", vPath});
 	}
 }

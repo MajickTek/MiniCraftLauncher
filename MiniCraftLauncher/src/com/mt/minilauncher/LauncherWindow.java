@@ -67,6 +67,7 @@ public class LauncherWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		Initializer.touchFoldersAndFiles();
 		frmLauncher = new JFrame();
 		frmLauncher.setTitle("Launcher");
 		frmLauncher.setBounds(100, 100, 800, 600);
@@ -159,7 +160,7 @@ public class LauncherWindow {
 					VersionObject selectedVersion = getList().getSelectedValue();
 					if(selectedVersion != null) {
 						if(selectedVersion.isDownloaded) {
-							String jarPath = Paths.get(Util.launcherPath.toString(), "versions", selectedVersion.version + ".jar").toString();
+							String jarPath = Paths.get(Initializer.jarPath.toString(), selectedVersion.version + ".jar").toString();
 							try {
 								Util.launchJar(jarPath, selectedVersion.version);
 							} catch (IOException e1) {
@@ -168,7 +169,7 @@ public class LauncherWindow {
 							}
 						} else {
 							try {
-								Util.downloadUsingNIO(selectedVersion.getURL(), Paths.get(Util.launcherPath.toString(), "versions", selectedVersion.version + ".jar").toString());
+								Util.downloadUsingNIO(selectedVersion.getURL(), Paths.get(Initializer.jarPath.toString(), selectedVersion.version + ".jar").toString());
 								selectedVersion.isDownloaded = true;
 								list.updateUI();
 							} catch (IOException e1) {
@@ -204,7 +205,7 @@ public class LauncherWindow {
 	
 	public void updateUI() {
 		DefaultListModel<VersionObject> dlm = (DefaultListModel<VersionObject>) getList().getModel();
-		String basePath = Paths.get(Util.launcherPath.toString(),"versions").toString();
+		String basePath = Initializer.jarPath.toString();
 		
 		for(int i = 0; i < dlm.getSize(); i++) {
 			String base = Paths.get(basePath, dlm.getElementAt(i).version + ".jar").toString();
