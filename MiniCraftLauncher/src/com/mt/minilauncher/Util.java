@@ -1,5 +1,7 @@
 package com.mt.minilauncher;
 
+import java.awt.Component;
+import java.awt.Container;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -13,6 +15,10 @@ import java.util.Map.Entry;
 import java.util.Properties;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JPanel;
+import javax.swing.JRootPane;
 import javax.swing.ListModel;
 
 public class Util {
@@ -61,6 +67,31 @@ public class Util {
 		return model;
 	}
 	
+	public static DefaultListModel<VersionObject> buildUserIndex() {
+		Properties props = new OrderedProperties();
+		FileInputStream fis;
+		try {
+			fis = new FileInputStream(Initializer.userIndexFile.toString());
+			props.load(fis);
+			fis.close();
+		} catch (IOException e) {
+			Debug.callCrashDialog("ERROR", "There was a problem loading the files.\nCheck the console output.", Debug.ERR);
+			e.printStackTrace();
+		}
+		
+		DefaultListModel<VersionObject> model = new DefaultListModel<>();
+		
+		
+		for(Entry<Object, Object> pairs: props.entrySet()) {
+			String[] str = pairs.getValue().toString().split(",");
+			String version = str[0];
+			String url = str[1];
+			model.add(Integer.parseInt(pairs.getKey().toString()), new VersionObject(url, version));
+		}
+		
+		return model;
+	}
+	
 	public static DefaultListModel<VersionObject> addToJList(ListModel<VersionObject> base, VersionObject vo, int index) {
 		DefaultListModel<VersionObject> dlm = (DefaultListModel<VersionObject>) base;
 		dlm.add(index, vo);
@@ -89,4 +120,5 @@ public class Util {
 		}
 		lw.getFrmLauncher().setVisible(true);
 	}
+	
 }

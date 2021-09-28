@@ -92,6 +92,7 @@ public static LauncherWindow instance;
 		menuBar.add(editMenu);
 		
 		JMenu channelMenu = new JMenu("Select Channel");
+		channelMenu.setName("editMenu.channelMenu");
 		editMenu.add(channelMenu);
 		
 		JMenu miniplusmenu = new JMenu("Minicraft+");
@@ -127,6 +128,17 @@ public static LauncherWindow instance;
 			}
 		});
 		channelMenu.add(modsMenuItem);
+		
+		JMenuItem userIndexMenuItem = new JMenuItem("User");
+		userIndexMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Debug.callCrashDialog("Warning!", "This section has the capability to download and launch any jar file from the web.\nUse at your OWN RISK!\nI can't help with any bugs caused by launching jars through here.", Debug.WARN);
+				getList().setModel(Util.buildUserIndex());
+				getList().updateUI();
+				updateUI();
+			}
+		});
+		channelMenu.add(userIndexMenuItem);
 		
 		JMenuItem insertVersionMenuItem = new JMenuItem("Insert Version Profile");
 		insertVersionMenuItem.addActionListener(new ActionListener() {
