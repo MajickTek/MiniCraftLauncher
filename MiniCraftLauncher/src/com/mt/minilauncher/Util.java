@@ -13,6 +13,7 @@ import java.util.Map.Entry;
 import java.util.Properties;
 
 import javax.swing.DefaultListModel;
+import javax.swing.ListModel;
 
 public class Util {
 	public static Path launcherPath = Paths.get(System.getProperty("user.home"), "Documents", "MajickTek", "minilauncher");
@@ -67,6 +68,13 @@ public class Util {
 		}
 		
 		return model;
+	}
+	
+	public static DefaultListModel<VersionObject> addToJList(ListModel<VersionObject> base, VersionObject vo, int index) {
+		DefaultListModel<VersionObject> dlm = (DefaultListModel<VersionObject>) base;
+		dlm.add(index, vo);
+		
+		return dlm;
 	}
 	
 	public static void downloadUsingNIO(String urlStr, String file) throws IOException {

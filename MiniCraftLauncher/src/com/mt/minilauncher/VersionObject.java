@@ -13,10 +13,27 @@ public class VersionObject implements Serializable {
 	String version;
 	boolean isDownloaded;
 	
+	boolean canEdit;
+	
 	public VersionObject(String url, String version) {
 		this.url = parseURL(url, version);
 		this.version = version;
 		isDownloaded = false;
+		canEdit = false;
+	}
+	
+	public VersionObject(String url, String version, boolean canEdit) {
+		this.url = parseURL(url, version);
+		this.version = version;
+		isDownloaded = false;
+		this.canEdit = canEdit;
+	}
+	
+	public VersionObject() {
+		this.url = "UNKNOWN";
+		this.version = "UNKNOWN";
+		isDownloaded = false;
+		canEdit = true;
 	}
 	
 	private String parseURL(String str, String vs) {
@@ -30,10 +47,6 @@ public class VersionObject implements Serializable {
 	
 	public String getVersion() {
 		return version;
-	}
-	
-	public boolean isDownloaded() {
-		return isDownloaded;
 	}
 	
 	public String getDownloadStatus() {

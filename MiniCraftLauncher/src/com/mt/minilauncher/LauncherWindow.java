@@ -22,6 +22,8 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.List;
+
 import javax.swing.JMenuItem;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -124,6 +126,28 @@ public class LauncherWindow {
 		});
 		channelMenu.add(modsMenuItem);
 		
+		JMenuItem insertVersionMenuItem = new JMenuItem("Insert Version Profile");
+		insertVersionMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int baseSize = getList().getModel().getSize();
+				getList().setModel(Util.addToJList(getList().getModel(), new VersionObject(), baseSize));
+				getList().updateUI();
+				getList().setSelectedIndex(baseSize);
+				getList().updateUI();
+				EditUtil.editInfo(getList().getSelectedValue());
+				getList().updateUI();
+			}
+		});
+		editMenu.add(insertVersionMenuItem);
+		
+		JMenuItem refreshUIMenuItem = new JMenuItem("Refresh UI");
+		refreshUIMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				updateUI();
+			}
+		});
+		editMenu.add(refreshUIMenuItem);
+		
 		JScrollPane scrollPane = new JScrollPane();
 		frmLauncher.getContentPane().add(scrollPane, BorderLayout.CENTER);
 		
@@ -159,9 +183,9 @@ public class LauncherWindow {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				if(SwingUtilities.isRightMouseButton(e)) {
-					if(list.getSelectedValue() != null) {
-						Debug.callCrashDialog("Test", list.getSelectedValue().toVerboseString(), Debug.INF);
-					}
+						list.setSelectedIndex(list.locationToIndex(e.getPoint()));
+						list.setModel(Util.addToJList(list.getModel(), EditUtil.editInfo(list.getSelectedValue()), list.getSelectedIndex()));
+						list.updateUI();
 				}
 			}
 		});
