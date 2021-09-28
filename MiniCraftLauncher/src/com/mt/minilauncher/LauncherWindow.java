@@ -27,6 +27,8 @@ import java.util.List;
 import javax.swing.JMenuItem;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class LauncherWindow {
 
@@ -162,10 +164,29 @@ public static LauncherWindow instance;
 		});
 		editMenu.add(refreshUIMenuItem);
 		
+		JMenuItem cleanFolderMenuItem = new JMenuItem("Clean Folders");
+		cleanFolderMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Initializer.cleanFolders();
+			}
+		});
+		editMenu.add(cleanFolderMenuItem);
+		
 		JScrollPane scrollPane = new JScrollPane();
 		frmLauncher.getContentPane().add(scrollPane, BorderLayout.CENTER);
 		
 		list = new JList<>();
+		list.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_DELETE) {
+						Initializer.cleanVersion(list.getSelectedValue().version);
+						forceReDownload(list.getSelectedIndex());
+						list.updateUI();
+						updateUI();
+				}
+			}
+		});
 		list.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -227,6 +248,24 @@ public static LauncherWindow instance;
 				dlm.get(i).isDownloaded = true;
 			}
 		}
+		getList().setModel(dlm);
+		getList().updateUI();
+	}
+	
+	public void forceReDownload() {
+		DefaultListModel<VersionObject> dlm = (DefaultListModel<VersionObject>) getList().getModel();
+		
+		for(int i = 0; i < dlm.getSize(); i++) {
+				dlm.get(i).isDownloaded = false;
+		}
+		getList().setModel(dlm);
+		getList().updateUI();
+	}
+	
+	public void forceReDownload(int index) {
+		DefaultListModel<VersionObject> dlm = (DefaultListModel<VersionObject>) getList().getModel();
+		
+		dlm.get(index).isDownloaded = false;
 		getList().setModel(dlm);
 		getList().updateUI();
 	}

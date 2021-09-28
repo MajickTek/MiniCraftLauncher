@@ -99,6 +99,13 @@ public class Util {
 		return dlm;
 	}
 	
+	public static DefaultListModel<VersionObject> removeFromJList(ListModel<VersionObject> base, int index) {
+		DefaultListModel<VersionObject> dlm = (DefaultListModel<VersionObject>) base;
+		dlm.remove(index);
+		
+		return dlm;
+	}
+	
 	public static void downloadUsingNIO(String urlStr, String file) throws IOException {
         URL url = new URL(urlStr);
         ReadableByteChannel rbc = Channels.newChannel(url.openStream());
@@ -119,6 +126,21 @@ public class Util {
 			e.printStackTrace();
 		}
 		lw.getFrmLauncher().setVisible(true);
+	}
+	
+	public static void purgeDirectory(File dir) {
+	    for (File file: dir.listFiles()) {
+	        if (file.isDirectory())
+	            purgeDirectory(file);
+	        file.delete();
+	    }
+	}
+	
+	public static void purgeDirectoryButKeepSubDirectories(File dir) {
+	    for (File file: dir.listFiles()) {
+	        if (!file.isDirectory())
+	            file.delete();
+	    }
 	}
 	
 }
