@@ -5,7 +5,7 @@ Everything that the launcher downloads is in `<user folder>/Documents/MajickTek/
 
 On \*NIX systems including macOS (probably) you should be able to find the right folder by navigating to `~\Documents\MajickTek`. On Windows this would be `C:/Users/%username%/Documents/MajickTek`.
 
-As of now, the current minimum version of the launcher you should use is `Pre Release 4`. This version bumbs the minimum JRE version to 1.8 to make it more accessible (this may change in the future if necessary).
+As of now, the current minimum version of the launcher you should use is `Pre Release 4`. This version bumbs the minimum JRE version to 1.8 to make it more accessible (this may change in the future if necessary). Earlier versions require JRE 16 or newer.
 
 ## Current functionality:
 
