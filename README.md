@@ -8,6 +8,9 @@ On \*NIX systems including macOS (probably) you should be able to find the right
 As of now, the current minimum version of the launcher you should use is `Pre Release 4`. This version bumbs the minimum JRE version to 1.8 to make it more accessible (this may change in the future if necessary). Earlier versions require JRE 16 or newer.
 
 ## Current functionality:
+This branch is the `XML-refactor` branch. It is updated ahead of `master` and adds new functionality and a complete rewrite of core features.
+
+The below functionality is still expected to work for now but may be unstable:
 
 - Load versions from /MiniCraftLauncherIndex
 - Double-click to download a version
