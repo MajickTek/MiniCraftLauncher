@@ -39,7 +39,7 @@ public class Initializer {
 		sb.append("#<index> = <version string>,<url>\n");
 		sb.append("#For example:\n");
 		sb.append("#0 = 1.0,https://www.download.com/my.jar\n");
-		sb.append("#Make sure it's a direct download link (you see a `.jar` at the end).");
+		sb.append("#Make sure it's a direct download link (you see a `.jar` at the end).\n");
 		sb.append("#Feel free to delete these comments.");
 		try {
 			FileWriter specWriter = new FileWriter(userIndexFile.toString());
