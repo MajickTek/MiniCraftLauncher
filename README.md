@@ -8,7 +8,7 @@ On \*NIX systems including macOS (probably) you should be able to find the right
 As of now, the current minimum version of the launcher you should use is `Release 1.0`. This version's minimum JRE version is 1.8 (JRE 8) to make it more accessible (this may change in the future if necessary). Earlier versions require JRE 16 or newer/may have broken download URLs.
 
 ## Current functionality:
-- Load versions from /MiniCraftLauncherIndex
+- Load versions from https://github.com/MajickTek/MiniCraftLauncherIndex/
 - Double-click to download a version
 - Double-click already downloaded version to launch it
 - The launcher keeps track of downloaded versions on restart
