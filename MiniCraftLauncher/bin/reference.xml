@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <index>
-	<version number="0.0.1">abc</version>
-	<version number="0.0.2">123</version>
-	<version number="0.0.3">xyz</version>
+	<game name="MiniCraft+">
+		<version number="0.0.1">abc</version>
+		<version number="0.0.2">123</version>
+		<version number="0.0.3">xyz</version>
+	</game>
 </index>

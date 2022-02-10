@@ -26,15 +26,21 @@ public class TestXML {
 			
 			System.out.println("root node - " + doc.getDocumentElement().getNodeName());
 			
-			NodeList list = doc.getElementsByTagName("version");
+			NodeList list = doc.getElementsByTagName("game");
 			
 			for(int tmp = 0; tmp < list.getLength(); tmp++) {
 				Node node = list.item(tmp);
 				if(node.getNodeType() == Node.ELEMENT_NODE) {
 					Element element = (Element) node;
-					String number = element.getAttribute("number");
-					String url = element.getTextContent();
-					System.out.println(number + " - " + url);
+					String name = element.getAttribute("name");
+					System.out.println("name: " + name + "\nVersions:");
+					
+					NodeList nl = element.getElementsByTagName("version");
+					for(int tmp2 = 0; tmp2 < nl.getLength(); tmp2++) {
+						Node n = nl.item(tmp2);
+						Element nel = (Element) n;
+						System.out.println("Number: " + nel.getAttribute("number") + " URL: " + nel.getTextContent());
+					}
 				}
 			}
 		} catch (Exception e) {
