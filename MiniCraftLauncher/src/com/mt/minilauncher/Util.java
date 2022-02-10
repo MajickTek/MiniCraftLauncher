@@ -39,27 +39,7 @@ public class Util {
 			Debug.callCrashDialog("ERROR", "There was a problem downloading the files.\nCheck the console output.", Debug.ERR);
 			e.printStackTrace();
 		}
-		
-//		Properties props = new OrderedProperties();
-//		FileInputStream fis;
-//		try {
-//			fis = new FileInputStream(Paths.get(Initializer.indexPath.toString(), indexFileName).toString());
-//			props.load(fis);
-//			fis.close();
-//		} catch (IOException e) {
-//			Debug.callCrashDialog("ERROR", "There was a problem loading the files.\nCheck the console output.", Debug.ERR);
-//			e.printStackTrace();
-//		}
-//		
-//		DefaultListModel<VersionObject> model = new DefaultListModel<>();
-//		
-//		
-//		for(Entry<Object, Object> pairs: props.entrySet()) {
-//			String[] str = pairs.getValue().toString().split(",");
-//			String version = str[0];
-//			String url = str[1];
-//			model.add(Integer.parseInt(pairs.getKey().toString()), new VersionObject(url, version));
-//		}
+
 		
 		DefaultListModel<VersionObject> model = new DefaultListModel<>();
 		
