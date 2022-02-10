@@ -57,13 +57,13 @@ public static LauncherWindow instance;
 	 * Create the application.
 	 */
 	public LauncherWindow() {
-		initialize();
 		try { // enable native UI
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch(Exception e){
             Debug.callCrashDialog("ERROR", "Couldn't access native UI class for some reason.\nCheck the console output.", Debug.ERR);
             e.printStackTrace();
         }
+		initialize();
 	}
 
 	/**
