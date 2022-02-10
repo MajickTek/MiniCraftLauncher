@@ -1,13 +1,13 @@
 package com.mt.minilauncher;
 
 import java.io.File;
-import java.io.IOException;
-
 import javax.xml.*;
 import javax.xml.parsers.*;
 
 import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class TestXML {
 	private static final String FILENAME = "/reference.xml";
@@ -24,7 +24,19 @@ public class TestXML {
 			
 			doc.getDocumentElement().normalize();
 			
-			System.out.println(doc.getDocumentElement().getNodeName());
+			System.out.println("root node - " + doc.getDocumentElement().getNodeName());
+			
+			NodeList list = doc.getElementsByTagName("version");
+			
+			for(int tmp = 0; tmp < list.getLength(); tmp++) {
+				Node node = list.item(tmp);
+				if(node.getNodeType() == Node.ELEMENT_NODE) {
+					Element element = (Element) node;
+					String number = element.getAttribute("number");
+					String url = element.getTextContent();
+					System.out.println(number + " - " + url);
+				}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
