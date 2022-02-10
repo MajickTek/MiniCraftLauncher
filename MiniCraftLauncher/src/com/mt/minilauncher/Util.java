@@ -25,7 +25,7 @@ public class Util {
 	
 	
 	public static DefaultListModel<VersionObject> buildIndex(boolean isRelease, boolean modsFlag) {
-		String baseURL = "https://github.com/MajickTek/MiniCraftLauncherIndex/raw/xml-refactor/";
+		String baseURL = "https://raw.githubusercontent.com/MajickTek/MiniCraftLauncherIndex/xml-refactor/";
 		
 		String indexFileName = isRelease ? "release.xml" : "dev.xml";
 		if(!isRelease && modsFlag) {
