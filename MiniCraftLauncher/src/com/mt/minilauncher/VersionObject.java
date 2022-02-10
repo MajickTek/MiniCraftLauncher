@@ -16,14 +16,14 @@ public class VersionObject implements Serializable {
 	boolean canEdit;
 	
 	public VersionObject(String url, String version) {
-		this.url = parseURL(url, version);
+		this.url = url;
 		this.version = version;
 		isDownloaded = false;
 		canEdit = false;
 	}
 	
 	public VersionObject(String url, String version, boolean canEdit) {
-		this.url = parseURL(url, version);
+		this.url = url;
 		this.version = version;
 		isDownloaded = false;
 		this.canEdit = canEdit;
@@ -34,11 +34,6 @@ public class VersionObject implements Serializable {
 		this.version = "UNKNOWN";
 		isDownloaded = false;
 		canEdit = true;
-	}
-	
-	private String parseURL(String str, String vs) {
-		String base = str.replaceAll("\\$version", vs);
-		return base;
 	}
 
 	public String getURL() {

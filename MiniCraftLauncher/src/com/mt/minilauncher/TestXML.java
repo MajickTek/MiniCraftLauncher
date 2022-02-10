@@ -26,18 +26,18 @@ public class TestXML {
 			
 			System.out.println("root node - " + doc.getDocumentElement().getNodeName());
 			
-			NodeList list = doc.getElementsByTagName("game");
+			NodeList gameList = doc.getElementsByTagName("game");
 			
-			for(int tmp = 0; tmp < list.getLength(); tmp++) {
-				Node node = list.item(tmp);
+			for(int tmp = 0; tmp < gameList.getLength(); tmp++) {
+				Node node = gameList.item(tmp);
 				if(node.getNodeType() == Node.ELEMENT_NODE) {
 					Element element = (Element) node;
 					String name = element.getAttribute("name");
 					System.out.println("name: " + name + "\nVersions:");
 					
-					NodeList nl = element.getElementsByTagName("version");
-					for(int tmp2 = 0; tmp2 < nl.getLength(); tmp2++) {
-						Node n = nl.item(tmp2);
+					NodeList versionList = element.getElementsByTagName("version");
+					for(int tmp2 = 0; tmp2 < versionList.getLength(); tmp2++) {
+						Node n = versionList.item(tmp2);
 						Element nel = (Element) n;
 						System.out.println("Number: " + nel.getAttribute("number") + " URL: " + nel.getTextContent());
 					}
