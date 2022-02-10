@@ -146,6 +146,16 @@ public static LauncherWindow instance;
 				getList().updateUI();
 			}
 		});
+		
+		JMenuItem cleanIndexButton = new JMenuItem("Clean Index");
+		cleanIndexButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Util.purgeDirectory(Initializer.indexPath.toFile());
+				list.setModel(new DefaultListModel<VersionObject>());
+				updateUI();
+			}
+		});
+		editMenu.add(cleanIndexButton);
 		editMenu.add(insertVersionMenuItem);
 		
 		JMenuItem refreshUIMenuItem = new JMenuItem("Refresh UI");
