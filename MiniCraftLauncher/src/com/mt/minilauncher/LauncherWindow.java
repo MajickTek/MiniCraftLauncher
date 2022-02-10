@@ -76,7 +76,7 @@ public static LauncherWindow instance;
 		frmLauncher.setTitle("Launcher");
 		frmLauncher.setBounds(100, 100, 800, 600);
 		frmLauncher.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmLauncher.setIconImage(new ImageIcon(LauncherWindow.class.getResource("/cube.png")).getImage());
+		frmLauncher.setIconImage(new ImageIcon(LauncherWindow.class.getResource("/logo.png")).getImage());
 		JMenuBar menuBar = new JMenuBar();
 		frmLauncher.setJMenuBar(menuBar);
 		
