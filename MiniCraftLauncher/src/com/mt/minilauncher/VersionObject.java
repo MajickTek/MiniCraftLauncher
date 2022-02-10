@@ -54,6 +54,6 @@ public class VersionObject implements Serializable {
 	}
 	
 	public String toVerboseString() {
-		return "VersionObject [url=" + url + ", version=" + version + ", isDownloaded=" + isDownloaded + "]";
+		return "VersionObject [url=" + url + ", version=" + version + ", isDownloaded=" + isDownloaded + ", canEdit=" + canEdit + "]";
 	}
 }

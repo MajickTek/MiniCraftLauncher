@@ -1,7 +1,5 @@
 package com.mt.minilauncher;
 
-import java.awt.Component;
-import java.awt.Container;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -17,26 +15,23 @@ import java.util.Map.Entry;
 import java.util.Properties;
 
 import javax.swing.DefaultListModel;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JPanel;
-import javax.swing.JRootPane;
 import javax.swing.ListModel;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
 
 public class Util {
 	
 	
 	
 	public static DefaultListModel<VersionObject> buildIndex(boolean isRelease, boolean modsFlag) {
-		String baseURL = "https://github.com/MajickTek/MiniCraftLauncherIndex/raw/main/";
+		String baseURL = "https://github.com/MajickTek/MiniCraftLauncherIndex/raw/xml-refactor/";
 		
-		String indexFileName = isRelease ? "release.index" : "dev.index";
+		String indexFileName = isRelease ? "release.xml" : "dev.xml";
 		if(!isRelease && modsFlag) {
-			indexFileName = "mods.index";
+			indexFileName = "mods.xml";
 		}
 		String indexURL = baseURL + indexFileName;
-		
-		
 		
 		try {
 			downloadUsingNIO(indexURL, Paths.get(Initializer.indexPath.toString(), indexFileName).toString());
@@ -45,27 +40,39 @@ public class Util {
 			e.printStackTrace();
 		}
 		
-		Properties props = new OrderedProperties();
-		FileInputStream fis;
-		try {
-			fis = new FileInputStream(Paths.get(Initializer.indexPath.toString(), indexFileName).toString());
-			props.load(fis);
-			fis.close();
-		} catch (IOException e) {
-			Debug.callCrashDialog("ERROR", "There was a problem loading the files.\nCheck the console output.", Debug.ERR);
-			e.printStackTrace();
-		}
+//		Properties props = new OrderedProperties();
+//		FileInputStream fis;
+//		try {
+//			fis = new FileInputStream(Paths.get(Initializer.indexPath.toString(), indexFileName).toString());
+//			props.load(fis);
+//			fis.close();
+//		} catch (IOException e) {
+//			Debug.callCrashDialog("ERROR", "There was a problem loading the files.\nCheck the console output.", Debug.ERR);
+//			e.printStackTrace();
+//		}
+//		
+//		DefaultListModel<VersionObject> model = new DefaultListModel<>();
+//		
+//		
+//		for(Entry<Object, Object> pairs: props.entrySet()) {
+//			String[] str = pairs.getValue().toString().split(",");
+//			String version = str[0];
+//			String url = str[1];
+//			model.add(Integer.parseInt(pairs.getKey().toString()), new VersionObject(url, version));
+//		}
 		
 		DefaultListModel<VersionObject> model = new DefaultListModel<>();
 		
-		
-		for(Entry<Object, Object> pairs: props.entrySet()) {
-			String[] str = pairs.getValue().toString().split(",");
-			String version = str[0];
-			String url = str[1];
-			model.add(Integer.parseInt(pairs.getKey().toString()), new VersionObject(url, version));
+		VersionObject[] vos;
+		try {
+			vos = XMLConverter.fromXML(Paths.get(Initializer.indexPath.toString(), indexFileName).toString());
+			for(int i = 0; i < vos.length; i++ ) {
+				model.add(i, vos[i]);
+			}
+		} catch (ParserConfigurationException | SAXException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
 		return model;
 	}
 	

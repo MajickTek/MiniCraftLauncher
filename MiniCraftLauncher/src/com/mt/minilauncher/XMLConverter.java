@@ -33,6 +33,7 @@ public class XMLConverter {
 			Node gameNode = gameList.item(i);
 			if(gameNode.getNodeType() == Node.ELEMENT_NODE) {
 				Element gameElementNode = (Element) gameNode;
+				String gameName = gameElementNode.getAttribute("name");
 				
 				NodeList versionList = gameElementNode.getElementsByTagName("version");
 				for (int j = 0; j < versionList.getLength(); j++) {
@@ -41,7 +42,7 @@ public class XMLConverter {
 						Element versionElementNode = (Element) versionNode;
 						String versionNumber = versionElementNode.getAttribute("number");
 						String versionDownloadURL = (versionElementNode.getTextContent().startsWith("http://") || versionElementNode.getTextContent().startsWith("https://")) ? versionElementNode.getTextContent() : "";
-						tempList.add(new VersionObject(versionDownloadURL, versionNumber));
+						tempList.add(new VersionObject(versionDownloadURL, gameName + "-"  + versionNumber));
 					}
 				}
 			}
