@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import javax.swing.JList;
 import java.awt.BorderLayout;
 import javax.swing.AbstractListModel;
@@ -171,10 +172,9 @@ public static LauncherWindow instance;
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_DELETE) {
-						Initializer.cleanVersion(list.getSelectedValue().version);
-						forceReDownload(list.getSelectedIndex());
-						list.updateUI();
-						updateUI();
+					clean();
+				} else if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+					edit();
 				}
 			}
 		});
@@ -210,8 +210,18 @@ public static LauncherWindow instance;
 			public void mousePressed(MouseEvent e) {
 				if(SwingUtilities.isRightMouseButton(e)) {
 						list.setSelectedIndex(list.locationToIndex(e.getPoint()));
-						list.setModel(Util.addToJList(list.getModel(), EditUtil.editInfo(list.getSelectedValue()), list.getSelectedIndex()));
-						list.updateUI();
+						
+						JPopupMenu menu = new JPopupMenu();
+						JMenuItem editMenu = new JMenuItem("Edit");
+						JMenuItem cleanMenu = new JMenuItem("Clean");
+						
+						editMenu.addActionListener(a -> edit());
+						
+						cleanMenu.addActionListener(a -> clean());
+						
+						menu.add(editMenu);
+						menu.add(cleanMenu);
+						menu.show(list, e.getPoint().x, e.getPoint().y);
 				}
 			}
 		});
@@ -222,6 +232,18 @@ public static LauncherWindow instance;
 		list.setModel(Util.buildIndex(true, false));
 		list.updateUI();
 		updateUI();
+	}
+
+	public void clean() {
+		Initializer.cleanVersion(list.getSelectedValue().version);
+		forceReDownload(list.getSelectedIndex());
+		list.updateUI();
+		updateUI();
+	}
+
+	public void edit() {
+		list.setModel(Util.addToJList(list.getModel(), EditUtil.editInfo(list.getSelectedValue()), list.getSelectedIndex()));
+		list.updateUI();
 	}
 
 	public JList<VersionObject> getList() {
