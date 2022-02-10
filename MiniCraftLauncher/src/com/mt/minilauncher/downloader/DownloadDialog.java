@@ -7,6 +7,8 @@ import javax.swing.JProgressBar;
 
 import com.littlebigberry.httpfiledownloader.FileDownloader;
 import com.littlebigberry.httpfiledownloader.FileDownloaderDelegate;
+import com.mt.minilauncher.Debug;
+import com.mt.minilauncher.Initializer;
 
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
@@ -44,7 +46,7 @@ public class DownloadDialog extends JDialog implements FileDownloaderDelegate{
 		getContentPane().add(progress, BorderLayout.CENTER);
 		
 		fileDownloader.setUrl("https://github.com/MinicraftPlus/minicraft-plus-revived/releases/download/v2.0.7/minicraft_plus-2.0.7.jar");
-		fileDownloader.setLocalLocation("C:/Users/%username%/Documents/MajickTek/minilauncher/game.jar");
+		fileDownloader.setLocalLocation(Initializer.jarPath.toString() + "/2.0.7.jar");
 		fileDownloader.beginDownload();
 	}
 
@@ -60,12 +62,13 @@ public class DownloadDialog extends JDialog implements FileDownloaderDelegate{
 
 	@Override
 	public void didFinishDownload(FileDownloader fileDownloader) {
-		progress.setText("done");
+		progress.setText("Done");
 	}
 
 	@Override
 	public void didFailDownload(FileDownloader fileDownloader) {
-		progress.setText("oops");
+		progress.setText("Oops!");
+		Debug.callCrashDialog("ERROR", "An error ocurred downloading the file. Please check the logs.", Debug.ERR);
 	}
 
 	public JLabel getProgress() {
