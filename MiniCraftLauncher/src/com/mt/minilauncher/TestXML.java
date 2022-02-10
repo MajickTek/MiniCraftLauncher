@@ -1,17 +1,33 @@
 package com.mt.minilauncher;
 
+import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
+import javax.xml.*;
+import javax.xml.parsers.*;
+
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
 public class TestXML {
-	public static void main(String[] args) throws URISyntaxException, IOException {
-		URL url = TestXML.class.getResource("/");
-	    Path path = Paths.get(url.toURI());
-	    Files.walk(path, 5).forEach(p -> System.out.printf("- %s%n", p.toString()));
+	private static final String FILENAME = "/reference.xml";
+	
+	public static void main(String[] args) {
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		
+		try {
+			dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+			
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			
+			Document doc = db.parse(new File(TestXML.class.getResource(FILENAME).toURI()));
+			
+			doc.getDocumentElement().normalize();
+			
+			System.out.println(doc.getDocumentElement().getNodeName());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 }
