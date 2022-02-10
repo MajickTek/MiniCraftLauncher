@@ -1,40 +1,37 @@
 package com.mt.minilauncher;
 
-import java.awt.Component;
-import java.awt.Container;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map.Entry;
 import java.util.Properties;
 
 import javax.swing.DefaultListModel;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JPanel;
-import javax.swing.JRootPane;
 import javax.swing.ListModel;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
 
 public class Util {
 	
 	
 	
 	public static DefaultListModel<VersionObject> buildIndex(boolean isRelease, boolean modsFlag) {
-		String baseURL = "https://github.com/MajickTek/MiniCraftLauncherIndex/raw/main/";
+		String baseURL = "https://raw.githubusercontent.com/MajickTek/MiniCraftLauncherIndex/xml-refactor/";
 		
-		String indexFileName = isRelease ? "release.index" : "dev.index";
+		String indexFileName = isRelease ? "release.xml" : "dev.xml";
 		if(!isRelease && modsFlag) {
-			indexFileName = "mods.index";
+			indexFileName = "mods.xml";
 		}
 		String indexURL = baseURL + indexFileName;
-		
-		
 		
 		try {
 			downloadUsingNIO(indexURL, Paths.get(Initializer.indexPath.toString(), indexFileName).toString());
@@ -42,55 +39,24 @@ public class Util {
 			Debug.callCrashDialog("ERROR", "There was a problem downloading the files.\nCheck the console output.", Debug.ERR);
 			e.printStackTrace();
 		}
-		
-		Properties props = new OrderedProperties();
-		FileInputStream fis;
-		try {
-			fis = new FileInputStream(Paths.get(Initializer.indexPath.toString(), indexFileName).toString());
-			props.load(fis);
-			fis.close();
-		} catch (IOException e) {
-			Debug.callCrashDialog("ERROR", "There was a problem loading the files.\nCheck the console output.", Debug.ERR);
-			e.printStackTrace();
-		}
+
 		
 		DefaultListModel<VersionObject> model = new DefaultListModel<>();
 		
-		
-		for(Entry<Object, Object> pairs: props.entrySet()) {
-			String[] str = pairs.getValue().toString().split(",");
-			String version = str[0];
-			String url = str[1];
-			model.add(Integer.parseInt(pairs.getKey().toString()), new VersionObject(url, version));
+		VersionObject[] vos;
+		try {
+			vos = XMLConverter.fromXML(Paths.get(Initializer.indexPath.toString(), indexFileName).toString());
+			for(int i = 0; i < vos.length; i++ ) {
+				model.add(i, vos[i]);
+			}
+		} catch (ParserConfigurationException | SAXException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
 		return model;
 	}
 	
-	public static DefaultListModel<VersionObject> buildUserIndex() {
-		Properties props = new OrderedProperties();
-		FileInputStream fis;
-		try {
-			fis = new FileInputStream(Initializer.userIndexFile.toString());
-			props.load(fis);
-			fis.close();
-		} catch (IOException e) {
-			Debug.callCrashDialog("ERROR", "There was a problem loading the files.\nCheck the console output.", Debug.ERR);
-			e.printStackTrace();
-		}
-		
-		DefaultListModel<VersionObject> model = new DefaultListModel<>();
-		
-		
-		for(Entry<Object, Object> pairs: props.entrySet()) {
-			String[] str = pairs.getValue().toString().split(",");
-			String version = str[0];
-			String url = str[1];
-			model.add(Integer.parseInt(pairs.getKey().toString()), new VersionObject(url, version));
-		}
-		
-		return model;
-	}
+	
 	
 	public static DefaultListModel<VersionObject> addToJList(ListModel<VersionObject> base, VersionObject vo, int index) {
 		DefaultListModel<VersionObject> dlm = (DefaultListModel<VersionObject>) base;
@@ -143,4 +109,9 @@ public class Util {
 	    }
 	}
 	
+	public static void listResources() throws URISyntaxException, IOException {
+		URL url = Util.class.getResource("/");
+	    Path path = Paths.get(url.toURI());
+	    Files.walk(path, 5).forEach(p -> System.out.printf("- %s%n", p.toString()));
+	}
 }
