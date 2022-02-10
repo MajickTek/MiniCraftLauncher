@@ -42,7 +42,7 @@ public class XMLConverter {
 						Element versionElementNode = (Element) versionNode;
 						String versionNumber = versionElementNode.getAttribute("number");
 						String versionDownloadURL = (versionElementNode.getTextContent().startsWith("http://") || versionElementNode.getTextContent().startsWith("https://")) ? versionElementNode.getTextContent() : "";
-						tempList.add(new VersionObject(versionDownloadURL, gameName + "-"  + versionNumber));
+						tempList.add(new VersionObject(versionDownloadURL, gameName + " "  + versionNumber));
 					}
 				}
 			}
