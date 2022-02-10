@@ -8,10 +8,6 @@ On \*NIX systems including macOS (probably) you should be able to find the right
 As of now, the current minimum version of the launcher you should use is `Pre Release 4`. This version bumbs the minimum JRE version to 1.8 to make it more accessible (this may change in the future if necessary). Earlier versions require JRE 16 or newer.
 
 ## Current functionality:
-This branch is the `XML-refactor` branch. It is updated ahead of `master` and adds new functionality and a complete rewrite of core features.
-
-The below functionality is still expected to work for now but may be unstable:
-
 - Load versions from /MiniCraftLauncherIndex
 - Double-click to download a version
 - Double-click already downloaded version to launch it
@@ -19,12 +15,9 @@ The below functionality is still expected to work for now but may be unstable:
 - Under the Edit menu, go into the Select Channel submenu to switch between Release, Pre-Release, and Mod channels.
 - Insert/Add version profiles. These cannot be saved at the moment. GUI Options accessible via the Edit menu.
 ## How does it work?
-When a channel is selected, it downloads a `.index` file from https://github.com/MajickTek/MiniCraftLauncherIndex.
-Inside this file is a list of versions, and the format is like this:
-~~~~
-<index> = <SemanticVersion>,<url>
-~~~~
-The SemanticVersion is often planted in the URL somewhere if the url contains the string `$version`.
+When a channel is selected, it downloads a `.xml` file from https://github.com/MajickTek/MiniCraftLauncherIndex.
+The format of this file is described over there.
+
 ## Roadmap
 - Add menu to open launcher folder
 - Add "cleaning" functionality (delete downloaded index files, jar files, and/or game folders)
