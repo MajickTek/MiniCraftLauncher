@@ -24,3 +24,4 @@ The format of this file is described over there.
 - Add config file to load the indexes (so they aren't hardcoded and the user can make their own)
 - (Future) Allow self-updating via GitHub Releases
   - I have an easy solution for this but it would be Windows-only unless I find a way to make it cross platform
+- Fabric Support (with help from PseudoDistant on the various discords)
