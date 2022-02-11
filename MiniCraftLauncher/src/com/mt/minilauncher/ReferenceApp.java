@@ -12,6 +12,7 @@ import javax.swing.event.HyperlinkEvent;
 import javax.swing.JTree;
 import javax.swing.JEditorPane;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 
 public class ReferenceApp extends JFrame {
 
@@ -44,34 +45,55 @@ public class ReferenceApp extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-		
-		JTree tree = new JTree();
-		contentPane.add(tree, BorderLayout.WEST);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		contentPane.add(scrollPane, BorderLayout.CENTER);
-		
-		JEditorPane htmlPane = new JEditorPane();
-		scrollPane.setViewportView(htmlPane);
-		htmlPane.setEditable(false);
-		htmlPane.setContentType("text/html");
 		try {
+			
+			JSplitPane splitPane = new JSplitPane();
+			splitPane.setResizeWeight(0.5);
+			contentPane.add(splitPane, BorderLayout.CENTER);
+			
+			JScrollPane scrollPane = new JScrollPane();
+			splitPane.setRightComponent(scrollPane);
+			
+			JEditorPane htmlPane = new JEditorPane();
+			scrollPane.setViewportView(htmlPane);
+			htmlPane.setEditable(false);
+			htmlPane.setContentType("text/html");
 			htmlPane.setPage(ReferenceApp.class.getResource("/docs/index.html").toURI().toURL());
+			
+			JScrollPane scrollPane_1 = new JScrollPane();
+			splitPane.setLeftComponent(scrollPane_1);
+			
+			JEditorPane tableOfContentsPane = new JEditorPane();
+			tableOfContentsPane.setEditable(false);
+			tableOfContentsPane.setContentType("text/html");
+			scrollPane_1.setViewportView(tableOfContentsPane);
+			htmlPane.addHyperlinkListener(l -> {
+				if(l.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+					try {
+						htmlPane.setPage(l.getURL());
+						System.out.println(l.getURL());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			});
+			tableOfContentsPane.setPage(ReferenceApp.class.getResource("/docs/contents.html").toURI().toURL());
+			tableOfContentsPane.addHyperlinkListener(l -> {
+				if(l.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+					try {
+						htmlPane.setPage(l.getURL());//the table of contents should open a link in the main view
+						System.out.println(l.getURL());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			});
 		} catch (IOException | URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		htmlPane.addHyperlinkListener(l -> {
-			if(l.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-				try {
-					htmlPane.setPage(l.getURL());
-					System.out.println(l.getURL());
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		});
 	}
 
 }
