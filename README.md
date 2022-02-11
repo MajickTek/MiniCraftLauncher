@@ -25,3 +25,7 @@ The format of this file is described over there.
 - (Future) Allow self-updating via GitHub Releases
   - I have an easy solution for this but it would be Windows-only unless I find a way to make it cross platform
 - Fabric Support (with help from PseudoDistant on the various discords)
+
+## Credits
+Downloading library is built in (`com.littlebigberry.*`) and the original is at https://github.com/jearle/file-downloader.
+- The code is 10 years old but it worked with some changes to deprecated method calls.
