@@ -7,20 +7,18 @@ import com.littlebigberry.httpfiledownloader.FileDownloaderDelegate;
 
 public class Downloader implements FileDownloaderDelegate{
 
-	String url, localLocation, percentage;
+	String url, localLocation;
 	JTextArea jta;
 	
 	public Downloader(String url, String localLocation) {
 		this.url = url;
 		this.localLocation = localLocation;
-		percentage = "0";
 		jta = null;
 	}
 
 	public Downloader(String url, String localLocation, JTextArea jta) {
 		this.url = url;
 		this.localLocation = localLocation;
-		percentage = "0";
 		this.jta = jta;
 	}
 	
@@ -33,12 +31,13 @@ public class Downloader implements FileDownloaderDelegate{
 	
 	@Override
 	public void didStartDownload(FileDownloader fileDownloader) {
-		System.out.println("Begin");
+		if(jta != null) {
+			jta.setText("Starting download...");
+		}
 	}
 
 	@Override
 	public void didProgressDownload(FileDownloader fileDownloader) {
-		percentage = fileDownloader.getPercentComplete();
 		if(jta != null) {
 			jta.setText("Downloading: " + fileDownloader.getPercentComplete());
 		}
@@ -46,15 +45,13 @@ public class Downloader implements FileDownloaderDelegate{
 
 	@Override
 	public void didFinishDownload(FileDownloader fileDownloader) {
-		System.out.println("End");
+		if(jta != null) {
+			jta.setText("Ready to play!");
+		}
 	}
 
 	@Override
 	public void didFailDownload(FileDownloader fileDownloader) {
 		System.err.println("Error");
-	}
-
-	public String getPercentage() {
-		return percentage;
 	}
 }
