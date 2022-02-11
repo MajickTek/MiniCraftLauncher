@@ -1,7 +1,6 @@
 package com.littlebigberry.httpfiledownloader;
 
 import java.io.*;
-import java.net.*;
 import java.text.MessageFormat;
 import java.util.Date;
 
@@ -67,7 +66,9 @@ public class FileDownloader implements DownloadWorkerDelegate {
 		double kiloBytesWrittenDifference = bytesWrittenDifference / 1024; // byte conversion to seconds
 		
 		if (timeDifferenceInSeconds != 0) {
-			this.setKbPerSecond(new Double(kiloBytesWrittenDifference / timeDifferenceInSeconds).toString());
+			//this.setKbPerSecond(new Double(kiloBytesWrittenDifference / timeDifferenceInSeconds).toString());
+			this.setKbPerSecond(Double.toString((double) (kiloBytesWrittenDifference / timeDifferenceInSeconds)));
+			
 		}
 		this.lastTimeReceivedData = currentTime;
 		this.previousBytesWritten = this.getBytesWritten();
@@ -161,8 +162,9 @@ public class FileDownloader implements DownloadWorkerDelegate {
 	}
 
 	private void setTotalTimeToDownload() {
-		String totalTimeToDownload = 
-				new Long( (this.getDownloadEndTime() - this.getDownloadBeginTime()) / 1000 /* milliseconds to seconds conversion*/).toString();
+//		String totalTimeToDownload = 
+//				new Long( (this.getDownloadEndTime() - this.getDownloadBeginTime()) / 1000 /* milliseconds to seconds conversion*/).toString();
+		String totalTimeToDownload = Long.toString((long) (this.getDownloadEndTime() - this.getDownloadBeginTime()) / 1000);
 		this.totalTimeToDownload = totalTimeToDownload;
 	}
 
@@ -188,7 +190,8 @@ public class FileDownloader implements DownloadWorkerDelegate {
 
 	private void setPercentComplete() {
 		int totalFileSize = this.getDownloadWorker().getFileSize();
-		Double percentComplete = new Double(new Double(this.getBytesWritten()) / new Double(totalFileSize));
+		//Double percentComplete = new Double(new Double(this.getBytesWritten()) / new Double(totalFileSize));
+		Double percentComplete = (double) this.getBytesWritten() / (double) totalFileSize;
 		this.percentComplete = MessageFormat.format("{0, number, #.##%}", percentComplete);
 	}
 
