@@ -1,18 +1,29 @@
 package com.mt.minilauncher.downloader;
 
+import javax.swing.JTextArea;
+
 import com.littlebigberry.httpfiledownloader.FileDownloader;
 import com.littlebigberry.httpfiledownloader.FileDownloaderDelegate;
 
 public class Downloader implements FileDownloaderDelegate{
 
 	String url, localLocation, percentage;
+	JTextArea jta;
 	
 	public Downloader(String url, String localLocation) {
 		this.url = url;
 		this.localLocation = localLocation;
 		percentage = "0";
+		jta = null;
 	}
 
+	public Downloader(String url, String localLocation, JTextArea jta) {
+		this.url = url;
+		this.localLocation = localLocation;
+		percentage = "0";
+		this.jta = jta;
+	}
+	
 	public void download() {
 		FileDownloader fileDownloader = new FileDownloader(this);
 		fileDownloader.setUrl(url);
@@ -28,6 +39,9 @@ public class Downloader implements FileDownloaderDelegate{
 	@Override
 	public void didProgressDownload(FileDownloader fileDownloader) {
 		percentage = fileDownloader.getPercentComplete();
+		if(jta != null) {
+			jta.setText("Downloading: " + fileDownloader.getPercentComplete());
+		}
 	}
 
 	@Override

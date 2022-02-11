@@ -26,12 +26,18 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.JTextArea;
+import java.awt.Color;
+import javax.swing.JPanel;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.EtchedBorder;
 
 public class LauncherWindow {
 
 	private JFrame frmLauncher;
 	private JList<VersionObject> list;
 public static LauncherWindow instance;
+private JTextArea textArea;
 	/**
 	 * Launch the application.
 	 */
@@ -203,7 +209,7 @@ public static LauncherWindow instance;
 //							DownloadDialog dd = new DownloadDialog();
 //							dd.download(selectedVersion.getURL(), Paths.get(Initializer.jarPath.toString(), selectedVersion.version + ".jar").toString());
 //							dd.close();
-							Downloader downloader = new Downloader(selectedVersion.getURL(), Paths.get(Initializer.jarPath.toString(), selectedVersion.version + ".jar").toString());
+							Downloader downloader = new Downloader(selectedVersion.getURL(), Paths.get(Initializer.jarPath.toString(), selectedVersion.version + ".jar").toString(), textArea);
 							downloader.download();
 							selectedVersion.isDownloaded = true;
 							list.updateUI();
@@ -236,6 +242,17 @@ public static LauncherWindow instance;
 		scrollPane.setViewportView(list);
 		
 		list.setModel(Util.buildIndex(true, false));
+		
+		JPanel panel = new JPanel();
+		panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		scrollPane.setColumnHeaderView(panel);
+		panel.setLayout(new BorderLayout(0, 0));
+		
+		textArea = new JTextArea();
+		textArea.setForeground(Color.GREEN);
+		textArea.setBackground(Color.BLACK);
+		textArea.setEditable(false);
+		panel.add(textArea);
 		list.updateUI();
 		updateUI();
 	}
@@ -292,5 +309,8 @@ public static LauncherWindow instance;
 	
 	public JFrame getFrmLauncher() {
 		return frmLauncher;
+	}
+	public JTextArea getTextArea() {
+		return textArea;
 	}
 }
