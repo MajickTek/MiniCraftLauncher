@@ -56,7 +56,7 @@ public class ReferenceApp extends JFrame {
 		htmlPane.setEditable(false);
 		htmlPane.setContentType("text/html");
 		try {
-			htmlPane.setPage(ReferenceApp.class.getResource("/docs/test.html").toURI().toURL());
+			htmlPane.setPage(ReferenceApp.class.getResource("/docs/index.html").toURI().toURL());
 		} catch (IOException | URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -65,6 +65,7 @@ public class ReferenceApp extends JFrame {
 			if(l.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
 				try {
 					htmlPane.setPage(l.getURL());
+					System.out.println(l.getURL());
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
