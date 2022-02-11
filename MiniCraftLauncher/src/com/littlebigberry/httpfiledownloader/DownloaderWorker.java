@@ -57,7 +57,7 @@ public class DownloaderWorker extends Thread {
 			this.delegate.didReceiveData(this, data, byteRead);
 			this.testCount++;
 		}
-		System.out.println("Total count: " + new Integer(this.testCount).toString());
+		System.out.println("Total count: " + (int) this.testCount);
 	}
 
 	public int getFileSize() {
