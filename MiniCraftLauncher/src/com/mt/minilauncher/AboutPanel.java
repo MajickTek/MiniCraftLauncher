@@ -21,7 +21,7 @@ public class AboutPanel extends JPanel {
 		JEditorPane htmlPane = new JEditorPane();
 		htmlPane.setEditable(false);
 		htmlPane.setContentType("text/html");
-		htmlPane.setText("<p><b>MiniCraftLauncher</b> by <b>MajickTek</b></p>\r\n<p>Make sure you have the latest version! automatic updates aren't available yet.</p>\r\n<p>Older versions might also break because of format changes to the index repo.</p>\r\n\r\n<a href=\"https://github.com/MajickTek/MiniCraftLauncher\">Launcher source code</a>\r\n<br />\r\n<a href=\"https://github.com/MajickTek/MiniCraftLauncherIndex\">Version index repo and archive</a>");
+		htmlPane.setText("<p><b>MiniCraftLauncher</b> by <b>MajickTek</b></p>\n<p>Make sure you have the latest version! automatic updates aren't available yet.</p>\n<p>Older versions might also break because of format changes to the index repo.</p>\n\n<a href=\"https://github.com/MajickTek/MiniCraftLauncher\">Launcher source code/releases</a>\n<br />\n<a href=\"https://github.com/MajickTek/MiniCraftLauncherIndex\">Version index repo and archive</a>");
 		
 		htmlPane.addHyperlinkListener(l -> {
 			if(l.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
