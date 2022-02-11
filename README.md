@@ -14,6 +14,8 @@ As of now, the current minimum version of the launcher you should use is `Releas
 - The launcher keeps track of downloaded versions on restart
 - Under the Edit menu, go into the Select Channel submenu to switch between Release, Pre-Release, and Mod channels.
 - Insert/Add version profiles. These cannot be saved at the moment. GUI Options accessible via the Edit menu.
+- See download progress
+- Supports basic hotkeys
 ## How does it work?
 When a channel is selected, it downloads a `.xml` file from https://github.com/MajickTek/MiniCraftLauncherIndex.
 The format of this file is described over there.
