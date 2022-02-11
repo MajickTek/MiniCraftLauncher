@@ -1,33 +1,26 @@
 package com.mt.minilauncher;
 
 import java.awt.EventQueue;
-import java.awt.Image;
-
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
-import com.mt.minilauncher.downloader.DownloadDialog;
+import com.mt.minilauncher.downloader.Downloader;
 
 import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JList;
 import java.awt.BorderLayout;
-import javax.swing.AbstractListModel;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.JScrollPane;
-import javax.swing.ListModel;
 import javax.swing.JMenu;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.List;
-
 import javax.swing.JMenuItem;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -206,17 +199,12 @@ public static LauncherWindow instance;
 								e1.printStackTrace();
 							}
 						} else {
-//							try {
-//								Util.downloadUsingNIO(selectedVersion.getURL(), Paths.get(Initializer.jarPath.toString(), selectedVersion.version + ".jar").toString());
-//								selectedVersion.isDownloaded = true;
-//								list.updateUI();
-//							} catch (IOException e1) {
-//								Debug.callCrashDialog("ERROR", "Failed downloading the jar.\nCheck console output.", Debug.ERR);
-//								e1.printStackTrace();
-//							}
-							DownloadDialog dd = new DownloadDialog();
-							dd.download(selectedVersion.getURL(), Paths.get(Initializer.jarPath.toString(), selectedVersion.version + ".jar").toString());
-							dd.close();
+
+//							DownloadDialog dd = new DownloadDialog();
+//							dd.download(selectedVersion.getURL(), Paths.get(Initializer.jarPath.toString(), selectedVersion.version + ".jar").toString());
+//							dd.close();
+							Downloader downloader = new Downloader(selectedVersion.getURL(), Paths.get(Initializer.jarPath.toString(), selectedVersion.version + ".jar").toString());
+							downloader.download();
 							selectedVersion.isDownloaded = true;
 							list.updateUI();
 						}
