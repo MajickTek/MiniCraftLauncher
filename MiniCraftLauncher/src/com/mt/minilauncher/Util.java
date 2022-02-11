@@ -20,6 +20,8 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
+import com.mt.minilauncher.downloader.DownloadDialog;
+
 public class Util {
 	
 	
@@ -33,14 +35,16 @@ public class Util {
 		}
 		String indexURL = baseURL + indexFileName;
 		
-		try {
-			downloadUsingNIO(indexURL, Paths.get(Initializer.indexPath.toString(), indexFileName).toString());
-		} catch (IOException e) {
-			Debug.callCrashDialog("ERROR", "There was a problem downloading the files.\nCheck the console output.", Debug.ERR);
-			e.printStackTrace();
-		}
+		DownloadDialog dd = new DownloadDialog();
+		dd.download(indexURL, Paths.get(Initializer.indexPath.toString(), indexFileName).toString());
+//		try {
+//			downloadUsingNIO(indexURL, Paths.get(Initializer.indexPath.toString(), indexFileName).toString());
+//		} catch (IOException e) {
+//			Debug.callCrashDialog("ERROR", "There was a problem downloading the files.\nCheck the console output.", Debug.ERR);
+//			e.printStackTrace();
+//		}
 
-		
+		dd.close();
 		DefaultListModel<VersionObject> model = new DefaultListModel<>();
 		
 		VersionObject[] vos;

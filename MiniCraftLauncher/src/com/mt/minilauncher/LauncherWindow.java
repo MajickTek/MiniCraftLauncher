@@ -5,6 +5,9 @@ import java.awt.Image;
 
 import javax.swing.JFrame;
 import javax.swing.UIManager;
+
+import com.mt.minilauncher.downloader.DownloadDialog;
+
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
@@ -203,14 +206,19 @@ public static LauncherWindow instance;
 								e1.printStackTrace();
 							}
 						} else {
-							try {
-								Util.downloadUsingNIO(selectedVersion.getURL(), Paths.get(Initializer.jarPath.toString(), selectedVersion.version + ".jar").toString());
-								selectedVersion.isDownloaded = true;
-								list.updateUI();
-							} catch (IOException e1) {
-								Debug.callCrashDialog("ERROR", "Failed downloading the jar.\nCheck console output.", Debug.ERR);
-								e1.printStackTrace();
-							}
+//							try {
+//								Util.downloadUsingNIO(selectedVersion.getURL(), Paths.get(Initializer.jarPath.toString(), selectedVersion.version + ".jar").toString());
+//								selectedVersion.isDownloaded = true;
+//								list.updateUI();
+//							} catch (IOException e1) {
+//								Debug.callCrashDialog("ERROR", "Failed downloading the jar.\nCheck console output.", Debug.ERR);
+//								e1.printStackTrace();
+//							}
+							DownloadDialog dd = new DownloadDialog();
+							dd.download(selectedVersion.getURL(), Paths.get(Initializer.jarPath.toString(), selectedVersion.version + ".jar").toString());
+							dd.close();
+							selectedVersion.isDownloaded = true;
+							list.updateUI();
 						}
 					}
 				}

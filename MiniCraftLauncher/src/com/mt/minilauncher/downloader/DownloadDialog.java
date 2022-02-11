@@ -13,6 +13,9 @@ import com.mt.minilauncher.Initializer;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import java.awt.FlowLayout;
+import java.awt.Window;
+import java.awt.event.WindowEvent;
+
 import javax.swing.BoxLayout;
 
 public class DownloadDialog extends JDialog implements FileDownloaderDelegate{
@@ -45,7 +48,7 @@ public class DownloadDialog extends JDialog implements FileDownloaderDelegate{
 		setTitle("Downloading");
 		setBounds(100, 100, 450, 100);
 
-		FileDownloader fileDownloader = new FileDownloader(this);
+		
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 		
 		eta = new JLabel("Estimated Time: 0");
@@ -60,11 +63,20 @@ public class DownloadDialog extends JDialog implements FileDownloaderDelegate{
 		bytesWritten = new JLabel("Bytes Written: 0");
 		getContentPane().add(bytesWritten);
 		
-		fileDownloader.setUrl("https://github.com/MinicraftPlus/minicraft-plus-revived/releases/download/v2.0.7/minicraft_plus-2.0.7.jar");
-		fileDownloader.setLocalLocation(Initializer.jarPath.toString() + "/2.0.7.jar");
-		fileDownloader.beginDownload();
 	}
 
+	public void download(String url, String localLocation) {
+		FileDownloader fileDownloader = new FileDownloader(this);
+		fileDownloader.setUrl(url);
+		fileDownloader.setLocalLocation(localLocation);
+		fileDownloader.beginDownload();
+	}
+	
+	public void close() {
+		this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+		this.dispose();
+	}
+	
 	@Override
 	public void didStartDownload(FileDownloader fileDownloader) {
 		System.out.println("Begin");
