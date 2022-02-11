@@ -187,6 +187,15 @@ private JTextArea textArea;
 		});
 		helpMenu.add(aboutMenuItem);
 		
+		JMenuItem referenceMenuItem = new JMenuItem("Reference");
+		referenceMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ReferenceApp ra = new ReferenceApp();
+				ra.setVisible(true);
+			}
+		});
+		helpMenu.add(referenceMenuItem);
+		
 		JScrollPane scrollPane = new JScrollPane();
 		frmLauncher.getContentPane().add(scrollPane, BorderLayout.CENTER);
 		

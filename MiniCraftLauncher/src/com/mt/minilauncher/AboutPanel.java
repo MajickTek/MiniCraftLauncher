@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 import javax.swing.JEditorPane;
+import javax.swing.JScrollPane;
 
 public class AboutPanel extends JPanel {
 
@@ -37,6 +38,8 @@ public class AboutPanel extends JPanel {
 				}
 			}
 		});
+		
+		
 		add(htmlPane, BorderLayout.CENTER);
 
 	}
