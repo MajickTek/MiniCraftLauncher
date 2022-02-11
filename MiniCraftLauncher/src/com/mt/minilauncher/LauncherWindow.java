@@ -176,6 +176,17 @@ private JTextArea textArea;
 		});
 		editMenu.add(cleanFolderMenuItem);
 		
+		JMenu helpMenu = new JMenu("Help");
+		menuBar.add(helpMenu);
+		
+		JMenuItem aboutMenuItem = new JMenuItem("About");
+		aboutMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Debug.callCrashDialog("About", new AboutPanel(), Debug.INF);
+			}
+		});
+		helpMenu.add(aboutMenuItem);
+		
 		JScrollPane scrollPane = new JScrollPane();
 		frmLauncher.getContentPane().add(scrollPane, BorderLayout.CENTER);
 		
