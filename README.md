@@ -1,5 +1,5 @@
 # MiniCraftLauncher
- a launcher for MiniCraft+ and some other variants of the game. Not Minecraft related.
+A launcher for MiniCraft+ and some other variants of the game. Not Minecraft related.
 
 Everything that the launcher downloads is in `<user folder>/Documents/MajickTek/minilauncher`. If your user folder doesn't have a Documents folder inside it for some reaason, it'll make one.
 
