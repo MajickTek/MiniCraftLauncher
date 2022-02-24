@@ -31,6 +31,7 @@ import java.awt.Color;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
+import javax.swing.JCheckBoxMenuItem;
 
 public class LauncherWindow {
 
@@ -38,6 +39,7 @@ public class LauncherWindow {
 	private JList<VersionObject> list;
 public static LauncherWindow instance;
 private JTextArea textArea;
+private JCheckBoxMenuItem enableHideMenuItem;
 	/**
 	 * Launch the application.
 	 */
@@ -176,6 +178,12 @@ private JTextArea textArea;
 		});
 		editMenu.add(cleanFolderMenuItem);
 		
+		JMenu optionsMenu = new JMenu("Options");
+		menuBar.add(optionsMenu);
+		
+		enableHideMenuItem = new JCheckBoxMenuItem("Hide Launcher During Play");
+		optionsMenu.add(enableHideMenuItem);
+		
 		JMenu helpMenu = new JMenu("Help");
 		menuBar.add(helpMenu);
 		
@@ -219,7 +227,7 @@ private JTextArea textArea;
 						if(selectedVersion.isDownloaded) {
 							String jarPath = Paths.get(Initializer.jarPath.toString(), selectedVersion.version + ".jar").toString();
 							try {
-								Util.launchJar(jarPath, selectedVersion.version, instance);
+								Util.launchJar(jarPath, selectedVersion.version, instance, enableHideMenuItem.isSelected());
 							} catch (IOException e1) {
 								Debug.callCrashDialog("ERROR", "Something went wrong launching the jar.\nPlease check the console output.", Debug.ERR);
 								e1.printStackTrace();
@@ -332,5 +340,8 @@ private JTextArea textArea;
 	}
 	public JTextArea getTextArea() {
 		return textArea;
+	}
+	public JCheckBoxMenuItem getEnableHideMenuItem() {
+		return enableHideMenuItem;
 	}
 }

@@ -81,17 +81,19 @@ public class Util {
         rbc.close();
     }
 	
-	public static void launchJar(String path, String version, LauncherWindow lw) throws IOException {
+	public static void launchJar(String path, String version, LauncherWindow lw, boolean hideLauncher) throws IOException {
 		String vPath = Paths.get(Initializer.savesDir.toString(), version).toString();
 		Process ps = Runtime.getRuntime().exec(new String[] {"java", "-jar", path, "--savedir", vPath});
-		lw.getFrmLauncher().setVisible(false);
-		try {
-			ps.waitFor();
-		} catch (InterruptedException e) {
-			Debug.callCrashDialog("ERROR", "Something failed while waiting for the game to terminate.\nCheck the console output.", Debug.ERR);
-			e.printStackTrace();
+		if(hideLauncher) {
+			lw.getFrmLauncher().setVisible(false);
+			try {
+				ps.waitFor();
+			} catch (InterruptedException e) {
+				Debug.callCrashDialog("ERROR", "Something failed while waiting for the game to terminate.\nCheck the console output.", Debug.ERR);
+				e.printStackTrace();
+			}
+			lw.getFrmLauncher().setVisible(true);
 		}
-		lw.getFrmLauncher().setVisible(true);
 	}
 	
 	public static void purgeDirectory(File dir) {
