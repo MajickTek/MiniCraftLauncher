@@ -18,7 +18,9 @@ As of now, the current minimum version of the launcher you should use is `Releas
 - Supports basic hotkeys
 ## How does it work?
 When a channel is selected, it downloads a `.xml` file from https://github.com/MajickTek/MiniCraftLauncherIndex.
+
 This file describes the information to display as well as the various needed download links.
+
 The format of this file is described over there.
 
 ## Roadmap
