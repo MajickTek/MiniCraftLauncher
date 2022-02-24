@@ -195,6 +195,7 @@ private JCheckBoxMenuItem enableHideMenuItem;
 		menuBar.add(optionsMenu);
 		
 		enableHideMenuItem = new JCheckBoxMenuItem("Hide Launcher During Play");
+		enableHideMenuItem.setSelected(true);//default should be on
 		optionsMenu.add(enableHideMenuItem);
 		
 		JMenu helpMenu = new JMenu("Help");
