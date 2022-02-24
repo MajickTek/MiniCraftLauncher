@@ -233,14 +233,15 @@ private JCheckBoxMenuItem enableHideMenuItem;
 								e1.printStackTrace();
 							}
 						} else {
-
-//							DownloadDialog dd = new DownloadDialog();
-//							dd.download(selectedVersion.getURL(), Paths.get(Initializer.jarPath.toString(), selectedVersion.version + ".jar").toString());
-//							dd.close();
-							Downloader downloader = new Downloader(selectedVersion.getURL(), Paths.get(Initializer.jarPath.toString(), selectedVersion.version + ".jar").toString(), textArea);
+							Downloader downloader = new Downloader(selectedVersion.getURL(),
+									Paths.get(Initializer.jarPath.toString(),
+											selectedVersion.version + ".jar").toString(),
+									textArea,
+									() -> {
+										selectedVersion.isDownloaded = true;
+										list.updateUI();
+									});
 							downloader.download();
-							selectedVersion.isDownloaded = true;
-							list.updateUI();
 						}
 					}
 				}
