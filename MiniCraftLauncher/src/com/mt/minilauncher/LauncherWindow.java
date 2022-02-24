@@ -93,6 +93,19 @@ private JCheckBoxMenuItem enableHideMenuItem;
 				System.exit(0);
 			}
 		});
+		
+		JMenuItem launcherFolderMenuItem = new JMenuItem("Open Launcher Folder");
+		launcherFolderMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Util.openNative(Initializer.launcherPath.toFile());
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		fileMenu.add(launcherFolderMenuItem);
 		fileMenu.add(exitMenuItem);
 		
 		JMenu editMenu = new JMenu("Edit");
@@ -255,13 +268,33 @@ private JCheckBoxMenuItem enableHideMenuItem;
 						JPopupMenu menu = new JPopupMenu();
 						JMenuItem editMenu = new JMenuItem("Edit");
 						JMenuItem cleanMenu = new JMenuItem("Clean");
+						JMenuItem folderMenu = new JMenuItem("Open Save Folder");
 						
 						editMenu.addActionListener(a -> edit());
 						
 						cleanMenu.addActionListener(a -> clean());
 						
+						File jarPath = Paths.get(Initializer.savesDir.toString(), list.getSelectedValue().version).toFile();
+						folderMenu.addActionListener(a -> {
+							if(jarPath.exists()) {
+								try {
+									Util.openNative(jarPath);
+								} catch (IOException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+							} else {
+								try {
+									Util.openNative(Initializer.savesDir.toFile());//This should always be there
+								} catch (IOException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+							}
+						});
 						menu.add(editMenu);
 						menu.add(cleanMenu);
+						menu.add(folderMenu);
 						menu.show(list, e.getPoint().x, e.getPoint().y);
 				}
 			}

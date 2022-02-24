@@ -1,5 +1,6 @@
 package com.mt.minilauncher;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -34,10 +35,7 @@ public class Util {
 			indexFileName = "mods.xml";
 		}
 		String indexURL = baseURL + indexFileName;
-		
-//		DownloadDialog dd = new DownloadDialog();
-//		dd.download(indexURL, Paths.get(Initializer.indexPath.toString(), indexFileName).toString());
-
+	
 		Downloader downloader = new Downloader(indexURL, Paths.get(Initializer.indexPath.toString(), indexFileName).toString());
 		downloader.download();
 		
@@ -115,5 +113,11 @@ public class Util {
 		URL url = Util.class.getResource("/");
 	    Path path = Paths.get(url.toURI());
 	    Files.walk(path, 5).forEach(p -> System.out.printf("- %s%n", p.toString()));
+	}
+	
+	public static void openNative(File f) throws IOException {
+		if(Desktop.isDesktopSupported()) {
+			Desktop.getDesktop().open(f);
+		}
 	}
 }
