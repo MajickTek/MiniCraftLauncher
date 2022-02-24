@@ -71,7 +71,7 @@ public class ReferenceApp extends JFrame {
 				if(l.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
 					try {
 						htmlPane.setPage(l.getURL());
-						System.out.println(l.getURL());
+						System.out.println("Loading page: " + l.getURL());
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -83,7 +83,7 @@ public class ReferenceApp extends JFrame {
 				if(l.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
 					try {
 						htmlPane.setPage(l.getURL());//the table of contents should open a link in the main view
-						System.out.println(l.getURL());
+						System.out.println("Loading page: " + l.getURL());
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
