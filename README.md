@@ -24,8 +24,6 @@ This file describes the information to display as well as the various needed dow
 The format of this file is described over there.
 
 ## Roadmap
-- Add menu to open launcher folder
-  - Now that a context menu has been implemented, this is easier
 - Add config file to load the indexes (so they aren't hardcoded and the user can make their own)
 - (Future) Allow self-updating via GitHub Releases
   - I have an easy solution for this but it would be Windows-only unless I find a way to make it cross platform
