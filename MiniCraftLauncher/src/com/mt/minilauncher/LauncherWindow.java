@@ -7,6 +7,9 @@ import javax.swing.UIManager;
 import com.mt.minilauncher.downloader.Downloader;
 import com.mt.minilauncher.util.EditUtil;
 import com.mt.minilauncher.util.Util;
+import com.mt.minilauncher.windows.AboutPanel;
+import com.mt.minilauncher.windows.ReferenceApp;
+import com.mt.minilauncher.windows.SystemInfo;
 
 import javax.swing.JMenuBar;
 import javax.swing.JPopupMenu;

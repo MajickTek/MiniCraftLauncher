@@ -1,7 +1,9 @@
-package com.mt.minilauncher;
+package com.mt.minilauncher.windows;
 
 import javax.swing.JPanel;
 import javax.swing.event.HyperlinkEvent;
+
+import com.mt.minilauncher.Debug;
 
 import java.awt.BorderLayout;
 import java.awt.Desktop;
