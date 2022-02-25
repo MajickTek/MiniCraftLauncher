@@ -251,7 +251,7 @@ private JCheckBoxMenuItem enableHideMenuItem;
 									Paths.get(Initializer.jarPath.toString(),
 											selectedVersion.version + ".jar").toString(),
 									textArea,
-									() -> {
+									() -> {//callback function which runs when download is finished (at 100% and hasn't failed)
 										selectedVersion.isDownloaded = true;
 										list.updateUI();
 									});
