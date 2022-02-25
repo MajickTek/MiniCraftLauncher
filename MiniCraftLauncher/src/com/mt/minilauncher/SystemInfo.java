@@ -11,12 +11,16 @@ import javax.swing.JSplitPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class SystemInfo extends JDialog {
+public class SystemInfo extends JDialog implements ActionListener{
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextArea textArea_1;
 	private JTextArea textArea;
+	private JButton okButton;
+	private JButton cancelButton;
 
 	/**
 	 * Launch the application.
@@ -74,13 +78,13 @@ public class SystemInfo extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("OK");
+				okButton = new JButton("OK");
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
-				JButton cancelButton = new JButton("Cancel");
+				cancelButton = new JButton("Cancel");
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
@@ -102,11 +106,35 @@ public class SystemInfo extends JDialog {
 			envBuilder.append(String.format("%s = %s", k.toString(), v.toString()) + "\n");
 		});
 		textArea.setText(envBuilder.toString());
+		
+		//init buttons
+		getOkButton().addActionListener(this);
+		getCancelButton().addActionListener(this);
 	}
 	public JTextArea getTextArea1() {
 		return textArea_1;
 	}
 	public JTextArea getTextArea() {
 		return textArea;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String action = e.getActionCommand().toUpperCase();
+		System.out.println("Dialog action: " + action);
+		switch(action) {
+		case "OK":
+			this.dispose();
+			break;
+		case "CANCEL":
+			this.dispose();
+			break;
+		}
+	}
+	public JButton getOkButton() {
+		return okButton;
+	}
+	public JButton getCancelButton() {
+		return cancelButton;
 	}
 }
