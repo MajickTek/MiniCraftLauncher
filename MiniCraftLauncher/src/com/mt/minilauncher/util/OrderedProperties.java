@@ -1,4 +1,4 @@
-package com.mt.minilauncher;
+package com.mt.minilauncher.util;
 
 import java.util.Enumeration;
 import java.util.LinkedHashMap;
