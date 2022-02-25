@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import com.mt.minilauncher.util.Util;
+
 public class Initializer {
 	public static Path launcherPath = Paths.get(System.getProperty("user.home"), "Documents", "MajickTek", "minilauncher");
 	public static Path savesDir = Paths.get(launcherPath.toString(), "saves");

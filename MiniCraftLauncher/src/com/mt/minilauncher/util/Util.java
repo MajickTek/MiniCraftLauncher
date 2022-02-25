@@ -1,4 +1,4 @@
-package com.mt.minilauncher;
+package com.mt.minilauncher.util;
 
 import java.awt.Desktop;
 import java.io.File;
@@ -21,6 +21,10 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
+import com.mt.minilauncher.Debug;
+import com.mt.minilauncher.Initializer;
+import com.mt.minilauncher.LauncherWindow;
+import com.mt.minilauncher.VersionObject;
 import com.mt.minilauncher.downloader.Downloader;
 
 public class Util {

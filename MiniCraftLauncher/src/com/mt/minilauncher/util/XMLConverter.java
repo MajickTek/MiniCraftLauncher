@@ -1,4 +1,4 @@
-package com.mt.minilauncher;
+package com.mt.minilauncher.util;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +14,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
+import com.mt.minilauncher.VersionObject;
 
 public class XMLConverter {
 	public static VersionObject[] fromXML(String filePath) throws ParserConfigurationException, SAXException, IOException {

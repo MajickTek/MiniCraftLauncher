@@ -1,4 +1,4 @@
-package com.mt.minilauncher;
+package com.mt.minilauncher.util;
 
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
@@ -6,6 +6,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import com.mt.minilauncher.*;
+import com.mt.minilauncher.VersionObject;
 
 public class EditUtil {
 	public static VersionObject editInfo(VersionObject vo) {

@@ -9,11 +9,11 @@ public class VersionObject implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	String url;
-	String version;
-	boolean isDownloaded;
+	public String url;
+	public String version;
+	public boolean isDownloaded;
 	
-	boolean canEdit;
+	public boolean canEdit;
 	
 	public VersionObject(String url, String version) {
 		this.url = url;

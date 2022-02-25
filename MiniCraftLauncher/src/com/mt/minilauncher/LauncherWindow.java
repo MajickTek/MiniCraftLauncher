@@ -5,6 +5,8 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 
 import com.mt.minilauncher.downloader.Downloader;
+import com.mt.minilauncher.util.EditUtil;
+import com.mt.minilauncher.util.Util;
 
 import javax.swing.JMenuBar;
 import javax.swing.JPopupMenu;
