@@ -10,6 +10,9 @@ import java.net.URISyntaxException;
 
 import javax.swing.JEditorPane;
 import javax.swing.JScrollPane;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class AboutPanel extends JPanel {
 
@@ -17,12 +20,18 @@ public class AboutPanel extends JPanel {
 	 * Create the panel.
 	 */
 	public AboutPanel() {
+		
 		setLayout(new BorderLayout(0, 0));
 		
 		JEditorPane htmlPane = new JEditorPane();
 		htmlPane.setEditable(false);
 		htmlPane.setContentType("text/html");
-		htmlPane.setText("<p><b>MiniCraftLauncher</b> by <b>MajickTek</b></p>\n<p>Make sure you have the latest version! automatic updates aren't available yet.</p>\n<p>Older versions might also break because of format changes to the index repo.</p>\n\n<a href=\"https://github.com/MajickTek/MiniCraftLauncher\">Launcher source code/releases</a>\n<br />\n<a href=\"https://github.com/MajickTek/MiniCraftLauncherIndex\">Version index repo and archive</a>");
+		htmlPane.setText("<p><b>MiniCraftLauncher</b> by <b>MajickTek</b></p>\n"
+				+ "<p>Make sure you have the latest version! automatic updates aren't available yet.</p>\n"
+				+ "<p>Older versions might also break because of format changes to the index repo.</p>\n\n"
+				+ "<a href=\"https://github.com/MajickTek/MiniCraftLauncher\">Launcher source code/releases</a>\n"
+				+ "<br />\n<a href=\"https://github.com/MajickTek/MiniCraftLauncherIndex\">Version index repo and archive</a>\n\n");
+		
 		
 		htmlPane.addHyperlinkListener(l -> {
 			if(l.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
@@ -41,6 +50,7 @@ public class AboutPanel extends JPanel {
 		
 		
 		add(htmlPane, BorderLayout.CENTER);
+		
 
 	}
 

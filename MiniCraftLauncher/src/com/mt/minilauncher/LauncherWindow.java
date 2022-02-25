@@ -218,6 +218,15 @@ private JCheckBoxMenuItem enableHideMenuItem;
 		});
 		helpMenu.add(referenceMenuItem);
 		
+		JMenuItem systemInfoMenuItem = new JMenuItem("System Info");
+		systemInfoMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				SystemInfo si = new SystemInfo();
+				si.setVisible(true);
+			}
+		});
+		helpMenu.add(systemInfoMenuItem);
+		
 		JScrollPane scrollPane = new JScrollPane();
 		frmLauncher.getContentPane().add(scrollPane, BorderLayout.CENTER);
 		
