@@ -17,16 +17,32 @@ public class Initializer {
 	
 	public static void touchFoldersAndFiles() {
 		File f = launcherPath.toFile();
-		f.mkdirs();
+		if(f.mkdirs()) {
+			System.out.println("Created launcher path: " + f.toString());
+		} else {
+			System.out.println("Launcher path already created: " + f.toString());
+		}
 		
 		f = savesDir.toFile();
-		f.mkdirs();
+		if(f.mkdirs()) {
+			System.out.println("Created saves directory: " + f.toString());
+		} else {
+			System.out.println("saves directory already created: " + f.toString());
+		}
 		
 		f = jarPath.toFile();
-		f.mkdirs();
+		if(f.mkdirs()) {
+			System.out.println("Created jar path: " + f.toString());
+		} else {
+			System.out.println("jar path already created: " + f.toString());
+		}
 		
 		f = indexPath.toFile();
-		f.mkdirs();
+		if(f.mkdirs()) {
+			System.out.println("Created index path: " + f.toString());
+		} else {
+			System.out.println("index path already created: " + f.toString());
+		}
 		
 	}
 	
