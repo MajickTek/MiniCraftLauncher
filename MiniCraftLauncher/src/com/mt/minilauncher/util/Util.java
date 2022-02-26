@@ -40,9 +40,12 @@ public class Util {
 		}
 		String indexURL = baseURL + indexFileName;
 	
-		Downloader downloader = new Downloader(indexURL, Paths.get(Initializer.indexPath.toString(), indexFileName).toString());
-		downloader.download();
-		
+		try {
+			downloadUsingNIO(indexURL, Paths.get(Initializer.indexPath.toString(), indexFileName).toString());
+		} catch (IOException e1) {
+			Debug.callCrashDialog("ERROR", "Failed to download index file. Check console for details.", Debug.ERR);
+			e1.printStackTrace();
+		}
 		DefaultListModel<VersionObject> model = new DefaultListModel<>();
 		
 		VersionObject[] vos;
