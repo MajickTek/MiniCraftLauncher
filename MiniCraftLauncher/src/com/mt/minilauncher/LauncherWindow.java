@@ -35,7 +35,6 @@ import javax.swing.JTextArea;
 import java.awt.Color;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
-import javax.swing.border.EtchedBorder;
 import javax.swing.JCheckBoxMenuItem;
 
 public class LauncherWindow {
@@ -192,6 +191,8 @@ private JCheckBoxMenuItem enableHideMenuItem;
 		cleanFolderMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Initializer.cleanFolders();
+				getList().setModel(new DefaultListModel<VersionObject>());
+				getList().updateUI();
 			}
 		});
 		editMenu.add(cleanFolderMenuItem);
