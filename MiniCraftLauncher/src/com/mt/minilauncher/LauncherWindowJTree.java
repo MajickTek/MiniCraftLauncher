@@ -202,7 +202,7 @@ public class LauncherWindowJTree {
 		frmLauncher.getContentPane().add(scrollPane, BorderLayout.CENTER);
 
 		tree = new JTree(new DefaultMutableTreeNode("empty"));
-		
+
 		tree.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -210,9 +210,9 @@ public class LauncherWindowJTree {
 					DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
 					if (node == null)
 						return;
-					if(node.isLeaf() && !node.toString().equals("empty")) {
+					if (node.isLeaf() && !node.toString().equals("empty")) {
 						VersionObject vo = (VersionObject) node.getUserObject();
-						if(vo.isDownloaded) {
+						if (vo.isDownloaded) {
 							String jarPath = Paths.get(Initializer.jarPath.toString(), vo.version + ".jar").toString();
 							try {
 								Util.launchJar(jarPath, vo.version, instance.frmLauncher, true);
@@ -222,10 +222,9 @@ public class LauncherWindowJTree {
 							}
 						} else {
 							Downloader downloader = new Downloader(vo.getURL(),
-									Paths.get(Initializer.jarPath.toString(),
-											vo.version + ".jar").toString(),
-									console,
-									() -> {//callback function which runs when download is finished (at 100% and hasn't failed)
+									Paths.get(Initializer.jarPath.toString(), vo.version + ".jar").toString(), console,
+									() -> {// callback function which runs when download is finished (at 100% and hasn't
+											// failed)
 										vo.isDownloaded = true;
 										tree.updateUI();
 									});
@@ -233,34 +232,37 @@ public class LauncherWindowJTree {
 						}
 					}
 				}
-				
-				//right click
-				if(SwingUtilities.isRightMouseButton(e)) {
+
+				// right click
+				if (SwingUtilities.isRightMouseButton(e)) {
+					int row = tree.getClosestRowForLocation(e.getX(), e.getY());
+					tree.setSelectionRow(row);
+					tree.updateUI();
 					DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
-					if(node == null) return;
-					if(node.isLeaf() && !node.toString().equals("empty")) {
-						int row = tree.getClosestRowForLocation(e.getX(), e.getY());
-						tree.setSelectionRow(row);
+					if (node == null)
+						return;
+
+					if (node.isLeaf() && !node.toString().equals("empty")) {
 						VersionObject vo = (VersionObject) node.getUserObject();
-						
+
 						JPopupMenu menu = new JPopupMenu();
 						JMenuItem editMenu = new JMenuItem("Edit");
 						JMenuItem cleanMenu = new JMenuItem("Clean");
 						JMenuItem folderMenu = new JMenuItem("Open Save Folder");
-						
+
 						editMenu.addActionListener(a -> {
 							node.setUserObject(EditUtil.editInfo(vo));
 							updateUI();
 						});
-						
+
 						cleanMenu.addActionListener(a -> {
 							Initializer.cleanVersion(vo.version);
 							updateUI();
 						});
-						
+
 						File jarPath = Paths.get(Initializer.savesDir.toString(), vo.version).toFile();
 						folderMenu.addActionListener(a -> {
-							if(jarPath.exists()) {
+							if (jarPath.exists()) {
 								try {
 									Util.openNative(jarPath);
 								} catch (IOException e1) {
@@ -269,7 +271,7 @@ public class LauncherWindowJTree {
 								}
 							} else {
 								try {
-									Util.openNative(Initializer.savesDir.toFile());//This should always be there
+									Util.openNative(Initializer.savesDir.toFile());// This should always be there
 								} catch (IOException e1) {
 									// TODO Auto-generated catch block
 									e1.printStackTrace();
@@ -281,19 +283,14 @@ public class LauncherWindowJTree {
 						menu.add(folderMenu);
 						menu.show(tree, e.getPoint().x, e.getPoint().y);
 					}
-					
-					
-					
+
 				}
 			}
 
-			
 		});
 		scrollPane.setViewportView(tree);
 		updateUI();
 	}
-	
-	
 
 	public JCheckBoxMenuItem getHideLauncherDuringPlayCheckBox() {
 		return hideLauncherDuringPlayCheckBox;
@@ -309,8 +306,7 @@ public class LauncherWindowJTree {
 
 	public void updateUI() {
 		DefaultTreeModel dtm = (DefaultTreeModel) tree.getModel();
-		Object root = dtm.getRoot();
-		walk(dtm, root);
+		walk(dtm, dtm.getRoot());
 		tree.setModel(dtm);
 		tree.updateUI();
 	}
@@ -326,10 +322,10 @@ public class LauncherWindowJTree {
 				VersionObject vo = (VersionObject) child;
 				String base = Paths.get(basePath, vo.version + ".jar").toString();
 				File file = new File(base);
-				if(file.exists()) {
+				if (file.exists()) {
 					vo.isDownloaded = true;
 				}
-			}else {
+			} else {
 				walk(dtm, child);
 			}
 		}

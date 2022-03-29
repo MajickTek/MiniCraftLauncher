@@ -49,6 +49,8 @@ public class EditUtil {
         	
         } else if(vo == null) {
         	return new VersionObject();
+        } else {
+        	return vo;
         }
         return null;
 	}
