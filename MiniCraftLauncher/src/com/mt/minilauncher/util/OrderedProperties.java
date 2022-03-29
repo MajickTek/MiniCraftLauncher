@@ -21,6 +21,10 @@ public class OrderedProperties extends Properties{
 		return linkMap.put(key, value);
 	}
 	
+	@Override
+	public Object get(Object key) {
+		return linkMap.get(key);
+	}
 	
 	@Override
 	public boolean contains(Object value) {
