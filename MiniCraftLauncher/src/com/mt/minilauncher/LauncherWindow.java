@@ -1,50 +1,56 @@
 package com.mt.minilauncher;
 
 import java.awt.EventQueue;
+
 import javax.swing.JFrame;
+import javax.swing.JMenuBar;
+import javax.swing.JTextArea;
+import java.awt.BorderLayout;
+import javax.swing.JScrollPane;
+import javax.swing.JTree;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
 
 import com.mt.minilauncher.downloader.Downloader;
+import com.mt.minilauncher.util.Callback;
 import com.mt.minilauncher.util.EditUtil;
+import com.mt.minilauncher.util.OrderedProperties;
 import com.mt.minilauncher.util.Util;
+import com.mt.minilauncher.util.XMLConverter;
 import com.mt.minilauncher.windows.AboutPanel;
-import com.mt.minilauncher.windows.ReferenceApp;
+import com.mt.minilauncher.windows.ChannelSelector;
 import com.mt.minilauncher.windows.SystemInfo;
 
-import javax.swing.JMenuBar;
-import javax.swing.JPopupMenu;
-import javax.swing.JList;
-import java.awt.BorderLayout;
-import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingUtilities;
-import javax.swing.JScrollPane;
 import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
+import javax.swing.ImageIcon;
+import javax.swing.JCheckBoxMenuItem;
+import java.awt.Color;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
-import javax.swing.JMenuItem;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import javax.swing.JTextArea;
-import java.awt.Color;
-import javax.swing.JPanel;
-import javax.swing.border.BevelBorder;
-import javax.swing.JCheckBoxMenuItem;
 
 public class LauncherWindow {
 
+	public static LauncherWindow instance;
 	private JFrame frmLauncher;
-	private JList<VersionObject> list;
-public static LauncherWindow instance;
-private JTextArea textArea;
-private JCheckBoxMenuItem enableHideMenuItem;
-
+	private JCheckBoxMenuItem hideLauncherDuringPlayCheckBox;
+	private JTree tree;
+	private JTextArea console;
 
 	/**
 	 * Launch the application.
@@ -56,7 +62,6 @@ private JCheckBoxMenuItem enableHideMenuItem;
 					LauncherWindow window = new LauncherWindow();
 					window.frmLauncher.setVisible(true);
 				} catch (Exception e) {
-					Debug.callCrashDialog("ERROR","The app failed to launch for some reason.\nCheck the console output.",Debug.ERR);
 					e.printStackTrace();
 				}
 			}
@@ -67,12 +72,13 @@ private JCheckBoxMenuItem enableHideMenuItem;
 	 * Create the application.
 	 */
 	public LauncherWindow() {
-		try { // enable native UI
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch(Exception e){
-            Debug.callCrashDialog("ERROR", "Couldn't access native UI class for some reason.\nCheck the console output.", Debug.ERR);
-            e.printStackTrace();
-        }
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		initialize();
 	}
 
@@ -82,7 +88,6 @@ private JCheckBoxMenuItem enableHideMenuItem;
 	private void initialize() {
 		instance = this;
 		Initializer.touchFoldersAndFiles();
-		
 		frmLauncher = new JFrame();
 		frmLauncher.setTitle("Launcher");
 		frmLauncher.setBounds(100, 100, 800, 600);
@@ -90,17 +95,10 @@ private JCheckBoxMenuItem enableHideMenuItem;
 		frmLauncher.setIconImage(new ImageIcon(LauncherWindow.class.getResource("/logo.png")).getImage());
 		JMenuBar menuBar = new JMenuBar();
 		frmLauncher.setJMenuBar(menuBar);
-		
+
 		JMenu fileMenu = new JMenu("File");
 		menuBar.add(fileMenu);
-		
-		JMenuItem exitMenuItem = new JMenuItem("Exit");
-		exitMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-			}
-		});
-		
+
 		JMenuItem launcherFolderMenuItem = new JMenuItem("Open Launcher Folder");
 		launcherFolderMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -113,120 +111,78 @@ private JCheckBoxMenuItem enableHideMenuItem;
 			}
 		});
 		fileMenu.add(launcherFolderMenuItem);
+
+		JMenuItem exitMenuItem = new JMenuItem("Exit");
+		exitMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
 		fileMenu.add(exitMenuItem);
-		
+
 		JMenu editMenu = new JMenu("Edit");
 		menuBar.add(editMenu);
-		
-		JMenu channelMenu = new JMenu("Select Channel");
-		channelMenu.setName("editMenu.channelMenu");
-		editMenu.add(channelMenu);
-		
-		JMenu miniplusmenu = new JMenu("Minicraft+");
-		channelMenu.add(miniplusmenu);
-		
-		JMenuItem releasesMenuItem = new JMenuItem("Release");
-		releasesMenuItem.addActionListener(new ActionListener() {
+
+		JMenuItem channelMenuItem = new JMenuItem("Select Channel");
+		channelMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				getList().setModel(Util.buildIndex(true, false));
-				getList().updateUI();
-				updateUI();
+				ChannelSelector cs = new ChannelSelector();
+				cs.setVisible(true);
+				cs.getOkButton().addActionListener(l -> {
+					try {
+						Path filePath = Paths.get(Initializer.indexPath.toString(),
+								String.format("index%d.xml", cs.getList().getSelectedIndex()));
+						Util.downloadUsingNIO(cs.getList().getSelectedValue().channelFile, filePath.toString());
+						DefaultTreeModel dtm = new DefaultTreeModel(XMLConverter.XMLtoTree(filePath.toString()));
+						tree.setModel(dtm);
+						tree.updateUI();
+					} catch (IOException | ParserConfigurationException | SAXException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					cs.dispose();
+				});
 			}
 		});
-		miniplusmenu.add(releasesMenuItem);
-		
-		JMenuItem devMenuItem = new JMenuItem("Pre-Release/dev");
-		devMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				getList().setModel(Util.buildIndex(false, false));
-				getList().updateUI();
-				updateUI();
-			}
-		});
-		miniplusmenu.add(devMenuItem);
-		
-		JMenuItem modsMenuItem = new JMenuItem("Mods");
-		modsMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Debug.callCrashDialog("Warning!", "The mods in this section are not fully supported.\nThey may contain hardcoded save/config paths or may not work at all.\nThey are here for funsies.", Debug.WARN);
-				getList().setModel(Util.buildIndex(false, true));
-				getList().updateUI();
-				updateUI();
-			}
-		});
-		channelMenu.add(modsMenuItem);
-		
-		
-		
-		JMenuItem insertVersionMenuItem = new JMenuItem("Insert Version Profile");
-		insertVersionMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int baseSize = getList().getModel().getSize();
-				getList().setModel(Util.addToJList(getList().getModel(), new VersionObject(), baseSize));
-				getList().updateUI();
-				getList().setSelectedIndex(baseSize);
-				getList().updateUI();
-				EditUtil.editInfo(getList().getSelectedValue());
-				getList().updateUI();
-			}
-		});
-		
-		JMenuItem cleanIndexButton = new JMenuItem("Clean Index");
-		cleanIndexButton.addActionListener(new ActionListener() {
+		editMenu.add(channelMenuItem);
+
+		JMenuItem cleanIndexMenuItem = new JMenuItem("Clean Index");
+		cleanIndexMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Util.purgeDirectory(Initializer.indexPath.toFile());
-				list.setModel(new DefaultListModel<VersionObject>());
-				updateUI();
 			}
 		});
-		editMenu.add(cleanIndexButton);
-		editMenu.add(insertVersionMenuItem);
-		
-		JMenuItem refreshUIMenuItem = new JMenuItem("Refresh UI");
-		refreshUIMenuItem.addActionListener(new ActionListener() {
+		editMenu.add(cleanIndexMenuItem);
+
+		JMenuItem cleanFoldersMenuItem = new JMenuItem("Clean Folders");
+		cleanFoldersMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				updateUI();
+				Util.purgeDirectoryButKeepSubDirectories(Initializer.launcherPath.toFile());
 			}
 		});
-		editMenu.add(refreshUIMenuItem);
-		
-		JMenuItem cleanFolderMenuItem = new JMenuItem("Clean Folders");
-		cleanFolderMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Initializer.cleanFolders();
-				getList().setModel(new DefaultListModel<VersionObject>());
-				getList().updateUI();
-			}
-		});
-		editMenu.add(cleanFolderMenuItem);
-		
+		editMenu.add(cleanFoldersMenuItem);
+
 		JMenu optionsMenu = new JMenu("Options");
 		menuBar.add(optionsMenu);
-		
-		enableHideMenuItem = new JCheckBoxMenuItem("Hide Launcher During Play");
-		enableHideMenuItem.setSelected(Util.parseBoolean(Initializer.options.get("window.hideDuringPlay").toString()));
-		optionsMenu.add(enableHideMenuItem);
-		
+
+		hideLauncherDuringPlayCheckBox = new JCheckBoxMenuItem("Hide Launcher During Play");
+		hideLauncherDuringPlayCheckBox.setSelected(true);
+		optionsMenu.add(hideLauncherDuringPlayCheckBox);
+
 		JMenu helpMenu = new JMenu("Help");
 		menuBar.add(helpMenu);
-		
+
 		JMenuItem aboutMenuItem = new JMenuItem("About");
 		aboutMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Debug.callCrashDialog("About", new AboutPanel(), Debug.INF);
+				Debug.callCrashDialog("About", new AboutPanel(), Debug.TST);
 			}
 		});
 		helpMenu.add(aboutMenuItem);
-		
+
 		JMenuItem referenceMenuItem = new JMenuItem("Reference");
-		referenceMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ReferenceApp ra = new ReferenceApp();
-				ra.setVisible(true);
-			}
-		});
 		helpMenu.add(referenceMenuItem);
-		
+
 		JMenuItem systemInfoMenuItem = new JMenuItem("System Info");
 		systemInfoMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -235,67 +191,78 @@ private JCheckBoxMenuItem enableHideMenuItem;
 			}
 		});
 		helpMenu.add(systemInfoMenuItem);
-		
+
+		console = new JTextArea();
+		console.setEditable(false);
+		console.setBackground(Color.BLACK);
+		console.setForeground(Color.GREEN);
+		frmLauncher.getContentPane().add(console, BorderLayout.NORTH);
+
 		JScrollPane scrollPane = new JScrollPane();
 		frmLauncher.getContentPane().add(scrollPane, BorderLayout.CENTER);
-		
-		list = new JList<>();
-		list.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode() == KeyEvent.VK_DELETE) {
-					clean();
-				} else if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-					edit();
-				}
-			}
-		});
-		list.addMouseListener(new MouseAdapter() {
+
+		tree = new JTree(new DefaultMutableTreeNode("empty"));
+
+		tree.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(e.getClickCount() == 2) {
-					VersionObject selectedVersion = getList().getSelectedValue();
-					if(selectedVersion != null) {
-						if(selectedVersion.isDownloaded) {
-							String jarPath = Paths.get(Initializer.jarPath.toString(), selectedVersion.version + ".jar").toString();
+				if (e.getClickCount() == 2) {
+					DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
+					if (node == null)
+						return;
+					if (node.isLeaf() && !node.toString().equals("empty")) {
+						VersionObject vo = (VersionObject) node.getUserObject();
+						if (vo.isDownloaded) {
+							String jarPath = Paths.get(Initializer.jarPath.toString(), vo.version + ".jar").toString();
 							try {
-								Util.launchJar(jarPath, selectedVersion.version, instance.frmLauncher, enableHideMenuItem.isSelected());
+								Util.launchJar(jarPath, vo.version, instance.frmLauncher, true);
 							} catch (IOException e1) {
-								Debug.callCrashDialog("ERROR", "Something went wrong launching the jar.\nPlease check the console output.", Debug.ERR);
+								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
 						} else {
-							Downloader downloader = new Downloader(selectedVersion.getURL(),
-									Paths.get(Initializer.jarPath.toString(),
-											selectedVersion.version + ".jar").toString(),
-									textArea,
-									() -> {//callback function which runs when download is finished (at 100% and hasn't failed)
-										selectedVersion.isDownloaded = true;
-										list.updateUI();
+							Downloader downloader = new Downloader(vo.getURL(),
+									Paths.get(Initializer.jarPath.toString(), vo.version + ".jar").toString(), console,
+									() -> {// callback function which runs when download is finished (at 100% and hasn't
+											// failed)
+										vo.isDownloaded = true;
+										tree.updateUI();
 									});
 							downloader.download();
 						}
 					}
 				}
-			}
-			
-			@Override
-			public void mousePressed(MouseEvent e) {
-				if(SwingUtilities.isRightMouseButton(e)) {
-						list.setSelectedIndex(list.locationToIndex(e.getPoint()));
-						
+
+				// right click
+				if (SwingUtilities.isRightMouseButton(e)) {
+					int row = tree.getClosestRowForLocation(e.getX(), e.getY());
+					tree.setSelectionRow(row);
+					tree.updateUI();
+					DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
+					if (node == null)
+						return;
+
+					if (node.isLeaf() && !node.toString().equals("empty")) {
+						VersionObject vo = (VersionObject) node.getUserObject();
+
 						JPopupMenu menu = new JPopupMenu();
 						JMenuItem editMenu = new JMenuItem("Edit");
 						JMenuItem cleanMenu = new JMenuItem("Clean");
 						JMenuItem folderMenu = new JMenuItem("Open Save Folder");
-						
-						editMenu.addActionListener(a -> edit());
-						
-						cleanMenu.addActionListener(a -> clean());
-						
-						File jarPath = Paths.get(Initializer.savesDir.toString(), list.getSelectedValue().version).toFile();
+
+						editMenu.addActionListener(a -> {
+							node.setUserObject(EditUtil.editInfo(vo));
+							updateUI();
+						});
+
+						cleanMenu.addActionListener(a -> {
+							Initializer.cleanVersion(vo.version);
+							updateUI();
+						});
+
+						File jarPath = Paths.get(Initializer.savesDir.toString(), vo.version).toFile();
 						folderMenu.addActionListener(a -> {
-							if(jarPath.exists()) {
+							if (jarPath.exists()) {
 								try {
 									Util.openNative(jarPath);
 								} catch (IOException e1) {
@@ -304,7 +271,7 @@ private JCheckBoxMenuItem enableHideMenuItem;
 								}
 							} else {
 								try {
-									Util.openNative(Initializer.savesDir.toFile());//This should always be there
+									Util.openNative(Initializer.savesDir.toFile());// This should always be there
 								} catch (IOException e1) {
 									// TODO Auto-generated catch block
 									e1.printStackTrace();
@@ -314,88 +281,54 @@ private JCheckBoxMenuItem enableHideMenuItem;
 						menu.add(editMenu);
 						menu.add(cleanMenu);
 						menu.add(folderMenu);
-						menu.show(list, e.getPoint().x, e.getPoint().y);
+						menu.show(tree, e.getPoint().x, e.getPoint().y);
+					}
+
 				}
 			}
+
 		});
-		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		list.setSelectedIndex(0);
-		scrollPane.setViewportView(list);
-		
-		list.setModel(Util.buildIndex(true, false));
-		
-		JPanel panel = new JPanel();
-		panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		scrollPane.setColumnHeaderView(panel);
-		panel.setLayout(new BorderLayout(0, 0));
-		
-		textArea = new JTextArea();
-		textArea.setForeground(Color.GREEN);
-		textArea.setBackground(Color.BLACK);
-		textArea.setEditable(false);
-		panel.add(textArea);
-		list.updateUI();
-		updateUI();
-		
-	}
-
-	public void clean() {
-		Initializer.cleanVersion(list.getSelectedValue().version);
-		forceReDownload(list.getSelectedIndex());
-		list.updateUI();
+		scrollPane.setViewportView(tree);
 		updateUI();
 	}
 
-	public void edit() {
-		list.setModel(Util.addToJList(list.getModel(), EditUtil.editInfo(list.getSelectedValue()), list.getSelectedIndex()));
-		list.updateUI();
+	public JCheckBoxMenuItem getHideLauncherDuringPlayCheckBox() {
+		return hideLauncherDuringPlayCheckBox;
 	}
 
-	public JList<VersionObject> getList() {
-		return list;
+	public JTree getTree() {
+		return tree;
 	}
-	
+
+	public JTextArea getConsole() {
+		return console;
+	}
+
 	public void updateUI() {
-		DefaultListModel<VersionObject> dlm = (DefaultListModel<VersionObject>) getList().getModel();
+		DefaultTreeModel dtm = (DefaultTreeModel) tree.getModel();
+		walk(dtm, dtm.getRoot());
+		tree.setModel(dtm);
+		tree.updateUI();
+	}
+
+	private void walk(DefaultTreeModel dtm, Object root) {
+		int cc;
+		cc = dtm.getChildCount(root);
 		String basePath = Initializer.jarPath.toString();
-		
-		for(int i = 0; i < dlm.getSize(); i++) {
-			String base = Paths.get(basePath, dlm.getElementAt(i).version + ".jar").toString();
-			File file = new File(base);
-			if(file.exists()) {
-				dlm.get(i).isDownloaded = true;
+		for (int i = 0; i < cc; i++) {
+			Object child = dtm.getChild(root, i);
+			if (dtm.isLeaf(child)) {
+				System.out.println(child.toString() + " is a leaf");
+				VersionObject vo = (VersionObject) child;
+				String base = Paths.get(basePath, vo.version + ".jar").toString();
+				File file = new File(base);
+				if (file.exists()) {
+					vo.isDownloaded = true;
+				}
+			} else {
+				walk(dtm, child);
 			}
 		}
-		getList().setModel(dlm);
-		getList().updateUI();
 	}
-	
-	public void forceReDownload() {
-		DefaultListModel<VersionObject> dlm = (DefaultListModel<VersionObject>) getList().getModel();
-		
-		for(int i = 0; i < dlm.getSize(); i++) {
-				dlm.get(i).isDownloaded = false;
-		}
-		getList().setModel(dlm);
-		getList().updateUI();
-	}
-	
-	public void forceReDownload(int index) {
-		DefaultListModel<VersionObject> dlm = (DefaultListModel<VersionObject>) getList().getModel();
-		
-		dlm.get(index).isDownloaded = false;
-		getList().setModel(dlm);
-		getList().updateUI();
-	}
-	
-	
-	public JFrame getFrmLauncher() {
-		return frmLauncher;
-	}
-	public JTextArea getTextArea() {
-		return textArea;
-	}
-	public JCheckBoxMenuItem getEnableHideMenuItem() {
-		return enableHideMenuItem;
-	}
+
 }
