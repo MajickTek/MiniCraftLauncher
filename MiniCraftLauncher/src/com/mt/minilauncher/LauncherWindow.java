@@ -259,7 +259,7 @@ private JCheckBoxMenuItem enableHideMenuItem;
 						if(selectedVersion.isDownloaded) {
 							String jarPath = Paths.get(Initializer.jarPath.toString(), selectedVersion.version + ".jar").toString();
 							try {
-								Util.launchJar(jarPath, selectedVersion.version, instance, enableHideMenuItem.isSelected());
+								Util.launchJar(jarPath, selectedVersion.version, instance.frmLauncher, enableHideMenuItem.isSelected());
 							} catch (IOException e1) {
 								Debug.callCrashDialog("ERROR", "Something went wrong launching the jar.\nPlease check the console output.", Debug.ERR);
 								e1.printStackTrace();

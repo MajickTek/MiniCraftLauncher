@@ -19,6 +19,7 @@ import java.util.Map.Entry;
 import java.util.Properties;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
 import javax.swing.ListModel;
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -89,18 +90,18 @@ public class Util {
         rbc.close();
     }
 	
-	public static void launchJar(String path, String version, LauncherWindow lw, boolean hideLauncher) throws IOException {
+	public static void launchJar(String path, String version, JFrame frame, boolean hideLauncher) throws IOException {
 		String vPath = Paths.get(Initializer.savesDir.toString(), version).toString();
 		Process ps = Runtime.getRuntime().exec(new String[] {"java", "-jar", path, "--savedir", vPath});
 		if(hideLauncher) {
-			lw.getFrmLauncher().setVisible(false);
+			frame.setVisible(false);
 			try {
 				ps.waitFor();
 			} catch (InterruptedException e) {
 				Debug.callCrashDialog("ERROR", "Something failed while waiting for the game to terminate.\nCheck the console output.", Debug.ERR);
 				e.printStackTrace();
 			}
-			lw.getFrmLauncher().setVisible(true);
+			frame.setVisible(true);
 		}
 	}
 	
