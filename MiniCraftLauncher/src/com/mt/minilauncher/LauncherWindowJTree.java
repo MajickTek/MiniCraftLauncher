@@ -8,6 +8,7 @@ import javax.swing.JTextArea;
 import java.awt.BorderLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -18,12 +19,18 @@ import org.xml.sax.SAXException;
 
 import com.mt.minilauncher.downloader.Downloader;
 import com.mt.minilauncher.util.Callback;
+import com.mt.minilauncher.util.EditUtil;
+import com.mt.minilauncher.util.OrderedProperties;
 import com.mt.minilauncher.util.Util;
 import com.mt.minilauncher.util.XMLConverter;
+import com.mt.minilauncher.windows.AboutPanel;
 import com.mt.minilauncher.windows.ChannelSelector;
+import com.mt.minilauncher.windows.SystemInfo;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBoxMenuItem;
 import java.awt.Color;
@@ -31,6 +38,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -92,6 +100,16 @@ public class LauncherWindowJTree {
 		menuBar.add(fileMenu);
 
 		JMenuItem launcherFolderMenuItem = new JMenuItem("Open Launcher Folder");
+		launcherFolderMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Util.openNative(Initializer.launcherPath.toFile());
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 		fileMenu.add(launcherFolderMenuItem);
 
 		JMenuItem exitMenuItem = new JMenuItem("Exit");
@@ -129,9 +147,19 @@ public class LauncherWindowJTree {
 		editMenu.add(channelMenuItem);
 
 		JMenuItem cleanIndexMenuItem = new JMenuItem("Clean Index");
+		cleanIndexMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Util.purgeDirectory(Initializer.indexPath.toFile());
+			}
+		});
 		editMenu.add(cleanIndexMenuItem);
 
 		JMenuItem cleanFoldersMenuItem = new JMenuItem("Clean Folders");
+		cleanFoldersMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Util.purgeDirectoryButKeepSubDirectories(Initializer.launcherPath.toFile());
+			}
+		});
 		editMenu.add(cleanFoldersMenuItem);
 
 		JMenu optionsMenu = new JMenu("Options");
@@ -145,12 +173,23 @@ public class LauncherWindowJTree {
 		menuBar.add(helpMenu);
 
 		JMenuItem aboutMenuItem = new JMenuItem("About");
+		aboutMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Debug.callCrashDialog("About", new AboutPanel(), Debug.TST);
+			}
+		});
 		helpMenu.add(aboutMenuItem);
 
 		JMenuItem referenceMenuItem = new JMenuItem("Reference");
 		helpMenu.add(referenceMenuItem);
 
 		JMenuItem systemInfoMenuItem = new JMenuItem("System Info");
+		systemInfoMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				SystemInfo si = new SystemInfo();
+				si.setVisible(true);
+			}
+		});
 		helpMenu.add(systemInfoMenuItem);
 
 		console = new JTextArea();
@@ -163,6 +202,7 @@ public class LauncherWindowJTree {
 		frmLauncher.getContentPane().add(scrollPane, BorderLayout.CENTER);
 
 		tree = new JTree(new DefaultMutableTreeNode("empty"));
+		
 		tree.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -170,7 +210,7 @@ public class LauncherWindowJTree {
 					DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
 					if (node == null)
 						return;
-					if(node.isLeaf()) {
+					if(node.isLeaf() && !node.toString().equals("empty")) {
 						VersionObject vo = (VersionObject) node.getUserObject();
 						if(vo.isDownloaded) {
 							String jarPath = Paths.get(Initializer.jarPath.toString(), vo.version + ".jar").toString();
@@ -193,10 +233,67 @@ public class LauncherWindowJTree {
 						}
 					}
 				}
+				
+				//right click
+				if(SwingUtilities.isRightMouseButton(e)) {
+					DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
+					if(node == null) return;
+					if(node.isLeaf() && !node.toString().equals("empty")) {
+						int row = tree.getClosestRowForLocation(e.getX(), e.getY());
+						tree.setSelectionRow(row);
+						VersionObject vo = (VersionObject) node.getUserObject();
+						
+						JPopupMenu menu = new JPopupMenu();
+						JMenuItem editMenu = new JMenuItem("Edit");
+						JMenuItem cleanMenu = new JMenuItem("Clean");
+						JMenuItem folderMenu = new JMenuItem("Open Save Folder");
+						
+						editMenu.addActionListener(a -> {
+							node.setUserObject(EditUtil.editInfo(vo));
+							updateUI();
+						});
+						
+						cleanMenu.addActionListener(a -> {
+							Initializer.cleanVersion(vo.version);
+							updateUI();
+						});
+						
+						File jarPath = Paths.get(Initializer.savesDir.toString(), vo.version).toFile();
+						folderMenu.addActionListener(a -> {
+							if(jarPath.exists()) {
+								try {
+									Util.openNative(jarPath);
+								} catch (IOException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+							} else {
+								try {
+									Util.openNative(Initializer.savesDir.toFile());//This should always be there
+								} catch (IOException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+							}
+						});
+						menu.add(editMenu);
+						menu.add(cleanMenu);
+						menu.add(folderMenu);
+						menu.show(tree, e.getPoint().x, e.getPoint().y);
+					}
+					
+					
+					
+				}
 			}
+
+			
 		});
 		scrollPane.setViewportView(tree);
+		updateUI();
 	}
+	
+	
 
 	public JCheckBoxMenuItem getHideLauncherDuringPlayCheckBox() {
 		return hideLauncherDuringPlayCheckBox;
@@ -212,7 +309,6 @@ public class LauncherWindowJTree {
 
 	public void updateUI() {
 		DefaultTreeModel dtm = (DefaultTreeModel) tree.getModel();
-		String basePath = Initializer.jarPath.toString();
 		Object root = dtm.getRoot();
 		walk(dtm, root);
 		tree.setModel(dtm);

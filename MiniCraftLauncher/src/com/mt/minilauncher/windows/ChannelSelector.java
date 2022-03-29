@@ -3,6 +3,7 @@ package com.mt.minilauncher.windows;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -26,6 +27,7 @@ import com.mt.minilauncher.ChannelObject;
 import com.mt.minilauncher.Initializer;
 import com.mt.minilauncher.VersionObject;
 import com.mt.minilauncher.downloader.Downloader;
+import com.mt.minilauncher.util.OrderedProperties;
 import com.mt.minilauncher.util.Util;
 import com.mt.minilauncher.util.XMLConverter;
 
@@ -121,22 +123,17 @@ public class ChannelSelector extends JDialog {
 		Path indexPath = Paths.get(Initializer.indexPath.toString(), "index.txt");
         DefaultListModel<ChannelObject> model = new DefaultListModel<>();
 		
-        ArrayList<ChannelObject> tempList = new ArrayList<>();
-        try (Stream<String> stream = Files.lines(Paths.get(indexPath.toString()))) {
-            stream.forEach(line -> {
-            	tempList.add(new ChannelObject(line));
-            });
-        } catch (IOException e) {
+        OrderedProperties op = new OrderedProperties();
+        try {
+			op.load(new FileInputStream(indexPath.toString()));
+			op.entrySet().forEach(l -> {
+				model.add(Integer.parseInt(l.getKey().toString()), new ChannelObject(l.getValue().toString()));
+			});
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         
-        ChannelObject[] cos = new ChannelObject[tempList.size()];
-        cos = tempList.toArray(cos);
-		
-        for(int i = 0; i < cos.length; i++) {
-        	model.add(i, cos[i]);
-        }
 		list.setModel(model);
 		list.updateUI();
 	}
