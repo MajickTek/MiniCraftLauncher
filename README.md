@@ -12,6 +12,7 @@ See the [wiki](https://github.com/MajickTek/MiniCraftLauncher/wiki).
 ## How does it work?
 Ditto.
 ## Roadmap
+- Add contextual icons for nodes in the tree 
 - (Future) Allow self-updating via GitHub Releases
   - I have an easy solution for this but it would be Windows-only unless I find a way to make it cross platform
 - Fabric Support (with help from PseudoDistant on the various discords)
