@@ -44,6 +44,8 @@ public class LauncherWindow {
 public static LauncherWindow instance;
 private JTextArea textArea;
 private JCheckBoxMenuItem enableHideMenuItem;
+
+
 	/**
 	 * Launch the application.
 	 */
@@ -80,6 +82,7 @@ private JCheckBoxMenuItem enableHideMenuItem;
 	private void initialize() {
 		instance = this;
 		Initializer.touchFoldersAndFiles();
+		
 		frmLauncher = new JFrame();
 		frmLauncher.setTitle("Launcher");
 		frmLauncher.setBounds(100, 100, 800, 600);
@@ -201,7 +204,7 @@ private JCheckBoxMenuItem enableHideMenuItem;
 		menuBar.add(optionsMenu);
 		
 		enableHideMenuItem = new JCheckBoxMenuItem("Hide Launcher During Play");
-		enableHideMenuItem.setSelected(true);//default should be on
+		enableHideMenuItem.setSelected(Util.parseBoolean(Initializer.options.get("window.hideDuringPlay").toString()));
 		optionsMenu.add(enableHideMenuItem);
 		
 		JMenu helpMenu = new JMenu("Help");
@@ -333,6 +336,7 @@ private JCheckBoxMenuItem enableHideMenuItem;
 		panel.add(textArea);
 		list.updateUI();
 		updateUI();
+		
 	}
 
 	public void clean() {
