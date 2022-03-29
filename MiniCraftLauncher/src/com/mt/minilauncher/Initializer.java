@@ -88,7 +88,7 @@ public class Initializer {
 		if(x == Debug.OK) {
 			Util.purgeDirectory(launcherPath.toFile());
 			touchFoldersAndFiles();
-			LauncherWindow.instance.forceReDownload();
+			LauncherWindow.instance.updateUI();
 		} else {
 			return;
 		}

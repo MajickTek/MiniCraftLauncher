@@ -34,6 +34,13 @@ public class Downloader implements FileDownloaderDelegate{
 		callback = onFinish;
 	}
 	
+	public Downloader(String url, String localLocation, Callback onFinish) {
+		this.url = url;
+		this.localLocation = localLocation;
+		this.jta = null;
+		callback = onFinish;
+	}
+	
 	public void download() {
 		FileDownloader fileDownloader = new FileDownloader(this);
 		fileDownloader.setUrl(url);
