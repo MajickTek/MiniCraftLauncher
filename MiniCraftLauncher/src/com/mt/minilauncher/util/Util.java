@@ -33,55 +33,6 @@ import com.mt.minilauncher.downloader.Downloader;
 
 public class Util {
 	
-	
-	
-	public static DefaultListModel<VersionObject> buildIndex(boolean isRelease, boolean modsFlag) {
-		String baseURL = "https://raw.githubusercontent.com/MajickTek/MiniCraftLauncherIndex/main/";
-		
-		String indexFileName = isRelease ? "release.xml" : "dev.xml";
-		if(!isRelease && modsFlag) {
-			indexFileName = "mods.xml";
-		}
-		String indexURL = baseURL + indexFileName;
-	
-		try {
-			downloadUsingNIO(indexURL, Paths.get(Initializer.indexPath.toString(), indexFileName).toString());
-		} catch (IOException e1) {
-			Debug.callCrashDialog("ERROR", "Failed to download index file. Check console for details.", Debug.ERR);
-			e1.printStackTrace();
-		}
-		DefaultListModel<VersionObject> model = new DefaultListModel<>();
-		
-		VersionObject[] vos;
-		try {
-			vos = XMLConverter.fromXML(Paths.get(Initializer.indexPath.toString(), indexFileName).toString());
-			for(int i = 0; i < vos.length; i++ ) {
-				model.add(i, vos[i]);
-			}
-		} catch (ParserConfigurationException | SAXException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return model;
-	}
-	
-	
-	
-	public static DefaultListModel<VersionObject> addToJList(ListModel<VersionObject> base, VersionObject vo, int index) {
-		DefaultListModel<VersionObject> dlm = (DefaultListModel<VersionObject>) base;
-		dlm.add(index, vo);
-		
-		return dlm;
-	}
-	
-	public static DefaultListModel<VersionObject> removeFromJList(ListModel<VersionObject> base, int index) {
-		DefaultListModel<VersionObject> dlm = (DefaultListModel<VersionObject>) base;
-		dlm.remove(index);
-		
-		return dlm;
-	}
-	
-	
 	public static void downloadUsingNIO(String urlStr, String file) throws IOException {
         URL url = new URL(urlStr);
         ReadableByteChannel rbc = Channels.newChannel(url.openStream());

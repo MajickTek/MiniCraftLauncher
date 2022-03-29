@@ -20,41 +20,8 @@ import com.mt.minilauncher.ChannelObject;
 import com.mt.minilauncher.VersionObject;
 
 public class XMLConverter {
-	public static VersionObject[] fromXML(String filePath) throws ParserConfigurationException, SAXException, IOException {
-		ArrayList<VersionObject> tempList = new ArrayList<>();
-		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-		
-		dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-		DocumentBuilder db = dbf.newDocumentBuilder();
-		
-		Document doc = db.parse(new File(filePath));
-		
-		doc.getDocumentElement().normalize();
-		
-		NodeList gameList = doc.getElementsByTagName("game");
-		
-		for (int i = 0; i < gameList.getLength(); i++) {
-			Node gameNode = gameList.item(i);
-			if(gameNode.getNodeType() == Node.ELEMENT_NODE) {
-				Element gameElementNode = (Element) gameNode;
-				String gameName = gameElementNode.getAttribute("name");
-				
-				NodeList versionList = gameElementNode.getElementsByTagName("version");
-				for (int j = 0; j < versionList.getLength(); j++) {
-					Node versionNode = versionList.item(j);
-					if(versionNode.getNodeType() == Node.ELEMENT_NODE) {
-						Element versionElementNode = (Element) versionNode;
-						String versionNumber = versionElementNode.getAttribute("number");
-						String versionDownloadURL = (versionElementNode.getTextContent().startsWith("http://") || versionElementNode.getTextContent().startsWith("https://")) ? versionElementNode.getTextContent() : "";
-						tempList.add(new VersionObject(versionDownloadURL, gameName + " "  + versionNumber));
-					}
-				}
-			}
-		}
-		return tempList.toArray(new VersionObject[tempList.size()]);
-	}
 	
-	public static DefaultMutableTreeNode XMLtoTree(String filePath) throws ParserConfigurationException, SAXException, IOException {
+	public static DefaultMutableTreeNode fromXML(String filePath) throws ParserConfigurationException, SAXException, IOException {
 		DefaultMutableTreeNode rootTreeNode = new DefaultMutableTreeNode("Games");
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		

@@ -133,7 +133,7 @@ public class LauncherWindow {
 						Path filePath = Paths.get(Initializer.indexPath.toString(),
 								String.format("index%d.xml", cs.getList().getSelectedIndex()));
 						Util.downloadUsingNIO(cs.getList().getSelectedValue().channelFile, filePath.toString());
-						DefaultTreeModel dtm = new DefaultTreeModel(XMLConverter.XMLtoTree(filePath.toString()));
+						DefaultTreeModel dtm = new DefaultTreeModel(XMLConverter.fromXML(filePath.toString()));
 						tree.setModel(dtm);
 						tree.updateUI();
 					} catch (IOException | ParserConfigurationException | SAXException e1) {
