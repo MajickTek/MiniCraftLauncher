@@ -34,12 +34,15 @@ import javax.swing.JPopupMenu;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBoxMenuItem;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.awt.event.ActionEvent;
@@ -181,6 +184,18 @@ public class LauncherWindow {
 		helpMenu.add(aboutMenuItem);
 
 		JMenuItem referenceMenuItem = new JMenuItem("Reference");
+		referenceMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Desktop.isDesktopSupported()) {
+					try {
+						Desktop.getDesktop().browse(new URL("https://github.com/MajickTek/MiniCraftLauncher/wiki").toURI());
+					} catch (IOException | URISyntaxException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
 		helpMenu.add(referenceMenuItem);
 
 		JMenuItem systemInfoMenuItem = new JMenuItem("System Info");
