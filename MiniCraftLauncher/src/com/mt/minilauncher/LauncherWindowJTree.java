@@ -10,6 +10,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -25,6 +26,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JCheckBoxMenuItem;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -35,6 +38,7 @@ public class LauncherWindowJTree {
 	private JFrame frmLauncher;
 	private JCheckBoxMenuItem hideLauncherDuringPlayCheckBox;
 	private JTree tree;
+	private JTextArea console;
 
 	/**
 	 * Launch the application.
@@ -142,16 +146,27 @@ public class LauncherWindowJTree {
 		JMenuItem systemInfoMenuItem = new JMenuItem("System Info");
 		helpMenu.add(systemInfoMenuItem);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setEditable(false);
-		textArea.setBackground(Color.BLACK);
-		textArea.setForeground(Color.GREEN);
-		frmLauncher.getContentPane().add(textArea, BorderLayout.NORTH);
+		console = new JTextArea();
+		console.setEditable(false);
+		console.setBackground(Color.BLACK);
+		console.setForeground(Color.GREEN);
+		frmLauncher.getContentPane().add(console, BorderLayout.NORTH);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		frmLauncher.getContentPane().add(scrollPane, BorderLayout.CENTER);
 		
 		tree = new JTree();
+		tree.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(e.getClickCount() == 2) {
+					DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
+					if(node == null) return;
+					VersionObject vo = (VersionObject) node.getUserObject();
+					System.out.println(vo.toVerboseString());
+				}
+			}
+		});
 		scrollPane.setViewportView(tree);
 	}
 
@@ -160,5 +175,8 @@ public class LauncherWindowJTree {
 	}
 	public JTree getTree() {
 		return tree;
+	}
+	public JTextArea getConsole() {
+		return console;
 	}
 }
