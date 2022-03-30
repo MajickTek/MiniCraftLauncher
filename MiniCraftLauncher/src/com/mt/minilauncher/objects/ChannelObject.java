@@ -1,4 +1,4 @@
-package com.mt.minilauncher;
+package com.mt.minilauncher.objects;
 
 import java.io.Serializable;
 
@@ -7,7 +7,7 @@ public class ChannelObject implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	String channelFile;
+	public String channelFile;
 	
 	public ChannelObject(String channelFile) {
 		this.channelFile = channelFile;

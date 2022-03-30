@@ -28,8 +28,8 @@ import org.xml.sax.SAXException;
 import com.mt.minilauncher.Debug;
 import com.mt.minilauncher.Initializer;
 import com.mt.minilauncher.LauncherWindow;
-import com.mt.minilauncher.VersionObject;
 import com.mt.minilauncher.downloader.Downloader;
+import com.mt.minilauncher.objects.VersionObject;
 
 public class Util {
 	

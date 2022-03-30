@@ -18,6 +18,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 import com.mt.minilauncher.downloader.Downloader;
+import com.mt.minilauncher.objects.VersionObject;
 import com.mt.minilauncher.util.Callback;
 import com.mt.minilauncher.util.EditUtil;
 import com.mt.minilauncher.util.OrderedProperties;

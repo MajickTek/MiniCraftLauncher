@@ -1,4 +1,4 @@
-package com.mt.minilauncher;
+package com.mt.minilauncher.objects;
 
 import java.io.Serializable;
 

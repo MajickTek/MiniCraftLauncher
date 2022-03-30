@@ -16,8 +16,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import com.mt.minilauncher.ChannelObject;
-import com.mt.minilauncher.VersionObject;
+import com.mt.minilauncher.objects.ChannelObject;
+import com.mt.minilauncher.objects.VersionObject;
 
 public class XMLConverter {
 	

@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import com.mt.minilauncher.*;
-import com.mt.minilauncher.VersionObject;
+import com.mt.minilauncher.objects.VersionObject;
 
 public class EditUtil {
 	public static VersionObject editInfo(VersionObject vo) {
