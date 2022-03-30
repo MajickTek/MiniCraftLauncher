@@ -12,7 +12,9 @@ See the [wiki](https://github.com/MajickTek/MiniCraftLauncher/wiki).
 ## How does it work?
 Ditto.
 ## Roadmap
-- Add contextual icons for nodes in the tree 
+- Add contextual icons for nodes in the tree
+- Add urls to the `options.txt` file so they aren't hardcoded
+  - This will allow testing brances to use specific versions of the index files instead of all using the `main` branch and breaking older versions
 - (Future) Allow self-updating via GitHub Releases
   - I have an easy solution for this but it would be Windows-only unless I find a way to make it cross platform
 - Fabric Support (with help from PseudoDistant on the various discords)
