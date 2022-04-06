@@ -290,7 +290,6 @@ public class LauncherWindow {
 								}
 							}
 						});
-						//push
 						menu.add(editMenu);
 						menu.add(cleanMenu);
 						menu.add(folderMenu);
