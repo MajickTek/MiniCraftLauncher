@@ -43,6 +43,8 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.awt.event.ActionEvent;
+import javax.swing.JToolBar;
+import javax.swing.JButton;
 
 public class LauncherWindow {
 
@@ -301,6 +303,17 @@ public class LauncherWindow {
 
 		});
 		scrollPane.setViewportView(tree);
+		
+		JToolBar toolBar = new JToolBar();
+		frmLauncher.getContentPane().add(toolBar, BorderLayout.SOUTH);
+		
+		JButton refreshButton = new JButton("Refresh");
+		refreshButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Debug.callCrashDialog("test", "Sorry, this doesn't work right now.", Debug.INF);
+			}
+		});
+		toolBar.add(refreshButton);
 		updateUI();
 	}
 
