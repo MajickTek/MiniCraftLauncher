@@ -19,9 +19,7 @@ import org.xml.sax.SAXException;
 
 import com.mt.minilauncher.downloader.Downloader;
 import com.mt.minilauncher.objects.VersionObject;
-import com.mt.minilauncher.util.Callback;
 import com.mt.minilauncher.util.EditUtil;
-import com.mt.minilauncher.util.OrderedProperties;
 import com.mt.minilauncher.util.Util;
 import com.mt.minilauncher.util.XMLConverter;
 import com.mt.minilauncher.windows.AboutPanel;
@@ -30,7 +28,6 @@ import com.mt.minilauncher.windows.SystemInfo;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBoxMenuItem;
@@ -40,7 +37,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
