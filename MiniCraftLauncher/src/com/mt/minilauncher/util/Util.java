@@ -2,12 +2,8 @@ package com.mt.minilauncher.util;
 
 import java.awt.Desktop;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.channels.Channels;
@@ -15,21 +11,9 @@ import java.nio.channels.ReadableByteChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Map.Entry;
-import java.util.Properties;
-
-import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
-import javax.swing.ListModel;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
-
 import com.mt.minilauncher.Debug;
 import com.mt.minilauncher.Initializer;
-import com.mt.minilauncher.LauncherWindow;
-import com.mt.minilauncher.downloader.Downloader;
-import com.mt.minilauncher.objects.VersionObject;
 
 public class Util {
 	
