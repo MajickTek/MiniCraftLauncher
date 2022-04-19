@@ -48,7 +48,9 @@ public class XMLConverter {
 						Element versionElementNode = (Element) versionNode;
 						String versionNumber = versionElementNode.getAttribute("number");
 						String versionDownloadURL = (versionElementNode.getTextContent().startsWith("http://") || versionElementNode.getTextContent().startsWith("https://")) ? versionElementNode.getTextContent() : "";
-						DefaultMutableTreeNode versionTreeNode = new DefaultMutableTreeNode(new VersionObject(versionDownloadURL, versionNumber));
+						VersionObject vo = new VersionObject(versionDownloadURL, versionNumber);
+						DefaultMutableTreeNode versionTreeNode = new DefaultMutableTreeNode(vo.toString());
+						versionTreeNode.setUserObject(vo);
 						gameTreeNode.add(versionTreeNode);
 					}
 				}

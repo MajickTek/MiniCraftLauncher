@@ -138,6 +138,7 @@ public class LauncherWindow {
 						DefaultTreeModel dtm = new DefaultTreeModel(XMLConverter.fromXML(filePath.toString()));
 						tree.setModel(dtm);
 						tree.updateUI();
+						//updateUI();
 					} catch (IOException | ParserConfigurationException | SAXException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -310,7 +311,7 @@ public class LauncherWindow {
 		JButton refreshButton = new JButton("Refresh");
 		refreshButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Debug.callCrashDialog("test", "Sorry, this doesn't work right now.", Debug.INF);
+				updateUI();
 			}
 		});
 		toolBar.add(refreshButton);
@@ -331,29 +332,33 @@ public class LauncherWindow {
 
 	public void updateUI() {
 		DefaultTreeModel dtm = (DefaultTreeModel) tree.getModel();
-		walk(dtm, dtm.getRoot());
+		walk(dtm, (DefaultMutableTreeNode) dtm.getRoot());
 		tree.setModel(dtm);
 		tree.updateUI();
 	}
 
-	private void walk(DefaultTreeModel dtm, Object root) {
+	private void walk(DefaultTreeModel dtm, DefaultMutableTreeNode root) {
 		int cc;
 		cc = dtm.getChildCount(root);
 		String basePath = Initializer.jarPath.toString();
 		for (int i = 0; i < cc; i++) {
-			Object child = dtm.getChild(root, i);
+			DefaultMutableTreeNode child = (DefaultMutableTreeNode) dtm.getChild(root, i);
 			if (dtm.isLeaf(child)) {
 				System.out.println(child.toString() + " is a leaf");
-				VersionObject vo = (VersionObject) child;
+				VersionObject vo = (VersionObject) child.getUserObject();
 				String base = Paths.get(basePath, vo.version + ".jar").toString();
 				File file = new File(base);
 				if (file.exists()) {
 					vo.isDownloaded = true;
+				} else {
+					vo.isDownloaded = false;
 				}
 			} else {
 				walk(dtm, child);
 			}
 		}
 	}
+	
+	
 
 }
