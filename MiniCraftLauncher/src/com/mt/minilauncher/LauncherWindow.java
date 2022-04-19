@@ -344,7 +344,6 @@ public class LauncherWindow {
 		for (int i = 0; i < cc; i++) {
 			DefaultMutableTreeNode child = (DefaultMutableTreeNode) dtm.getChild(root, i);
 			if (dtm.isLeaf(child)) {
-				System.out.println(child.toString() + " is a leaf");
 				VersionObject vo = (VersionObject) child.getUserObject();
 				String base = Paths.get(basePath, vo.version + ".jar").toString();
 				File file = new File(base);
