@@ -140,9 +140,11 @@ public class LauncherWindow {
 						tree.updateUI();
 						updateUI();
 					} catch (IOException | ParserConfigurationException | SAXException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
+					cs.dispose();
+				});
+				cs.getCancelButton().addActionListener(l -> {
 					cs.dispose();
 				});
 			}
