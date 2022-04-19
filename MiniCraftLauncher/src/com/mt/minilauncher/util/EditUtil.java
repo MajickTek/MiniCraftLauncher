@@ -6,7 +6,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import com.mt.minilauncher.*;
 import com.mt.minilauncher.objects.VersionObject;
 
 public class EditUtil {

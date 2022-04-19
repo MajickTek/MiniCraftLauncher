@@ -1,11 +1,9 @@
 package com.mt.minilauncher.util;
 
-import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-import java.util.Vector;
 
 public class OrderedProperties extends Properties{
 

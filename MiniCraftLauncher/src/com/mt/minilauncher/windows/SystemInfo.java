@@ -16,6 +16,10 @@ import java.awt.event.ActionEvent;
 
 public class SystemInfo extends JDialog implements ActionListener{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextArea textArea_1;
 	private JTextArea textArea;

@@ -2,35 +2,19 @@ package com.mt.minilauncher.windows;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.stream.Stream;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
-
 import com.mt.minilauncher.Initializer;
-import com.mt.minilauncher.downloader.Downloader;
 import com.mt.minilauncher.objects.ChannelObject;
-import com.mt.minilauncher.objects.VersionObject;
 import com.mt.minilauncher.util.OrderedProperties;
 import com.mt.minilauncher.util.Util;
-import com.mt.minilauncher.util.XMLConverter;
-
 import javax.swing.JScrollPane;
 import javax.swing.JList;
 import java.awt.event.ActionListener;

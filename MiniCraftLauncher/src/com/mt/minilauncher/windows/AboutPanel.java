@@ -11,12 +11,13 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 import javax.swing.JEditorPane;
-import javax.swing.JScrollPane;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class AboutPanel extends JPanel {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Create the panel.
