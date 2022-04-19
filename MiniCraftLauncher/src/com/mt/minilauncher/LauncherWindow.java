@@ -138,7 +138,7 @@ public class LauncherWindow {
 						DefaultTreeModel dtm = new DefaultTreeModel(XMLConverter.fromXML(filePath.toString()));
 						tree.setModel(dtm);
 						tree.updateUI();
-						//updateUI();
+						updateUI();
 					} catch (IOException | ParserConfigurationException | SAXException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
