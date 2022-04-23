@@ -246,6 +246,9 @@ public class LauncherWindow {
 						
 						JMenu runMenu = new JMenu("Run");
 						JMenuItem vanillaLaunch = new JMenuItem("Vanilla / No Mods");
+						vanillaLaunch.addActionListener(a -> {
+							Util.launchJarSimple(tree, instance);
+						});
 						runMenu.add(vanillaLaunch);
 
 						editMenu.addActionListener(a -> {
@@ -276,10 +279,10 @@ public class LauncherWindow {
 								}
 							}
 						});
+						menu.add(runMenu);
 						menu.add(editMenu);
 						menu.add(cleanMenu);
 						menu.add(folderMenu);
-						menu.add(runMenu);
 						menu.show(tree, e.getPoint().x, e.getPoint().y);
 					}
 
