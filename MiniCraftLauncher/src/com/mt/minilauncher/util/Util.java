@@ -12,8 +12,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import javax.swing.JFrame;
+import javax.swing.JTree;
+import javax.swing.tree.DefaultMutableTreeNode;
+
 import com.mt.minilauncher.Debug;
 import com.mt.minilauncher.Initializer;
+import com.mt.minilauncher.LauncherWindow;
+import com.mt.minilauncher.downloader.Downloader;
+import com.mt.minilauncher.objects.VersionObject;
 
 public class Util {
 	
@@ -38,6 +44,33 @@ public class Util {
 				e.printStackTrace();
 			}
 			frame.setVisible(true);
+		}
+	}
+	
+	public static void launchJarSimple(JTree tree, LauncherWindow window) {
+		DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
+		if (node == null)
+			return;
+		if (node.isLeaf() && !node.toString().equals("empty")) {
+			VersionObject vo = (VersionObject) node.getUserObject();
+			if (vo.isDownloaded) {
+				String jarPath = Paths.get(Initializer.jarPath.toString(), vo.version + ".jar").toString();
+				try {
+					launchJar(jarPath, vo.version, window.frmLauncher, true);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			} else {
+				Downloader downloader = new Downloader(vo.getURL(),
+						Paths.get(Initializer.jarPath.toString(), vo.version + ".jar").toString(), window.getConsole(),
+						() -> {// callback function which runs when download is finished (at 100% and hasn't
+								// failed)
+							vo.isDownloaded = true;
+							tree.updateUI();
+						});
+				downloader.download();
+			}
 		}
 	}
 	

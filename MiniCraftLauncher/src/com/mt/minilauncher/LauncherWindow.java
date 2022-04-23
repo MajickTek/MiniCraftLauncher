@@ -49,7 +49,7 @@ import javax.swing.JButton;
 public class LauncherWindow {
 
 	public static LauncherWindow instance;
-	private JFrame frmLauncher;
+	public JFrame frmLauncher;
 	private JCheckBoxMenuItem hideLauncherDuringPlayCheckBox;
 	private JTree tree;
 	private JTextArea console;
@@ -266,6 +266,10 @@ public class LauncherWindow {
 						JMenuItem editMenu = new JMenuItem("Edit");
 						JMenuItem cleanMenu = new JMenuItem("Clean");
 						JMenuItem folderMenu = new JMenuItem("Open Save Folder");
+						
+						JMenu runMenu = new JMenu("Run");
+						JMenuItem vanillaLaunch = new JMenuItem("Vanilla / No Mods");
+						runMenu.add(vanillaLaunch);
 
 						editMenu.addActionListener(a -> {
 							node.setUserObject(EditUtil.editInfo(vo));
@@ -298,6 +302,7 @@ public class LauncherWindow {
 						menu.add(editMenu);
 						menu.add(cleanMenu);
 						menu.add(folderMenu);
+						menu.add(runMenu);
 						menu.show(tree, e.getPoint().x, e.getPoint().y);
 					}
 
