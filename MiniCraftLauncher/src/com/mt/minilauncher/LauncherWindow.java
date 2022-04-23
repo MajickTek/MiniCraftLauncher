@@ -224,30 +224,7 @@ public class LauncherWindow {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {//double click
-					DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
-					if (node == null)
-						return;
-					if (node.isLeaf() && !node.toString().equals("empty")) {
-						VersionObject vo = (VersionObject) node.getUserObject();
-						if (vo.isDownloaded) {
-							String jarPath = Paths.get(Initializer.jarPath.toString(), vo.version + ".jar").toString();
-							try {
-								Util.launchJar(jarPath, vo.version, instance.frmLauncher, true);
-							} catch (IOException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-						} else {
-							Downloader downloader = new Downloader(vo.getURL(),
-									Paths.get(Initializer.jarPath.toString(), vo.version + ".jar").toString(), console,
-									() -> {// callback function which runs when download is finished (at 100% and hasn't
-											// failed)
-										vo.isDownloaded = true;
-										tree.updateUI();
-									});
-							downloader.download();
-						}
-					}
+					Util.launchJarSimple(tree, instance);
 				}
 
 				// right click
