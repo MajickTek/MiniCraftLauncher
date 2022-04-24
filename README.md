@@ -11,6 +11,9 @@ As of now, the current minimum version of the launcher you can (and should) use 
 See the [wiki](https://github.com/MajickTek/MiniCraftLauncher/wiki).
 ## How does it work?
 Ditto.
+
+Although if you want to know how the implementation of the UI itself was though up, you can see the [Zoom Manager](https://github.com/MajickTek/ZoomManager) repo. The earliest versions of this launcher (all below Release 1.4) were based directly on the ZoomManager code.
+
 ## Roadmap
 - Add contextual icons for nodes in the tree
 - Add urls to the `options.txt` file so they aren't hardcoded
