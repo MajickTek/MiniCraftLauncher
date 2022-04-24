@@ -12,7 +12,7 @@ import com.mt.minilauncher.util.Util;
 public class LauncherWrapper {
 	IWrap wrapper;
 	LauncherWindow window;
-	
+	String prompt = String.format("[%s] ", LauncherWrapper.class.getSimpleName());
 	
 	public LauncherWrapper(IWrap wrapper, LauncherWindow window) {
 		this.wrapper = wrapper;
@@ -20,19 +20,23 @@ public class LauncherWrapper {
 	}
 	
 	public void launch() {
+		System.out.println(prompt + "Beginning launch process.");
 		DefaultMutableTreeNode node = (DefaultMutableTreeNode) window.getTree().getLastSelectedPathComponent();
 		if (node == null)
 			return;
 		if (node.isLeaf() && !node.toString().equals("empty")) {
 			VersionObject vo = (VersionObject) node.getUserObject();
 			if (vo.isDownloaded) {
-				System.out.println("Launching with no mods.");
+				System.out.println(String.format("%sLaunching game using the [%s] system.", prompt, wrapper.getClass().getSimpleName()));
 				String jarPath = Paths.get(Initializer.jarPath.toString(), vo.version + ".jar").toString();
 				wrapper.launchJar(jarPath, vo.version, window);
 			} else {
+				System.out.println(prompt + "Beginning download process.");
 				Util.downloadJar(vo, window);
+				System.out.println(prompt + "Download complete.");
 			}
 		}
+		System.out.println(prompt + "Leaving launch process.");
 	}
 	public IWrap getWrapper() {
 		return wrapper;

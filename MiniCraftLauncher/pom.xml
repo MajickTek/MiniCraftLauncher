@@ -27,10 +27,5 @@
     </plugins>
   </build>
   <dependencies>
-  	<dependency>
-  		<groupId>org.ow2.asm</groupId>
-  		<artifactId>asm-all</artifactId>
-  		<version>6.0_BETA</version>
-  	</dependency>
   </dependencies>
 </project>
