@@ -37,8 +37,7 @@ public class Util {
 		System.out.println(String.format("Downloading: [URL:%s, path: %s]", vo.getURL(), path));
 		Downloader downloader = new Downloader(vo.getURL(),
 				path, window.getConsole(),
-				() -> {// callback function which runs when download is finished (at 100% and hasn't
-						// failed)
+				() -> {// callback function which runs when download is finished (at 100% and hasn't failed)
 					vo.isDownloaded = true;
 					window.getTree().updateUI();
 				});
