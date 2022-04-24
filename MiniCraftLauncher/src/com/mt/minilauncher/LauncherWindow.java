@@ -17,7 +17,6 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
-import com.mt.minilauncher.downloader.Downloader;
 import com.mt.minilauncher.launchwrap.LauncherWrapper;
 import com.mt.minilauncher.launchwrap.VanillaWrap;
 import com.mt.minilauncher.objects.VersionObject;
@@ -172,7 +171,7 @@ public class LauncherWindow {
 
 		JMenu optionsMenu = new JMenu("Options");
 		menuBar.add(optionsMenu);
-
+		
 		hideLauncherDuringPlayCheckBox = new JCheckBoxMenuItem("Hide Launcher During Play");
 		hideLauncherDuringPlayCheckBox.setSelected(true);
 		//optionsMenu.add(hideLauncherDuringPlayCheckBox);
