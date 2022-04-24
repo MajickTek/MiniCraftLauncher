@@ -28,7 +28,7 @@ public class LauncherWrapper {
 			if (vo.isDownloaded) {
 				System.out.println("Launching with no mods.");
 				String jarPath = Paths.get(Initializer.jarPath.toString(), vo.version + ".jar").toString();
-				wrapper.launchJar(jarPath, vo.version);
+				wrapper.launchJar(jarPath, vo.version, window);
 			} else {
 				Util.downloadJar(vo, window);
 			}
