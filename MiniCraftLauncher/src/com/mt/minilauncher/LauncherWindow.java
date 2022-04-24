@@ -246,10 +246,20 @@ public class LauncherWindow {
 						
 						JMenu runMenu = new JMenu("Run");
 						JMenuItem vanillaLaunch = new JMenuItem("Vanilla / No Mods");
+						JMenuItem asmLaunch = new JMenuItem("ASM");
+						asmLaunch.addActionListener(a -> {
+							Debug.callCrashDialog("ASM", "ASM support is not added yet!", Debug.WARN);
+						});
+						JMenuItem fabricLaunch = new JMenuItem("Fabric");
+						fabricLaunch.addActionListener(a -> {
+							Debug.callCrashDialog("Fabric", "Fabric support is not added yet!", Debug.WARN);
+						});
 						vanillaLaunch.addActionListener(a -> {
 							Util.launchJarSimple(tree, instance);
 						});
 						runMenu.add(vanillaLaunch);
+						runMenu.add(asmLaunch);
+						runMenu.add(fabricLaunch);
 
 						editMenu.addActionListener(a -> {
 							node.setUserObject(EditUtil.editInfo(vo));

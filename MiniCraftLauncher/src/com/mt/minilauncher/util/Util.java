@@ -54,6 +54,7 @@ public class Util {
 		if (node.isLeaf() && !node.toString().equals("empty")) {
 			VersionObject vo = (VersionObject) node.getUserObject();
 			if (vo.isDownloaded) {
+				System.out.println("Launching with no mods.");
 				String jarPath = Paths.get(Initializer.jarPath.toString(), vo.version + ".jar").toString();
 				try {
 					launchJar(jarPath, vo.version, window.frmLauncher, true);
@@ -62,8 +63,10 @@ public class Util {
 					e1.printStackTrace();
 				}
 			} else {
+				String path = Paths.get(Initializer.jarPath.toString(), vo.version + ".jar").toString();
+				System.out.println(String.format("Downloading: [URL:%s, path: %s]", vo.getURL(), path));
 				Downloader downloader = new Downloader(vo.getURL(),
-						Paths.get(Initializer.jarPath.toString(), vo.version + ".jar").toString(), window.getConsole(),
+						path, window.getConsole(),
 						() -> {// callback function which runs when download is finished (at 100% and hasn't
 								// failed)
 							vo.isDownloaded = true;
