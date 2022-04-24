@@ -20,5 +20,4 @@ Ditto.
 - Fabric Support (with help from PseudoDistant on the various discords)
 
 ## Credits
-Downloading library is built in (`com.littlebigberry.*`) and the original is at https://github.com/jearle/file-downloader.
-- The code is 10 years old but it worked with some changes to deprecated method calls.
+Downloading library used is https://github.com/MajickTek/file-downloader, an updated fork of some 10-year old code that still works
