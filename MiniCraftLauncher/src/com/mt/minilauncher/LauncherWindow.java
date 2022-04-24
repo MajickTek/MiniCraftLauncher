@@ -17,7 +17,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
-import com.mt.minilauncher.launchwrap.ASMWrap;
+import com.mt.minilauncher.launchwrap.FabricWrap;
 import com.mt.minilauncher.launchwrap.LauncherWrapper;
 import com.mt.minilauncher.launchwrap.VanillaWrap;
 import com.mt.minilauncher.objects.VersionObject;
@@ -253,17 +253,12 @@ public class LauncherWindow {
 							launcherWrapper.setWrapper(new VanillaWrap());
 							launcherWrapper.launch();
 						});
-						JMenuItem asmLaunch = new JMenuItem("ASM");
-						asmLaunch.addActionListener(a -> {
-							launcherWrapper.setWrapper(new ASMWrap());
-							launcherWrapper.launch();
-						});
 						JMenuItem fabricLaunch = new JMenuItem("Fabric");
 						fabricLaunch.addActionListener(a -> {
-							Debug.callCrashDialog("Fabric", "Fabric support is not added yet!", Debug.WARN);
+							launcherWrapper.setWrapper(new FabricWrap());
+							launcherWrapper.launch();
 						});
 						runMenu.add(vanillaLaunch);
-						runMenu.add(asmLaunch);
 						runMenu.add(fabricLaunch);
 
 						editMenu.addActionListener(a -> {

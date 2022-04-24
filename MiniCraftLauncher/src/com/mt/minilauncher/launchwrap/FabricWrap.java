@@ -2,7 +2,7 @@ package com.mt.minilauncher.launchwrap;
 
 import com.mt.minilauncher.LauncherWindow;
 
-public class ASMWrap implements IWrap{
+public class FabricWrap implements IWrap{
 
 	@Override
 	public void launchJar(String path, String version, LauncherWindow window) {
