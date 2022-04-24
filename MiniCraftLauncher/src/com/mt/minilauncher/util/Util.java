@@ -32,6 +32,19 @@ public class Util {
         rbc.close();
     }
 	
+	public static void downloadJar(VersionObject vo, LauncherWindow window) {
+		String path = Paths.get(Initializer.jarPath.toString(), vo.version + ".jar").toString();
+		System.out.println(String.format("Downloading: [URL:%s, path: %s]", vo.getURL(), path));
+		Downloader downloader = new Downloader(vo.getURL(),
+				path, window.getConsole(),
+				() -> {// callback function which runs when download is finished (at 100% and hasn't
+						// failed)
+					vo.isDownloaded = true;
+					window.getTree().updateUI();
+				});
+		downloader.download();
+	}
+	
 	public static void launchJar(String path, String version, JFrame frame, boolean hideLauncher) throws IOException {
 		String vPath = Paths.get(Initializer.savesDir.toString(), version).toString();
 		Process ps = Runtime.getRuntime().exec(new String[] {"java", "-jar", path, "--savedir", vPath});
@@ -63,16 +76,7 @@ public class Util {
 					e1.printStackTrace();
 				}
 			} else {
-				String path = Paths.get(Initializer.jarPath.toString(), vo.version + ".jar").toString();
-				System.out.println(String.format("Downloading: [URL:%s, path: %s]", vo.getURL(), path));
-				Downloader downloader = new Downloader(vo.getURL(),
-						path, window.getConsole(),
-						() -> {// callback function which runs when download is finished (at 100% and hasn't
-								// failed)
-							vo.isDownloaded = true;
-							tree.updateUI();
-						});
-				downloader.download();
+				downloadJar(vo, window);
 			}
 		}
 	}
