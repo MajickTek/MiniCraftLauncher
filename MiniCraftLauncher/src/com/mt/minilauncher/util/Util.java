@@ -45,19 +45,19 @@ public class Util {
 		downloader.download();
 	}
 	
-	public static void launchJar(String path, String version, JFrame frame, boolean hideLauncher) throws IOException {
+	public static void launchJar(String path, String version, JFrame frame/*, boolean hideLauncher*/) throws IOException {
 		String vPath = Paths.get(Initializer.savesDir.toString(), version).toString();
 		Process ps = Runtime.getRuntime().exec(new String[] {"java", "-jar", path, "--savedir", vPath});
-		if(hideLauncher) {
-			frame.setVisible(false);
-			try {
-				ps.waitFor();
-			} catch (InterruptedException e) {
-				Debug.callCrashDialog("ERROR", "Something failed while waiting for the game to terminate.\nCheck the console output.", Debug.ERR);
-				e.printStackTrace();
-			}
-			frame.setVisible(true);
-		}
+//		if(hideLauncher) {
+//			frame.setVisible(false);
+//			try {
+//				ps.waitFor();
+//			} catch (InterruptedException e) {
+//				Debug.callCrashDialog("ERROR", "Something failed while waiting for the game to terminate.\nCheck the console output.", Debug.ERR);
+//				e.printStackTrace();
+//			}
+//			frame.setVisible(true);
+//		}
 	}
 	
 	public static void launchJarSimple(JTree tree, LauncherWindow window) {
@@ -70,7 +70,7 @@ public class Util {
 				System.out.println("Launching with no mods.");
 				String jarPath = Paths.get(Initializer.jarPath.toString(), vo.version + ".jar").toString();
 				try {
-					launchJar(jarPath, vo.version, window.frmLauncher, true);
+					launchJar(jarPath, vo.version, window.frmLauncher/*, true*/);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

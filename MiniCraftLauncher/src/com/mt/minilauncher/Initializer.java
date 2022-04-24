@@ -49,6 +49,7 @@ public class Initializer {
 			System.out.println("index path already created: " + f.toString());
 		}
 		
+		/*
 		f = configPath.toFile();
 		if(f.mkdirs()) {
 			System.out.println("Created config path: " + f.toString());
@@ -69,16 +70,18 @@ public class Initializer {
 			Debug.callCrashDialog("ERROR", "There was an error creating the options.txt config file. Look at the console for further details.", Debug.ERR);
 			e.printStackTrace();
 		}
-		
+		*/
 		
 	}
 	
+	/*
 	private static void initOptionsFile() throws IOException {
 		PrintWriter pw = new PrintWriter(optionsFile);
 		pw.append("window.hideDuringPlay=true\n");
 		pw.close();
 		options.load(new FileInputStream(optionsFile));
 	}
+	*/
 
 	public static void cleanFolders() {
 		int x = Debug.callConfirmDialog("Warning!", "This will clean all of the launcher's folders.\nYou will lose all game data and all downloaded jars.");

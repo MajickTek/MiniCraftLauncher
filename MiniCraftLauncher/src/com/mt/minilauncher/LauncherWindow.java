@@ -172,7 +172,7 @@ public class LauncherWindow {
 
 		hideLauncherDuringPlayCheckBox = new JCheckBoxMenuItem("Hide Launcher During Play");
 		hideLauncherDuringPlayCheckBox.setSelected(true);
-		optionsMenu.add(hideLauncherDuringPlayCheckBox);
+		//optionsMenu.add(hideLauncherDuringPlayCheckBox);
 
 		JMenu helpMenu = new JMenu("Help");
 		menuBar.add(helpMenu);
