@@ -17,7 +17,8 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
-import com.mt.minilauncher.downloader.Downloader;
+import com.mt.minilauncher.launchwrap.LauncherWrapper;
+import com.mt.minilauncher.launchwrap.VanillaWrap;
 import com.mt.minilauncher.objects.VersionObject;
 import com.mt.minilauncher.util.EditUtil;
 import com.mt.minilauncher.util.Util;
@@ -53,7 +54,7 @@ public class LauncherWindow {
 	private JCheckBoxMenuItem hideLauncherDuringPlayCheckBox;
 	private JTree tree;
 	private JTextArea console;
-
+	private LauncherWrapper launcherWrapper;
 	/**
 	 * Launch the application.
 	 */
@@ -90,6 +91,7 @@ public class LauncherWindow {
 	private void initialize() {
 		instance = this;
 		Initializer.touchFoldersAndFiles();
+		launcherWrapper = new LauncherWrapper(new VanillaWrap(), instance);
 		frmLauncher = new JFrame();
 		frmLauncher.setTitle("Launcher");
 		frmLauncher.setBounds(100, 100, 800, 600);
@@ -169,10 +171,10 @@ public class LauncherWindow {
 
 		JMenu optionsMenu = new JMenu("Options");
 		menuBar.add(optionsMenu);
-
+		
 		hideLauncherDuringPlayCheckBox = new JCheckBoxMenuItem("Hide Launcher During Play");
 		hideLauncherDuringPlayCheckBox.setSelected(true);
-		optionsMenu.add(hideLauncherDuringPlayCheckBox);
+		//optionsMenu.add(hideLauncherDuringPlayCheckBox);
 
 		JMenu helpMenu = new JMenu("Help");
 		menuBar.add(helpMenu);
@@ -224,7 +226,7 @@ public class LauncherWindow {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {//double click
-					Util.launchJarSimple(tree, instance);
+					launcherWrapper.launch();
 				}
 
 				// right click
@@ -246,6 +248,9 @@ public class LauncherWindow {
 						
 						JMenu runMenu = new JMenu("Run");
 						JMenuItem vanillaLaunch = new JMenuItem("Vanilla / No Mods");
+						vanillaLaunch.addActionListener(a -> {
+							launcherWrapper.launch();
+						});
 						JMenuItem asmLaunch = new JMenuItem("ASM");
 						asmLaunch.addActionListener(a -> {
 							Debug.callCrashDialog("ASM", "ASM support is not added yet!", Debug.WARN);
@@ -253,9 +258,6 @@ public class LauncherWindow {
 						JMenuItem fabricLaunch = new JMenuItem("Fabric");
 						fabricLaunch.addActionListener(a -> {
 							Debug.callCrashDialog("Fabric", "Fabric support is not added yet!", Debug.WARN);
-						});
-						vanillaLaunch.addActionListener(a -> {
-							Util.launchJarSimple(tree, instance);
 						});
 						runMenu.add(vanillaLaunch);
 						runMenu.add(asmLaunch);

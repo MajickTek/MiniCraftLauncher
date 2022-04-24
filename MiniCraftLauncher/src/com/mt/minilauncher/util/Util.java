@@ -11,11 +11,6 @@ import java.nio.channels.ReadableByteChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import javax.swing.JFrame;
-import javax.swing.JTree;
-import javax.swing.tree.DefaultMutableTreeNode;
-
-import com.mt.minilauncher.Debug;
 import com.mt.minilauncher.Initializer;
 import com.mt.minilauncher.LauncherWindow;
 import com.mt.minilauncher.downloader.Downloader;
@@ -32,49 +27,16 @@ public class Util {
         rbc.close();
     }
 	
-	public static void launchJar(String path, String version, JFrame frame, boolean hideLauncher) throws IOException {
-		String vPath = Paths.get(Initializer.savesDir.toString(), version).toString();
-		Process ps = Runtime.getRuntime().exec(new String[] {"java", "-jar", path, "--savedir", vPath});
-		if(hideLauncher) {
-			frame.setVisible(false);
-			try {
-				ps.waitFor();
-			} catch (InterruptedException e) {
-				Debug.callCrashDialog("ERROR", "Something failed while waiting for the game to terminate.\nCheck the console output.", Debug.ERR);
-				e.printStackTrace();
-			}
-			frame.setVisible(true);
-		}
-	}
-	
-	public static void launchJarSimple(JTree tree, LauncherWindow window) {
-		DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
-		if (node == null)
-			return;
-		if (node.isLeaf() && !node.toString().equals("empty")) {
-			VersionObject vo = (VersionObject) node.getUserObject();
-			if (vo.isDownloaded) {
-				System.out.println("Launching with no mods.");
-				String jarPath = Paths.get(Initializer.jarPath.toString(), vo.version + ".jar").toString();
-				try {
-					launchJar(jarPath, vo.version, window.frmLauncher, true);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			} else {
-				String path = Paths.get(Initializer.jarPath.toString(), vo.version + ".jar").toString();
-				System.out.println(String.format("Downloading: [URL:%s, path: %s]", vo.getURL(), path));
-				Downloader downloader = new Downloader(vo.getURL(),
-						path, window.getConsole(),
-						() -> {// callback function which runs when download is finished (at 100% and hasn't
-								// failed)
-							vo.isDownloaded = true;
-							tree.updateUI();
-						});
-				downloader.download();
-			}
-		}
+	public static void downloadJar(VersionObject vo, LauncherWindow window) {
+		String path = Paths.get(Initializer.jarPath.toString(), vo.version + ".jar").toString();
+		System.out.println(String.format("Downloading: [URL:%s, path: %s]", vo.getURL(), path));
+		Downloader downloader = new Downloader(vo.getURL(),
+				path, window.getConsole(),
+				() -> {// callback function which runs when download is finished (at 100% and hasn't failed)
+					vo.isDownloaded = true;
+					window.getTree().updateUI();
+				});
+		downloader.download();
 	}
 	
 	public static void purgeDirectory(File dir) {
