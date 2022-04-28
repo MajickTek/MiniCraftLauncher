@@ -7,7 +7,7 @@ Everything that the launcher downloads is in `<user folder>/Documents/MajickTek/
 
 On \*NIX systems including macOS (probably) you should be able to find the right folder by navigating to `~\Documents\MajickTek`. On Windows this would be `C:/Users/%username%/Documents/MajickTek`.
 
-As of now, the current minimum version of the launcher you can (and should) use is `Release 1.0`. This version's minimum JRE version is 1.8 (JRE 8) to make it more accessible (this may change in the future if necessary). Earlier versions require JRE 16 or newer and likely don't support the generally backwards-compatible [XML format](https://github.com/MajickTek/MiniCraftLauncherIndex).
+As of now, the current minimum version of the launcher you can (and should) use is `Release 1.0`. It is recommended to use the latest Java Runtime Environment available. As of now this is [JRE 17 LTS](https://www.azul.com/downloads/?version=java-17-lts&package=jre). The JDK FX package from that link is what is currently being used to develop this software. 
 
 ## Current functionality:
 See the [wiki](https://github.com/MajickTek/MiniCraftLauncher/wiki).
