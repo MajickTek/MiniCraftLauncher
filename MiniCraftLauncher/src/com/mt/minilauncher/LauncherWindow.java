@@ -177,7 +177,11 @@ public class LauncherWindow {
 		
 		ButtonGroup launcherGroup = new ButtonGroup();
 		
+		JMenu selectLWMenu = new JMenu("Select LauncherWrapper");
+		optionsMenu.add(selectLWMenu);
+		
 		JRadioButtonMenuItem vanillaLauncherMenuItem = new JRadioButtonMenuItem("Vanilla / No Mods");
+		selectLWMenu.add(vanillaLauncherMenuItem);
 		vanillaLauncherMenuItem.setSelected(true);
 		vanillaLauncherMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -185,16 +189,15 @@ public class LauncherWindow {
 			}
 		});
 		launcherGroup.add(vanillaLauncherMenuItem);
-		optionsMenu.add(vanillaLauncherMenuItem);
 		
 		JRadioButtonMenuItem fabricLauncherMenuItem = new JRadioButtonMenuItem("Fabric");
+		selectLWMenu.add(fabricLauncherMenuItem);
 		fabricLauncherMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				launcherWrapper.setWrapper(new FabricWrap());
 			}
 		});
 		launcherGroup.add(fabricLauncherMenuItem);
-		optionsMenu.add(fabricLauncherMenuItem);
 		
 		hideLauncherDuringPlayCheckBox = new JCheckBoxMenuItem("Hide Launcher During Play");
 		hideLauncherDuringPlayCheckBox.setSelected(true);
