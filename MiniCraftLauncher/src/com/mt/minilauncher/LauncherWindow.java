@@ -31,6 +31,8 @@ import com.mt.minilauncher.windows.SystemInfo;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import javax.swing.JRadioButtonMenuItem;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBoxMenuItem;
 import java.awt.Color;
@@ -92,7 +94,7 @@ public class LauncherWindow {
 	private void initialize() {
 		instance = this;
 		Initializer.touchFoldersAndFiles();
-		launcherWrapper = new LauncherWrapper(new VanillaWrap(), instance);
+		launcherWrapper = new LauncherWrapper(new VanillaWrap(), instance);//VanillaWrap is default
 		frmLauncher = new JFrame();
 		frmLauncher.setTitle("Launcher");
 		frmLauncher.setBounds(100, 100, 800, 600);
@@ -173,6 +175,27 @@ public class LauncherWindow {
 		JMenu optionsMenu = new JMenu("Options");
 		menuBar.add(optionsMenu);
 		
+		ButtonGroup launcherGroup = new ButtonGroup();
+		
+		JRadioButtonMenuItem vanillaLauncherMenuItem = new JRadioButtonMenuItem("Vanilla / No Mods");
+		vanillaLauncherMenuItem.setSelected(true);
+		vanillaLauncherMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				launcherWrapper.setWrapper(new VanillaWrap());
+			}
+		});
+		launcherGroup.add(vanillaLauncherMenuItem);
+		optionsMenu.add(vanillaLauncherMenuItem);
+		
+		JRadioButtonMenuItem fabricLauncherMenuItem = new JRadioButtonMenuItem("Fabric");
+		fabricLauncherMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				launcherWrapper.setWrapper(new FabricWrap());
+			}
+		});
+		launcherGroup.add(fabricLauncherMenuItem);
+		optionsMenu.add(fabricLauncherMenuItem);
+		
 		hideLauncherDuringPlayCheckBox = new JCheckBoxMenuItem("Hide Launcher During Play");
 		hideLauncherDuringPlayCheckBox.setSelected(true);
 		//optionsMenu.add(hideLauncherDuringPlayCheckBox);
@@ -247,19 +270,6 @@ public class LauncherWindow {
 						JMenuItem cleanMenu = new JMenuItem("Clean");
 						JMenuItem folderMenu = new JMenuItem("Open Save Folder");
 						
-						JMenu runMenu = new JMenu("Run");
-						JMenuItem vanillaLaunch = new JMenuItem("Vanilla / No Mods");
-						vanillaLaunch.addActionListener(a -> {
-							launcherWrapper.setWrapper(new VanillaWrap());
-							launcherWrapper.launch();
-						});
-						JMenuItem fabricLaunch = new JMenuItem("Fabric");
-						fabricLaunch.addActionListener(a -> {
-							launcherWrapper.setWrapper(new FabricWrap());
-							launcherWrapper.launch();
-						});
-						runMenu.add(vanillaLaunch);
-						runMenu.add(fabricLaunch);
 
 						editMenu.addActionListener(a -> {
 							node.setUserObject(EditUtil.editInfo(vo));
@@ -289,7 +299,6 @@ public class LauncherWindow {
 								}
 							}
 						});
-						menu.add(runMenu);
 						menu.add(editMenu);
 						menu.add(cleanMenu);
 						menu.add(folderMenu);
