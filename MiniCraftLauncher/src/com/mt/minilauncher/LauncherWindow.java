@@ -271,7 +271,8 @@ public class LauncherWindow {
 						JPopupMenu menu = new JPopupMenu();
 						JMenuItem editMenu = new JMenuItem("Edit");
 						JMenuItem cleanMenu = new JMenuItem("Clean");
-						JMenuItem folderMenu = new JMenuItem("Open Save Folder");
+						JMenuItem saveFolderMenu = new JMenuItem("Open Save Folder");
+						JMenuItem modFolderMenu = new JMenuItem("Open Mods Folder");
 						
 
 						editMenu.addActionListener(a -> {
@@ -285,7 +286,7 @@ public class LauncherWindow {
 						});
 
 						File jarPath = Paths.get(Initializer.savesDir.toString(), vo.version).toFile();
-						folderMenu.addActionListener(a -> {
+						saveFolderMenu.addActionListener(a -> {
 							if (jarPath.exists()) {
 								try {
 									Util.openNative(jarPath);
@@ -302,9 +303,31 @@ public class LauncherWindow {
 								}
 							}
 						});
+						
+						
+						modFolderMenu.addActionListener(a -> {
+							File folder = Paths.get(Initializer.launcherPath.toString(), "mods").toFile();
+							if(folder.exists()) {
+								try {
+									Util.openNative(folder);
+								} catch (IOException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+							} else {
+								folder.mkdirs();
+								try {
+									Util.openNative(folder);
+								} catch (IOException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+							}
+						});
 						menu.add(editMenu);
 						menu.add(cleanMenu);
-						menu.add(folderMenu);
+						menu.add(saveFolderMenu);
+						menu.add(modFolderMenu);
 						menu.show(tree, e.getPoint().x, e.getPoint().y);
 					}
 

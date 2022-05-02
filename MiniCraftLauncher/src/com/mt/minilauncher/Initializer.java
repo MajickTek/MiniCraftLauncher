@@ -17,8 +17,6 @@ public class Initializer {
 	public static Path savesDir = Paths.get(launcherPath.toString(), "saves");
 	public static Path jarPath = Paths.get(launcherPath.toString(), "versions");
 	public static Path indexPath = Paths.get(launcherPath.toString(), "index");
-	public static Path configPath = Paths.get(launcherPath.toString(), "config");
-	public static File optionsFile = new File(Paths.get(configPath.toString(), "options.txt").toUri());
 	
 	public static void touchFoldersAndFiles() {
 		File f = launcherPath.toFile();
