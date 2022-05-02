@@ -49,6 +49,7 @@ import java.nio.file.Paths;
 import java.awt.event.ActionEvent;
 import javax.swing.JToolBar;
 import javax.swing.JButton;
+import java.awt.Toolkit;
 
 public class LauncherWindow {
 
@@ -99,7 +100,7 @@ public class LauncherWindow {
 		frmLauncher.setTitle("Launcher");
 		frmLauncher.setBounds(100, 100, 800, 600);
 		frmLauncher.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmLauncher.setIconImage(new ImageIcon(LauncherWindow.class.getResource("/logo.png")).getImage());
+		frmLauncher.setIconImage(Toolkit.getDefaultToolkit().getImage(LauncherWindow.class.getResource("/minicraftplus.png")));
 		JMenuBar menuBar = new JMenuBar();
 		frmLauncher.setJMenuBar(menuBar);
 
