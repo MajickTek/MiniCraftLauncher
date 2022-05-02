@@ -27,5 +27,15 @@
     </plugins>
   </build>
   <dependencies>
+  <dependency>
+  <groupId>org.luaj</groupId>
+  <artifactId>luaj-jse</artifactId>
+  <version>3.0.1</version>
+</dependency>
+<dependency>
+  <groupId>org.apache.bcel</groupId>
+  <artifactId>bcel</artifactId>
+  <version>6.5.0</version>
+</dependency>
   </dependencies>
 </project>
