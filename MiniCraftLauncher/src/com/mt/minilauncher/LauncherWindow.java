@@ -331,6 +331,7 @@ public class LauncherWindow {
 							String checksum = "";
 							try {
 								if(vo.isDownloaded) {
+									//TODO: Decouple from GameProvider
 									checksum = io.github.pseudodistant.provider.services.GetMD5FromJar.getMD5Checksum(Paths.get(Initializer.jarPath.toString(), vo.version + ".jar").toString());
 								} else {
 									checksum = "";
