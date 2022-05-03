@@ -332,7 +332,7 @@ public class LauncherWindow {
 							try {
 								if(vo.isDownloaded) {
 									//TODO: Decouple from GameProvider
-									checksum = io.github.pseudodistant.provider.services.GetMD5FromJar.getMD5Checksum(Paths.get(Initializer.jarPath.toString(), vo.version + ".jar").toString());
+									checksum = com.mt.minigameprovider.services.GetMD5FromJar.getMD5Checksum(Paths.get(Initializer.jarPath.toString(), vo.version + ".jar").toString());
 								} else {
 									checksum = "";
 								}
