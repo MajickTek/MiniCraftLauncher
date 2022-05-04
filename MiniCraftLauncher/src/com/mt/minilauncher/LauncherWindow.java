@@ -274,7 +274,7 @@ public class LauncherWindow {
 						JMenuItem cleanMenu = new JMenuItem("Clean");
 						JMenuItem saveFolderMenu = new JMenuItem("Open Save Folder");
 						JMenuItem modFolderMenu = new JMenuItem("Open Mods Folder");
-						JMenuItem getMD5Menu = new JMenuItem("Get MD5 Hash");
+						
 						
 
 						editMenu.addActionListener(a -> {
@@ -327,29 +327,12 @@ public class LauncherWindow {
 							}
 						});
 						
-						getMD5Menu.addActionListener(a -> {
-							String checksum = "";
-							try {
-								if(vo.isDownloaded) {
-									//TODO: Decouple from GameProvider
-									checksum = com.mt.minigameprovider.services.GetMD5FromJar.getMD5Checksum(Paths.get(Initializer.jarPath.toString(), vo.version + ".jar").toString());
-								} else {
-									checksum = "";
-								}
-							} catch (Exception e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-							
-							if(!checksum.isEmpty()) {
-								Debug.callCrashDialog("MD5 Checksum", new javax.swing.JTextField(checksum), Debug.INF);
-							}
-						});
+						
 						menu.add(editMenu);
 						menu.add(cleanMenu);
 						menu.add(saveFolderMenu);
 						menu.add(modFolderMenu);
-						menu.add(getMD5Menu);
+						
 						menu.show(tree, e.getPoint().x, e.getPoint().y);
 					}
 
