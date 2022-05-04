@@ -50,15 +50,17 @@ import java.awt.event.ActionEvent;
 import javax.swing.JToolBar;
 import javax.swing.JButton;
 import java.awt.Toolkit;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 public class LauncherWindow {
 
 	public static LauncherWindow instance;
 	public JFrame frmLauncher;
-	private JCheckBoxMenuItem hideLauncherDuringPlayCheckBox;
 	private JTree tree;
 	private JTextArea console;
 	private LauncherWrapper launcherWrapper;
+	private JCheckBoxMenuItem hideLauncherMenuItem;
 	/**
 	 * Launch the application.
 	 */
@@ -168,7 +170,7 @@ public class LauncherWindow {
 		JMenuItem cleanFoldersMenuItem = new JMenuItem("Clean Folders");
 		cleanFoldersMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Util.purgeDirectoryButKeepSubDirectories(Initializer.launcherPath.toFile());
+				Initializer.cleanFolders();
 			}
 		});
 		editMenu.add(cleanFoldersMenuItem);
@@ -200,10 +202,11 @@ public class LauncherWindow {
 		});
 		launcherGroup.add(fabricLauncherMenuItem);
 		
-		hideLauncherDuringPlayCheckBox = new JCheckBoxMenuItem("Hide Launcher During Play");
-		hideLauncherDuringPlayCheckBox.setSelected(true);
-		//optionsMenu.add(hideLauncherDuringPlayCheckBox);
-
+		hideLauncherMenuItem = new JCheckBoxMenuItem("Hide Launcher");
+		
+		hideLauncherMenuItem.setSelected(true);
+		optionsMenu.add(hideLauncherMenuItem);
+		
 		JMenu helpMenu = new JMenu("Help");
 		menuBar.add(helpMenu);
 
@@ -355,10 +358,6 @@ public class LauncherWindow {
 		updateUI();
 	}
 
-	public JCheckBoxMenuItem getHideLauncherDuringPlayCheckBox() {
-		return hideLauncherDuringPlayCheckBox;
-	}
-
 	public JTree getTree() {
 		return tree;
 	}
@@ -397,4 +396,7 @@ public class LauncherWindow {
 	
 	
 
+	public JCheckBoxMenuItem getHideLauncherMenuItem() {
+		return hideLauncherMenuItem;
+	}
 }

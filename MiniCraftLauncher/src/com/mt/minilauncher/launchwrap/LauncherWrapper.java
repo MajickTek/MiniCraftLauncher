@@ -14,9 +14,11 @@ public class LauncherWrapper {
 	LauncherWindow window;
 	String prompt = String.format("[%s] ", LauncherWrapper.class.getSimpleName());
 	
+	
 	public LauncherWrapper(IWrap wrapper, LauncherWindow window) {
 		this.wrapper = wrapper;
 		this.window = window;
+		
 	}
 	
 	public void launch() {
@@ -50,6 +52,5 @@ public class LauncherWrapper {
 	public void setWindow(LauncherWindow window) {
 		this.window = window;
 	}
-	
-	
+
 }

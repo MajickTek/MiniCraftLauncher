@@ -22,16 +22,21 @@ public class FabricWrap implements IWrap{
 			try {
 				Process ps = Runtime.getRuntime().exec(new String[] {"java", "-jar", "FabricBootstrap.jar", vPath, path, lPath});
 				
-				//hide launcher
-				window.frmLauncher.setVisible(false);
+				if(window.getHideLauncherMenuItem().isSelected()) {
+					window.frmLauncher.setVisible(false);
+				}
+				
 				try {
 					ps.waitFor();
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				window.frmLauncher.setVisible(true);
-				//end hide launcher
+				
+				if(!window.frmLauncher.isVisible()) {
+					window.frmLauncher.setVisible(true);
+				}
+				
 				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

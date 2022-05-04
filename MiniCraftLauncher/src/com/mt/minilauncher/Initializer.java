@@ -54,7 +54,9 @@ public class Initializer {
 		int x = Debug.callConfirmDialog("Warning!", "This will clean all of the launcher's folders.\nYou will lose all game data and all downloaded jars.");
 		
 		if(x == Debug.OK) {
-			Util.purgeDirectory(launcherPath.toFile());
+			Util.purgeDirectory(savesDir.toFile());
+			Util.purgeDirectory(indexPath.toFile());
+			Util.purgeDirectory(jarPath.toFile());
 			touchFoldersAndFiles();
 			LauncherWindow.instance.updateUI();
 		} else {
