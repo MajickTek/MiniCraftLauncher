@@ -19,6 +19,5 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/kingt/Documents/GitHub/file-downloader/filedownloader.jar"/>
-	<classpathentry kind="lib" path="C:/Users/kingt/Documents/GitHub/MiniGameProvider.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

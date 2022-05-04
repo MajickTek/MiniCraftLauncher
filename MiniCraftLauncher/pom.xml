@@ -14,7 +14,7 @@
 	</repositories>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
-		
+
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -26,57 +26,5 @@
 			</plugin>
 		</plugins>
 	</build>
-	<dependencies>
-		<dependency>
-			<groupId>net.fabricmc</groupId>
-			<artifactId>access-widener</artifactId>
-			<version>2.1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.ow2.asm</groupId>
-			<artifactId>asm</artifactId>
-			<version>9.2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.ow2.asm</groupId>
-			<artifactId>asm-analysis</artifactId>
-			<version>9.2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.ow2.asm</groupId>
-			<artifactId>asm-commons</artifactId>
-			<version>9.2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.ow2.asm</groupId>
-			<artifactId>asm-tree</artifactId>
-			<version>9.2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.ow2.asm</groupId>
-			<artifactId>asm-util</artifactId>
-			<version>9.2</version>
-		</dependency>
-
-		<dependency>
-			<groupId>net.fabricmc</groupId>
-			<artifactId>sponge-mixin</artifactId>
-			<version>0.11.1+mixin.0.8.5</version>
-		</dependency>
-		<dependency>
-			<groupId>net.fabricmc</groupId>
-			<artifactId>tiny-mappings-parser</artifactId>
-			<version>0.3.0+build.17</version>
-		</dependency>
-		<dependency>
-			<groupId>net.fabricmc</groupId>
-			<artifactId>tiny-remapper</artifactId>
-			<version>0.8.1</version>
-		</dependency>
-		<dependency>
-			<groupId>net.fabricmc</groupId>
-			<artifactId>fabric-loader</artifactId>
-			<version>0.13.0</version>
-		</dependency>
-	</dependencies>
+	
 </project>

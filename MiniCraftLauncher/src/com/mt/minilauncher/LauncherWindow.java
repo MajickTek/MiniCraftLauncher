@@ -50,15 +50,17 @@ import java.awt.event.ActionEvent;
 import javax.swing.JToolBar;
 import javax.swing.JButton;
 import java.awt.Toolkit;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 public class LauncherWindow {
 
 	public static LauncherWindow instance;
 	public JFrame frmLauncher;
-	private JCheckBoxMenuItem hideLauncherDuringPlayCheckBox;
 	private JTree tree;
 	private JTextArea console;
 	private LauncherWrapper launcherWrapper;
+	private JCheckBoxMenuItem hideLauncherMenuItem;
 	/**
 	 * Launch the application.
 	 */
@@ -168,7 +170,7 @@ public class LauncherWindow {
 		JMenuItem cleanFoldersMenuItem = new JMenuItem("Clean Folders");
 		cleanFoldersMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Util.purgeDirectoryButKeepSubDirectories(Initializer.launcherPath.toFile());
+				Initializer.cleanFolders();
 			}
 		});
 		editMenu.add(cleanFoldersMenuItem);
@@ -200,10 +202,11 @@ public class LauncherWindow {
 		});
 		launcherGroup.add(fabricLauncherMenuItem);
 		
-		hideLauncherDuringPlayCheckBox = new JCheckBoxMenuItem("Hide Launcher During Play");
-		hideLauncherDuringPlayCheckBox.setSelected(true);
-		//optionsMenu.add(hideLauncherDuringPlayCheckBox);
-
+		hideLauncherMenuItem = new JCheckBoxMenuItem("Hide Launcher");
+		
+		hideLauncherMenuItem.setSelected(true);
+		optionsMenu.add(hideLauncherMenuItem);
+		
 		JMenu helpMenu = new JMenu("Help");
 		menuBar.add(helpMenu);
 
@@ -274,7 +277,7 @@ public class LauncherWindow {
 						JMenuItem cleanMenu = new JMenuItem("Clean");
 						JMenuItem saveFolderMenu = new JMenuItem("Open Save Folder");
 						JMenuItem modFolderMenu = new JMenuItem("Open Mods Folder");
-						JMenuItem getMD5Menu = new JMenuItem("Get MD5 Hash");
+						
 						
 
 						editMenu.addActionListener(a -> {
@@ -327,29 +330,12 @@ public class LauncherWindow {
 							}
 						});
 						
-						getMD5Menu.addActionListener(a -> {
-							String checksum = "";
-							try {
-								if(vo.isDownloaded) {
-									//TODO: Decouple from GameProvider
-									checksum = com.mt.minigameprovider.services.GetMD5FromJar.getMD5Checksum(Paths.get(Initializer.jarPath.toString(), vo.version + ".jar").toString());
-								} else {
-									checksum = "";
-								}
-							} catch (Exception e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-							
-							if(!checksum.isEmpty()) {
-								Debug.callCrashDialog("MD5 Checksum", new javax.swing.JTextField(checksum), Debug.INF);
-							}
-						});
+						
 						menu.add(editMenu);
 						menu.add(cleanMenu);
 						menu.add(saveFolderMenu);
 						menu.add(modFolderMenu);
-						menu.add(getMD5Menu);
+						
 						menu.show(tree, e.getPoint().x, e.getPoint().y);
 					}
 
@@ -370,10 +356,6 @@ public class LauncherWindow {
 		});
 		toolBar.add(refreshButton);
 		updateUI();
-	}
-
-	public JCheckBoxMenuItem getHideLauncherDuringPlayCheckBox() {
-		return hideLauncherDuringPlayCheckBox;
 	}
 
 	public JTree getTree() {
@@ -414,4 +396,7 @@ public class LauncherWindow {
 	
 	
 
+	public JCheckBoxMenuItem getHideLauncherMenuItem() {
+		return hideLauncherMenuItem;
+	}
 }
