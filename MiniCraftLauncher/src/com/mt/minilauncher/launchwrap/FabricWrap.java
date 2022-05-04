@@ -5,7 +5,6 @@ import java.nio.file.Paths;
 import com.mt.minilauncher.Initializer;
 import com.mt.minilauncher.LauncherWindow;
 
-import net.fabricmc.loader.launch.knot.KnotClient;
 
 public class FabricWrap implements IWrap{
 
