@@ -20,6 +20,7 @@ public class FabricWrap implements IWrap{
 			window.getConsole().setText("Failed to use FabricWrap, could not find FabricBootstrap.jar!");
 		} else {
 			try {
+				//FabricBootstrap expects 3 arguments: the version folder, the jar file, and the launcher folder
 				Process ps = Runtime.getRuntime().exec(new String[] {"java", "-jar", "FabricBootstrap.jar", vPath, path, lPath});
 				
 				if(window.getHideLauncherMenuItem().isSelected()) {
