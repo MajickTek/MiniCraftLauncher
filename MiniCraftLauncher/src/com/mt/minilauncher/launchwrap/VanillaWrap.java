@@ -18,7 +18,7 @@ public class VanillaWrap implements IWrap{
 				String vPath = Paths.get(Initializer.savesDir.toString(), version).toString();
 				try {
 					Process ps = Runtime.getRuntime().exec(new String[] {"java", "-jar", path, "--savedir", vPath});
-					
+					vo.setRunning(true);
 					if(window.getHideLauncherMenuItem().isSelected()) {
 						window.frmLauncher.setVisible(false);
 					}
@@ -29,7 +29,7 @@ public class VanillaWrap implements IWrap{
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					
+					vo.setRunning(false);
 					if(!window.frmLauncher.isVisible()) {
 						window.frmLauncher.setVisible(true);
 					}
@@ -40,7 +40,13 @@ public class VanillaWrap implements IWrap{
 				}
 			}
 		};
-		gameThread.start();
+		
+		if(!vo.isRunning) {
+			gameThread.start();
+		} else {
+			window.getConsole().setText("This version is already running!");
+		}
+		
 		
 		
 	}
