@@ -121,47 +121,37 @@ public class ChannelSelector extends JDialog {
 		Path indexPath = Paths.get(Initializer.indexPath.toString(), "index.xml");
 		DefaultListModel<ChannelObject> model = new DefaultListModel<>();
 
-//        OrderedProperties op = new OrderedProperties();
-//        try {
-//			op.load(new FileInputStream(indexPath.toString()));
-//			op.entrySet().forEach(l -> {
-//				model.add(Integer.parseInt(l.getKey().toString()), new ChannelObject(l.getValue().toString()));
-//			});
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 
 		dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
 		DocumentBuilder db = dbf.newDocumentBuilder();
 		Document doc = db.parse(indexPath.toFile());
-		
+
 		doc.getDocumentElement().normalize();
 		ArrayList<ChannelObject> tempList = new ArrayList<>();
-		
+
 		NodeList indexList = doc.getElementsByTagName("index");
-		for(int i = 0; i < indexList.getLength(); i++) {
+		for (int i = 0; i < indexList.getLength(); i++) {
 			Node indexNode = indexList.item(i);
-			if(indexNode.getNodeType() == Node.ELEMENT_NODE) {
+			if (indexNode.getNodeType() == Node.ELEMENT_NODE) {
 				Element indexElement = (Element) indexNode;
 				String indexName = indexElement.getAttribute("name");
 				NodeList urlList = indexElement.getElementsByTagName("url");
 				Node urlNode = urlList.item(0);
-				if(urlNode.getNodeType() == Node.ELEMENT_NODE) {
+				if (urlNode.getNodeType() == Node.ELEMENT_NODE) {
 					Element urlElement = (Element) urlNode;
 					String target = urlElement.getAttribute("target");
-					String url = (urlElement.getTextContent().startsWith("http://") || urlElement.getTextContent().startsWith("https://")) ? urlElement.getTextContent() : "";
+					String url = (urlElement.getTextContent().startsWith("http://")
+							|| urlElement.getTextContent().startsWith("https://")) ? urlElement.getTextContent() : "";
 					tempList.add(new ChannelObject(url, indexName));
 				}
 			}
 		}
-		
+
 		ChannelObject[] objects = new ChannelObject[tempList.size()];
 		objects = tempList.toArray(objects);
-		
-		for(int i = 0; i < objects.length; i++) {
+
+		for (int i = 0; i < objects.length; i++) {
 			model.add(i, objects[i]);
 		}
 		list.setModel(model);
