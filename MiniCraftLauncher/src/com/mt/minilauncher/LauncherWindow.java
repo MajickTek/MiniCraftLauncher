@@ -140,8 +140,7 @@ public class LauncherWindow {
 				cs.setVisible(true);
 				cs.getOkButton().addActionListener(l -> {
 					try {
-						Path filePath = Paths.get(Initializer.indexPath.toString(),
-								String.format("index%d.xml", cs.getList().getSelectedIndex()));
+						Path filePath = Paths.get(Initializer.indexPath.toString(), cs.getList().getSelectedValue().target);
 						Util.downloadUsingNIO(cs.getList().getSelectedValue().channelFile, filePath.toString());
 						DefaultTreeModel dtm = new DefaultTreeModel(XMLConverter.fromXML(filePath.toString()));
 						tree.setModel(dtm);

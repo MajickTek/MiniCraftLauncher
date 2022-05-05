@@ -151,6 +151,7 @@ public class ChannelSelector extends JDialog {
 				Node urlNode = urlList.item(0);
 				if(urlNode.getNodeType() == Node.ELEMENT_NODE) {
 					Element urlElement = (Element) urlNode;
+					String target = urlElement.getAttribute("target");
 					String url = (urlElement.getTextContent().startsWith("http://") || urlElement.getTextContent().startsWith("https://")) ? urlElement.getTextContent() : "";
 					tempList.add(new ChannelObject(url, indexName));
 				}
