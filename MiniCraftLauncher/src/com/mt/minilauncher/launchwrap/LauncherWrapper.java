@@ -31,7 +31,7 @@ public class LauncherWrapper {
 			if (vo.isDownloaded) {
 				System.out.println(String.format("%sLaunching game using the [%s] system.", prompt, wrapper.getClass().getSimpleName()));
 				String jarPath = Paths.get(Initializer.jarPath.toString(), vo.version + ".jar").toString();
-				wrapper.launchJar(jarPath, vo.version, window);
+				wrapper.launchJar(jarPath, vo.version, vo, window);
 			} else {
 				System.out.println(prompt + "Beginning download process.");
 				Util.downloadJar(vo, window);

@@ -6,12 +6,13 @@ import java.nio.file.Paths;
 
 import com.mt.minilauncher.Initializer;
 import com.mt.minilauncher.LauncherWindow;
+import com.mt.minilauncher.objects.VersionObject;
 
 
 public class FabricWrap implements IWrap{
 
 	@Override
-	public void launchJar(String path, String version, LauncherWindow window) {
+	public void launchJar(String path, String version, VersionObject vo, LauncherWindow window) {
 
 		Thread gameThread = new Thread() {
 			@Override
