@@ -251,7 +251,7 @@ public class LauncherWindow {
 		frmLauncher.getContentPane().add(scrollPane, BorderLayout.CENTER);
 
 		tree = new JTree(new DefaultMutableTreeNode("empty"));
-
+		
 		tree.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

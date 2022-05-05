@@ -169,4 +169,6 @@ public class ChannelSelector extends JDialog {
 	public JButton getCancelButton() {
 		return cancelButton;
 	}
+	
+	
 }
