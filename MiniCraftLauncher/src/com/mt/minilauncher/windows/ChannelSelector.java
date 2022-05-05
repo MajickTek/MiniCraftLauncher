@@ -2,8 +2,6 @@ package com.mt.minilauncher.windows;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -27,7 +25,6 @@ import org.xml.sax.SAXException;
 
 import com.mt.minilauncher.Initializer;
 import com.mt.minilauncher.objects.ChannelObject;
-import com.mt.minilauncher.util.OrderedProperties;
 import com.mt.minilauncher.util.Util;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
