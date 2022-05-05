@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
 import java.awt.BorderLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
@@ -22,6 +24,7 @@ import com.mt.minilauncher.launchwrap.LauncherWrapper;
 import com.mt.minilauncher.launchwrap.VanillaWrap;
 import com.mt.minilauncher.objects.VersionObject;
 import com.mt.minilauncher.util.EditUtil;
+import com.mt.minilauncher.util.GetMD5FromJar;
 import com.mt.minilauncher.util.Util;
 import com.mt.minilauncher.util.XMLConverter;
 import com.mt.minilauncher.windows.AboutPanel;
@@ -276,7 +279,7 @@ public class LauncherWindow {
 						JMenuItem cleanMenu = new JMenuItem("Clean");
 						JMenuItem saveFolderMenu = new JMenuItem("Open Save Folder");
 						JMenuItem modFolderMenu = new JMenuItem("Open Mods Folder");
-						
+						JMenuItem MD5Menu = new JMenuItem("Get MD5 Hash");
 						
 
 						editMenu.addActionListener(a -> {
@@ -329,12 +332,24 @@ public class LauncherWindow {
 							}
 						});
 						
+						MD5Menu.addActionListener(a -> {
+							if(vo.isDownloaded) {
+								try {
+									JTextField textField = new JTextField(GetMD5FromJar.getMD5Checksum(Paths.get(Initializer.jarPath.toString(), vo.version + ".jar").toString()));
+									textField.setEditable(false);
+									Debug.callCrashDialog("MD5 Hash", textField, Debug.INF);
+								} catch (Exception e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+							}
+						});
 						
 						menu.add(editMenu);
 						menu.add(cleanMenu);
 						menu.add(saveFolderMenu);
 						menu.add(modFolderMenu);
-						
+						menu.add(MD5Menu);
 						menu.show(tree, e.getPoint().x, e.getPoint().y);
 					}
 
