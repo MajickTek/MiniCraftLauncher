@@ -17,10 +17,13 @@ public class EditUtil {
         JTextField urlField = new JTextField(vo != null ? vo.url : "", 20),
         		versionField = new JTextField(vo != null ? vo.version : "", 20);
         JCheckBox downloadStatusCheckbox = new JCheckBox();
+        JCheckBox isRunningCheckbox = new JCheckBox();
         JCheckBox canEditCheckBox = new JCheckBox();
         
         downloadStatusCheckbox.setSelected(vo != null ? vo.isDownloaded : false);
         downloadStatusCheckbox.setEnabled(false);
+        isRunningCheckbox.setSelected(vo != null ? vo.isRunning: false);
+        isRunningCheckbox.setEnabled(false);
         
         canEditCheckBox.setSelected(vo != null ? vo.canEdit : false);
         
@@ -33,9 +36,11 @@ public class EditUtil {
         dialogPanel.add(urlField);
         dialogPanel.add(new JLabel("Version String:"));
         dialogPanel.add(versionField);
-        dialogPanel.add(new JLabel("Is Downloaded (this should be unmodifiable):"));
+        dialogPanel.add(new JLabel("Is Downloaded? (this should be unmodifiable):"));
         dialogPanel.add(downloadStatusCheckbox);
-		
+        dialogPanel.add(new JLabel("Is Running? (this should be unmodifiable):"));
+        dialogPanel.add(isRunningCheckbox);
+        
         canEditCheckBox.addActionListener(listener -> {
         	urlField.setEditable(!urlField.isEditable());
         	versionField.setEditable(!versionField.isEditable());
