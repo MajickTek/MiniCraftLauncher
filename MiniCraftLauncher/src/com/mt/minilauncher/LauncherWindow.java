@@ -36,7 +36,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
 import javax.swing.JCheckBoxMenuItem;
 import java.awt.Color;
 import java.awt.Desktop;
@@ -53,8 +52,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.JToolBar;
 import javax.swing.JButton;
 import java.awt.Toolkit;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
 
 public class LauncherWindow {
 
