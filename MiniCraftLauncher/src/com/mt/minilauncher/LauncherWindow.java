@@ -15,10 +15,6 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
-
 import com.mt.minilauncher.launchwrap.FabricWrap;
 import com.mt.minilauncher.launchwrap.LauncherWrapper;
 import com.mt.minilauncher.launchwrap.VanillaWrap;
@@ -27,7 +23,6 @@ import com.mt.minilauncher.objects.VersionObject;
 import com.mt.minilauncher.util.EditUtil;
 import com.mt.minilauncher.util.GetMD5FromJar;
 import com.mt.minilauncher.util.Util;
-import com.mt.minilauncher.util.XMLConverter;
 import com.mt.minilauncher.windows.AboutPanel;
 import com.mt.minilauncher.windows.ChannelSelector;
 import com.mt.minilauncher.windows.SystemInfo;
@@ -47,7 +42,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.awt.event.ActionEvent;
 import javax.swing.JToolBar;
@@ -60,7 +54,6 @@ public class LauncherWindow {
 	public JFrame frmLauncher;
 	private JTree tree;
 	private JTextArea console;
-	private LauncherWrapper launcherWrapper;
 	private JCheckBoxMenuItem hideLauncherMenuItem;
 	/**
 	 * Launch the application.
@@ -98,7 +91,6 @@ public class LauncherWindow {
 	private void initialize() {
 		instance = this;
 		Initializer.touchFoldersAndFiles();
-		launcherWrapper = new LauncherWrapper(new VanillaWrap(), instance);//VanillaWrap is default
 		frmLauncher = new JFrame();
 		frmLauncher.setTitle("Launcher");
 		frmLauncher.setBounds(100, 100, 800, 600);
@@ -161,30 +153,6 @@ public class LauncherWindow {
 
 		JMenu optionsMenu = new JMenu("Options");
 		menuBar.add(optionsMenu);
-		
-		ButtonGroup launcherGroup = new ButtonGroup();
-		
-		JMenu selectLWMenu = new JMenu("Select LauncherWrapper");
-		optionsMenu.add(selectLWMenu);
-		
-		JRadioButtonMenuItem vanillaLauncherMenuItem = new JRadioButtonMenuItem("Vanilla / No Mods");
-		selectLWMenu.add(vanillaLauncherMenuItem);
-		vanillaLauncherMenuItem.setSelected(true);
-		vanillaLauncherMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				launcherWrapper.setWrapper(new VanillaWrap());
-			}
-		});
-		launcherGroup.add(vanillaLauncherMenuItem);
-		
-		JRadioButtonMenuItem fabricLauncherMenuItem = new JRadioButtonMenuItem("Fabric");
-		selectLWMenu.add(fabricLauncherMenuItem);
-		fabricLauncherMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				launcherWrapper.setWrapper(new FabricWrap());
-			}
-		});
-		launcherGroup.add(fabricLauncherMenuItem);
 		
 		hideLauncherMenuItem = new JCheckBoxMenuItem("Hide Launcher");
 		
