@@ -40,6 +40,8 @@ public class EditUtil {
         dialogPanel.add(downloadStatusCheckbox);
         dialogPanel.add(new JLabel("Is Running? (this should be unmodifiable):"));
         dialogPanel.add(isRunningCheckbox);
+        dialogPanel.add(new JLabel("Launches with: " + vo.getLauncherWrapper().getWrapper().getClass().getSimpleName()));
+        
         
         canEditCheckBox.addActionListener(listener -> {
         	urlField.setEditable(!urlField.isEditable());
