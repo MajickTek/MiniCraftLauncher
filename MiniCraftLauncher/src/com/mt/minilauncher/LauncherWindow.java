@@ -269,7 +269,7 @@ public class LauncherWindow {
 					if (node == null)
 						return;
 
-					if (node.isLeaf() && !node.toString().equals("empty")) {
+					if (node.isLeaf() && !(node.getUserObject() instanceof EmptyObject)) {
 						VersionObject vo = (VersionObject) node.getUserObject();
 
 						JPopupMenu menu = new JPopupMenu();
