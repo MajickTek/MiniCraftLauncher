@@ -138,22 +138,6 @@ public class LauncherWindow {
 			public void actionPerformed(ActionEvent e) {
 				ChannelSelector cs = new ChannelSelector();
 				cs.setVisible(true);
-				cs.getOkButton().addActionListener(l -> {
-					try {
-						Path filePath = Paths.get(Initializer.indexPath.toString(), cs.getList().getSelectedValue().target);
-						Util.downloadUsingNIO(cs.getList().getSelectedValue().channelFile, filePath.toString());
-						DefaultTreeModel dtm = new DefaultTreeModel(XMLConverter.fromXML(filePath.toString()));
-						tree.setModel(dtm);
-						tree.updateUI();
-						updateUI();
-					} catch (IOException | ParserConfigurationException | SAXException e1) {
-						e1.printStackTrace();
-					}
-					cs.dispose();
-				});
-				cs.getCancelButton().addActionListener(l -> {
-					cs.dispose();
-				});
 			}
 		});
 		editMenu.add(channelMenuItem);

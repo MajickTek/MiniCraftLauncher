@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.tree.DefaultTreeModel;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -24,8 +25,11 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import com.mt.minilauncher.Initializer;
+import com.mt.minilauncher.LauncherWindow;
 import com.mt.minilauncher.objects.ChannelObject;
 import com.mt.minilauncher.util.Util;
+import com.mt.minilauncher.util.XMLConverter;
+
 import javax.swing.JScrollPane;
 import javax.swing.JList;
 import java.awt.event.ActionListener;
@@ -99,6 +103,22 @@ public class ChannelSelector extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
+		okButton.addActionListener(l -> {
+			try {
+				Path filePath = Paths.get(Initializer.indexPath.toString(), this.getList().getSelectedValue().target);
+				Util.downloadUsingNIO(this.getList().getSelectedValue().channelFile, filePath.toString());
+				DefaultTreeModel dtm = new DefaultTreeModel(XMLConverter.fromXML(filePath.toString()));
+				LauncherWindow.instance.getTree().setModel(dtm);
+				LauncherWindow.instance.getTree().updateUI();
+				LauncherWindow.instance.updateUI();
+			} catch (IOException | ParserConfigurationException | SAXException e1) {
+				e1.printStackTrace();
+			}
+			this.dispose();
+		});
+		cancelButton.addActionListener(l -> {
+			this.dispose();
+		});
 		init();
 	}
 
