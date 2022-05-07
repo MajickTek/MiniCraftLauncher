@@ -26,7 +26,7 @@ public class LauncherWrapper {
 		DefaultMutableTreeNode node = (DefaultMutableTreeNode) window.getTree().getLastSelectedPathComponent();
 		if (node == null)
 			return;
-		if (node.isLeaf() && !node.toString().equals("empty")) {
+		if (node.isLeaf() && !(node.getUserObject() instanceof EmptyObject)) {
 			VersionObject vo = (VersionObject) node.getUserObject();
 			if (vo.isDownloaded) {
 				System.out.println(String.format("%sLaunching game using the [%s] system.", prompt, wrapper.getClass().getSimpleName()));
