@@ -17,7 +17,15 @@ public class FabricWrap implements IWrap {
 			@Override
 			public void run() {
 				String vPath = Paths.get(Initializer.savesDir.toString(), version).toString();
-				String lPath = Initializer.launcherPath.toString();
+				File versionFolder = new File(vPath);
+				versionFolder.mkdirs();
+				
+				
+				//String lPath = Initializer.launcherPath.toString();
+				String lPath = Paths.get(vPath.toString(), "playminicraft").toString();
+				File launcherFolder = new File(lPath.toString());
+				launcherFolder.mkdirs();
+				
 				File f = new File("FabricBootstrap.jar");
 				if (!f.exists()) {
 					window.getConsole().setText("Failed to use FabricWrap, could not find FabricBootstrap.jar!");
