@@ -311,7 +311,7 @@ public class LauncherWindow {
 						
 						
 						modFolderMenu.addActionListener(a -> {
-							File folder = Paths.get(Initializer.launcherPath.toString(), "mods").toFile();
+							File folder = Paths.get(Initializer.savesDir.toString(), vo.version, "playminicraft", "mods").toFile();
 							if(folder.exists()) {
 								try {
 									Util.openNative(folder);
