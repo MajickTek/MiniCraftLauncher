@@ -237,6 +237,7 @@ public class LauncherWindow {
 
 		DefaultMutableTreeNode empty = new DefaultMutableTreeNode("empty");
 		empty.setUserObject(new EmptyObject());
+		
 		tree = new JTree(empty);
 		
 		tree.addMouseListener(new MouseAdapter() {
