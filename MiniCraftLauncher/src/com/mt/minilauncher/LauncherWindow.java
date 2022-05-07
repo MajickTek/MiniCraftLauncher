@@ -22,6 +22,7 @@ import org.xml.sax.SAXException;
 import com.mt.minilauncher.launchwrap.FabricWrap;
 import com.mt.minilauncher.launchwrap.LauncherWrapper;
 import com.mt.minilauncher.launchwrap.VanillaWrap;
+import com.mt.minilauncher.objects.EmptyObject;
 import com.mt.minilauncher.objects.VersionObject;
 import com.mt.minilauncher.util.EditUtil;
 import com.mt.minilauncher.util.GetMD5FromJar;
@@ -234,13 +235,28 @@ public class LauncherWindow {
 		JScrollPane scrollPane = new JScrollPane();
 		frmLauncher.getContentPane().add(scrollPane, BorderLayout.CENTER);
 
-		tree = new JTree(new DefaultMutableTreeNode("empty"));
+		DefaultMutableTreeNode empty = new DefaultMutableTreeNode("empty");
+		empty.setUserObject(new EmptyObject());
+		tree = new JTree(empty);
 		
 		tree.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {//double click
-					launcherWrapper.launch();
+					int row = tree.getClosestRowForLocation(e.getX(), e.getY());
+					tree.setSelectionRow(row);
+					tree.updateUI();
+					DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
+					if (node == null)
+						return;
+					
+					if(node.getUserObject() instanceof EmptyObject) {
+						ChannelSelector cs = new ChannelSelector();
+						cs.setVisible(true);
+					} else {
+						launcherWrapper.launch();
+					}
+					
 				}
 
 				// right click
