@@ -2,6 +2,10 @@ package com.mt.minilauncher.objects;
 
 import java.io.Serializable;
 
+import com.mt.minilauncher.LauncherWindow;
+import com.mt.minilauncher.launchwrap.LauncherWrapper;
+import com.mt.minilauncher.launchwrap.VanillaWrap;
+
 public class VersionObject implements Serializable {
 
 	/**
@@ -17,12 +21,15 @@ public class VersionObject implements Serializable {
 	
 	public boolean isRunning;
 	
+	public LauncherWrapper launcherWrapper;
+	
 	public VersionObject(String url, String version) {
 		this.url = url;
 		this.version = version;
 		this.isDownloaded = false;
 		this.canEdit = false;
 		this.isRunning = false;
+		launcherWrapper = new LauncherWrapper(new VanillaWrap(), LauncherWindow.instance);
 	}
 	
 	public VersionObject(String url, String version, boolean canEdit) {
@@ -31,6 +38,7 @@ public class VersionObject implements Serializable {
 		this.isDownloaded = false;
 		this.canEdit = canEdit;
 		this.isRunning = false;
+		launcherWrapper = new LauncherWrapper(new VanillaWrap(), LauncherWindow.instance);
 	}
 	
 	public VersionObject(String url, String version, boolean canEdit, boolean isRunning) {
@@ -39,6 +47,7 @@ public class VersionObject implements Serializable {
 		this.isDownloaded = false;
 		this.canEdit = canEdit;
 		this.isRunning = isRunning;
+		launcherWrapper = new LauncherWrapper(new VanillaWrap(), LauncherWindow.instance);
 	}
 	
 	public VersionObject() {
@@ -47,6 +56,7 @@ public class VersionObject implements Serializable {
 		this.isDownloaded = false;
 		this.canEdit = true;
 		this.isRunning = false;
+		launcherWrapper = new LauncherWrapper(new VanillaWrap(), LauncherWindow.instance);
 	}
 
 	public String getURL() {
@@ -67,6 +77,14 @@ public class VersionObject implements Serializable {
 
 	public void setRunning(boolean isRunning) {
 		this.isRunning = isRunning;
+	}
+
+	public LauncherWrapper getLauncherWrapper() {
+		return launcherWrapper;
+	}
+
+	public void setLauncherWrapper(LauncherWrapper launcherWrapper) {
+		this.launcherWrapper = launcherWrapper;
 	}
 
 	@Override

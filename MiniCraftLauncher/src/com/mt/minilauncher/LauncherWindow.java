@@ -255,7 +255,11 @@ public class LauncherWindow {
 						ChannelSelector cs = new ChannelSelector();
 						cs.setVisible(true);
 					} else {
-						launcherWrapper.launch();
+						if(node.isLeaf() && (node.getUserObject() instanceof VersionObject)) {
+							VersionObject vo = (VersionObject) node.getUserObject();
+							vo.getLauncherWrapper().launch();
+						}
+						
 					}
 					
 				}
@@ -343,6 +347,24 @@ public class LauncherWindow {
 							}
 						});
 						
+						ButtonGroup runWithGroup = new ButtonGroup();
+						JMenu runWithMenu = new JMenu("Run With");
+						JRadioButtonMenuItem runVanilla = new JRadioButtonMenuItem("Vanilla / No Mods");
+						runVanilla.setSelected(true);
+						runVanilla.addActionListener(l -> {
+							vo.getLauncherWrapper().setWrapper(new VanillaWrap());
+						});
+						JRadioButtonMenuItem runFabric = new JRadioButtonMenuItem("Fabric");
+						runFabric.addActionListener(l -> {
+							vo.getLauncherWrapper().setWrapper(new FabricWrap());
+						});
+						runWithGroup.add(runVanilla);
+						runWithGroup.add(runFabric);
+						runWithMenu.add(runVanilla);
+						runWithMenu.add(runFabric);
+						
+						
+						menu.add(runWithMenu);
 						menu.add(editMenu);
 						menu.add(cleanMenu);
 						menu.add(saveFolderMenu);
