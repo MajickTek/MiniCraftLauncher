@@ -6,6 +6,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import com.mt.minilauncher.Initializer;
 import com.mt.minilauncher.LauncherWindow;
+import com.mt.minilauncher.objects.EmptyObject;
 import com.mt.minilauncher.objects.VersionObject;
 import com.mt.minilauncher.util.Util;
 
