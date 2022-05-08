@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.event.HyperlinkEvent;
 
 import com.mt.minilauncher.Debug;
+import com.mt.minilauncher.LauncherWindow;
 
 import java.awt.BorderLayout;
 import java.awt.Desktop;
@@ -31,7 +32,7 @@ public class AboutPanel extends JPanel {
 		htmlPane.setContentType("text/html");
 		htmlPane.setText("<p><b>MiniCraftLauncher</b> by <b>MajickTek</b></p>\n"
 				+ "<p>Make sure you have the latest version! automatic updates aren't available yet.</p>\n"
-				+ "<p><b>Current Version: 1.6.2</b></p>\n"
+				+ String.format("<p><b>Current Version:</b> %s</p>%n", LauncherWindow.version)
 				+ "<p>Older versions might also break because of format changes to the index repo.</p>\n\n"
 				+ "<a href=\"https://github.com/MajickTek/MiniCraftLauncher\">Launcher source code/releases</a>\n"
 				+ "<br />\n<a href=\"https://github.com/MajickTek/MiniCraftLauncherIndex\">Version index repo and archive</a>\n\n");
