@@ -16,7 +16,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import com.mt.minilauncher.launchwrap.FabricWrap;
-import com.mt.minilauncher.launchwrap.LauncherWrapper;
 import com.mt.minilauncher.launchwrap.VanillaWrap;
 import com.mt.minilauncher.objects.EmptyObject;
 import com.mt.minilauncher.objects.VersionObject;
