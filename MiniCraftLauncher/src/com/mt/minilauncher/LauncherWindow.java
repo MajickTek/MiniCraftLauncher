@@ -241,7 +241,8 @@ public class LauncherWindow {
 					if (node == null)
 						return;
 
-					if ((node.isLeaf() && !(node.getUserObject() instanceof EmptyObject)) && node.getUserObject() instanceof VersionObject) {
+					
+					if (node.isLeaf() && (!(node.getUserObject() instanceof EmptyObject) && node.getUserObject() instanceof VersionObject)) {
 						VersionObject vo = (VersionObject) node.getUserObject();
 
 						JPopupMenu menu = new JPopupMenu();
