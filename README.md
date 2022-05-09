@@ -1,5 +1,5 @@
 # MiniCraftLauncher
-A launcher for MiniCraft+ and some other variants of the game. Not Minecraft related.
+A launcher for [MiniCraft+](https://github.com/MinicraftPlus/minicraft-plus-revived) and some other variants of the game. Not Minecraft related.
 
 ![MiniCraftLauncher 1.5 Hotfix](https://imgur.com/l4mlEdY.png)
 
