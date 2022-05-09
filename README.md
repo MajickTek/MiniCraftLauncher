@@ -5,7 +5,7 @@ A launcher for [MiniCraft+](https://github.com/MinicraftPlus/minicraft-plus-revi
 
 Everything that the launcher downloads is in `<user folder>/Documents/MajickTek/minilauncher`. If your user folder doesn't have a Documents folder inside it for some reaason, it'll make one.
 
-On \*NIX systems including macOS (probably) you should be able to find the right folder by navigating to `~\Documents\MajickTek`. On Windows this would be `C:/Users/%username%/Documents/MajickTek`.
+On \*NIX systems including macOS (probably) you should be able to find the right folder by navigating to `~/Documents/MajickTek`. On Windows this would be `C:\Users\%username%\Documents\MajickTek`.
 
 As of now, the current minimum version of the launcher you can use is `Release 1.0`. The latest version is recommended. It is recommended to use the latest Java Runtime Environment available. As of now this is [JRE 17 LTS](https://www.azul.com/downloads/?version=java-17-lts&package=jre). The JDK FX package from that link is what is currently being used to develop this software. 
 
