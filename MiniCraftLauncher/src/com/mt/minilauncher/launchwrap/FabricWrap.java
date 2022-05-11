@@ -35,15 +35,18 @@ public class FabricWrap implements IWrap {
 					try {
 						// FabricBootstrap expects 3 arguments: the version folder, the jar file, and
 						// the launcher folder
-						Process ps = Runtime.getRuntime()
-								.exec(new String[] { "java", "-jar", "FabricBootstrap.jar", vPath, path, lPath });
+						
+						ProcessBuilder pb = new ProcessBuilder( "java", "-jar", "FabricBootstrap.jar", vPath, path, lPath);
+						pb.inheritIO();
+						Process process = pb.start();
+
 						vo.setRunning(true);
 						if (window.getHideLauncherMenuItem().isSelected()) {
 							window.frmLauncher.setVisible(false);
 						}
 
 						try {
-							ps.waitFor();
+							process.waitFor();
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
