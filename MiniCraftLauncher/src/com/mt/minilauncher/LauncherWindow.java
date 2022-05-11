@@ -317,13 +317,15 @@ public class LauncherWindow {
 						});
 						
 						ButtonGroup runWithGroup = new ButtonGroup();
+						//TODO: Make wrapper selection more dynamic
 						JMenu runWithMenu = new JMenu("Run With");
 						JRadioButtonMenuItem runVanilla = new JRadioButtonMenuItem("Vanilla / No Mods");
-						runVanilla.setSelected(true);
+						runVanilla.setSelected((vo.launcherWrapper.getWrapper() instanceof VanillaWrap)? true: false);
 						runVanilla.addActionListener(l -> {
 							vo.getLauncherWrapper().setWrapper(new VanillaWrap());
 						});
 						JRadioButtonMenuItem runFabric = new JRadioButtonMenuItem("Fabric");
+						runFabric.setSelected((vo.launcherWrapper.getWrapper() instanceof FabricWrap)? true: false);
 						runFabric.addActionListener(l -> {
 							vo.getLauncherWrapper().setWrapper(new FabricWrap());
 						});
