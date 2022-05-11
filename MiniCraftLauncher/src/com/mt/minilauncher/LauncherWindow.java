@@ -92,7 +92,7 @@ public class LauncherWindow {
 		instance = this;
 		Initializer.touchFoldersAndFiles();
 		frmLauncher = new JFrame();
-		frmLauncher.setTitle("Launcher");
+		frmLauncher.setTitle(String.format("Launcher [%s]", version));
 		frmLauncher.setBounds(100, 100, 800, 600);
 		frmLauncher.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmLauncher.setIconImage(Toolkit.getDefaultToolkit().getImage(LauncherWindow.class.getResource("/minicraftplus.png")));
