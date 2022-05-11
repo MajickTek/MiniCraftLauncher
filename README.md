@@ -16,12 +16,17 @@ Ditto.
 
 Although if you want to know how the implementation of the UI itself was thought up, you can see the [Zoom Manager](https://github.com/MajickTek/ZoomManager) repo. The earliest versions of this launcher (all below Release 1.4) were based directly on the ZoomManager code.
 
-## Roadmap
+## Roadmap (ordered by highest priority)
+- Generic modding API for Fabric
+  - Use version info from the GameProvider to separate implementations at runtime
+  - use scripting language such as `luaj` or a tcp (networked) wrapper like `Minecraft PI`
+- Allow self-updating via GitHub Releases
+  - This  is being worked on
 - Add contextual icons for nodes in the tree
 - Allow multiple versions of the index xmls so older releases don't break
   - Display indexes correctly in the Channel Selector
-- (Future) Allow self-updating via GitHub Releases
-  - This  is being worked on
 
 ## Credits
-Downloading library used is https://github.com/MajickTek/file-downloader, an updated fork of some 10-year old code that still works
+Downloading library used is https://github.com/MajickTek/file-downloader, an updated fork of some 10-year old code that still works.
+
+Fabric support is built on the minicraft-compatible ecosystem developed by PseudoDistant [here](https://github.com/MiniFabric)
