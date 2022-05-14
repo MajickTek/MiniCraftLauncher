@@ -129,6 +129,7 @@ public class ChannelSelector extends JDialog {
 						VersionObject tmp = new VersionObject();
 						tmp.url = r.getFileURL();
 						tmp.version = r.getName();
+						tmp.canEdit = false;
 						DefaultMutableTreeNode tmpNode = new DefaultMutableTreeNode();
 						tmpNode.setUserObject(tmp);
 						preReleaseNode.add(tmpNode);
