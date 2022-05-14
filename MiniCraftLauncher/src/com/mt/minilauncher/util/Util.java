@@ -11,6 +11,8 @@ import java.nio.channels.ReadableByteChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+import com.mt.mclupdater.ReleaseObject;
 import com.mt.minilauncher.Initializer;
 import com.mt.minilauncher.LauncherWindow;
 import com.mt.minilauncher.downloader.Downloader;
@@ -36,6 +38,14 @@ public class Util {
 					vo.isDownloaded = true;
 					window.getTree().updateUI();
 				});
+		downloader.download();
+	}
+	
+	public static void downloadAsset(ReleaseObject ro, LauncherWindow window) {
+		Path path = Paths.get(Initializer.launcherPath.toString(), ro.getName());
+		Downloader downloader = new Downloader(ro.getFileURL(), path.toString(), window.getConsole(), () -> {
+			
+		});
 		downloader.download();
 	}
 	

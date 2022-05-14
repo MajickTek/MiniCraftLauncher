@@ -15,6 +15,9 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+
+import com.mt.mclupdater.ReleaseObject;
+import com.mt.mclupdater.util.GithubReleaseParser;
 import com.mt.minilauncher.launchwrap.FabricWrap;
 import com.mt.minilauncher.launchwrap.VanillaWrap;
 import com.mt.minilauncher.objects.EmptyObject;
@@ -42,6 +45,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JToolBar;
 import javax.swing.JButton;
@@ -170,8 +174,8 @@ public class LauncherWindow {
 		});
 		helpMenu.add(aboutMenuItem);
 
-		JMenuItem referenceMenuItem = new JMenuItem("Wiki");
-		referenceMenuItem.addActionListener(new ActionListener() {
+		JMenuItem wikiMenuItem = new JMenuItem("Wiki");
+		wikiMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(Desktop.isDesktopSupported()) {
 					try {
@@ -183,9 +187,16 @@ public class LauncherWindow {
 				}
 			}
 		});
-		helpMenu.add(referenceMenuItem);
+		helpMenu.add(wikiMenuItem);
 		
 		JMenuItem forceUpdateMenuItem = new JMenuItem("Force Update...");
+		forceUpdateMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ArrayList<ReleaseObject> releases = GithubReleaseParser.parseReleases("MajickTek", "MiniCraftLauncher");
+				ReleaseObject ro = releases.get(0);
+				Util.downloadAsset(ro, instance);
+			}
+		});
 		helpMenu.add(forceUpdateMenuItem);
 
 		console = new JTextArea();
