@@ -27,6 +27,7 @@ import com.mt.minilauncher.windows.ChannelSelector;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.ButtonGroup;
@@ -324,7 +325,27 @@ public class LauncherWindow {
 						runWithMenu.add(runVanilla);
 						runWithMenu.add(runFabric);
 						
+						JMenuItem changelogMenu = new JMenuItem("View Changelog");
+						changelogMenu.addActionListener(a -> {
+							JFrame frame = new JFrame("Changelog");
+							frame.setSize(400, 400);
+							frame.setLayout(new BorderLayout());
+							JScrollPane jsp = new JScrollPane();
+							JTextArea jta = new JTextArea();
+							jsp.setViewportView(jta);
+							
+							jta.setText("<!--Markdown rendering is not supported. As soon as it is, you won't see this message anymore.-->\n\n");
+							jta.append("<!--BEGIN CHANGELOG-->\n");
+							jta.append(vo.changelog);
+							jta.append("\n\n");
+							jta.append("<!--END CHANGELOG-->");
+							jta.setEditable(false);
+							frame.add(jsp, BorderLayout.CENTER);
+							frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+							frame.setVisible(true);
+						});
 						
+						menu.add(changelogMenu);
 						menu.add(runWithMenu);
 						menu.add(editMenu);
 						menu.add(cleanMenu);
