@@ -3,6 +3,8 @@ A launcher for [MiniCraft+](https://github.com/MinicraftPlus/minicraft-plus-revi
 
 ![MiniCraftLauncher 1.5 Hotfix](https://imgur.com/l4mlEdY.png)
 
+Looking for how to fork and build? [Look here.](https://github.com/MajickTek/MiniCraftLauncher/blob/main/MiniCraftLauncher/out/README.md)
+
 Everything that the launcher downloads is in `<user folder>/Documents/MajickTek/minilauncher`. If your user folder doesn't have a Documents folder inside it for some reaason, it'll make one.
 
 On \*NIX systems including macOS (probably) you should be able to find the right folder by navigating to `~/Documents/MajickTek`. On Windows this would be `C:\Users\%username%\Documents\MajickTek`.
