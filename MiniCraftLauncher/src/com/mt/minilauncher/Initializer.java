@@ -14,8 +14,11 @@ public class Initializer {
 	public static Path savesDir = Paths.get(launcherPath.toString(), "saves");
 	public static Path jarPath = Paths.get(launcherPath.toString(), "versions");
 	public static Path indexPath = Paths.get(launcherPath.toString(), "index");
+	public static Path workingDir = Paths.get("");
 	
 	public static void touchFoldersAndFiles() {
+		System.out.println("Working Directory: " + workingDir.toAbsolutePath().toString());
+		
 		File f = launcherPath.toFile();
 		if(f.mkdirs()) {
 			System.out.println("Created launcher path: " + f.toString());

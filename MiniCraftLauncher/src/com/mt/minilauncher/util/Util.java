@@ -42,7 +42,7 @@ public class Util {
 	}
 	
 	public static void downloadAsset(ReleaseObject ro, LauncherWindow window) {
-		Path path = Paths.get(Initializer.launcherPath.toString(), ro.getName());
+		Path path = Paths.get(Initializer.launcherPath.toString(), ro.getAssetName());
 		Downloader downloader = new Downloader(ro.getFileURL(), path.toString(), window.getConsole(), () -> {
 			
 		});
