@@ -3,6 +3,8 @@ package com.mt.minilauncher.util;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.StringReader;
+
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
@@ -13,13 +15,14 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import com.mt.minilauncher.objects.VersionObject;
 
 public class XMLConverter {
 	
-	public static DefaultMutableTreeNode fromXML(String filePath, boolean isFile) throws ParserConfigurationException, SAXException, IOException {
+	public static DefaultMutableTreeNode fromXML(String filePath) throws ParserConfigurationException, SAXException, IOException {
 		DefaultMutableTreeNode rootTreeNode = new DefaultMutableTreeNode("Games");
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		
@@ -27,11 +30,8 @@ public class XMLConverter {
 		DocumentBuilder db = dbf.newDocumentBuilder();
 		
 		Document doc;
-		if(isFile) {
-			doc = db.parse(new File(filePath));
-		} else {
-			doc = db.parse(new ByteArrayInputStream(filePath.getBytes()));
-		}
+		
+		doc = db.parse(new File(filePath));
 		
 		
 		doc.getDocumentElement().normalize();

@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
@@ -108,14 +109,20 @@ public class ChannelSelector extends JDialog {
 		okButton.addActionListener(l -> {
 			try {
 				if(this.getList().getSelectedValue().isLive()) {
-					DefaultTreeModel dtm = new DefaultTreeModel(XMLConverter.fromXML(MiniCraftLauncherXML.toXML(GithubReleaseParser.parseReleases(this.getList().getSelectedValue().channelName, this.getList().getSelectedValue().target)), false));
+					DefaultMutableTreeNode root = new DefaultMutableTreeNode("MiniCraft+");
+					DefaultMutableTreeNode releaseNode = new DefaultMutableTreeNode("Releases");
+					DefaultMutableTreeNode preReleaseNode = new DefaultMutableTreeNode("Pre-Releases");
+					root.add(releaseNode);
+					root.add(preReleaseNode);
+					
+					DefaultTreeModel dtm = new DefaultTreeModel(root);
 					LauncherWindow.instance.getTree().setModel(dtm);
 					LauncherWindow.instance.getTree().updateUI();
 					LauncherWindow.instance.updateUI();
 				} else {
 					Path filePath = Paths.get(Initializer.indexPath.toString(), this.getList().getSelectedValue().target);
 					Util.downloadUsingNIO(this.getList().getSelectedValue().channelFile, filePath.toString());
-					DefaultTreeModel dtm = new DefaultTreeModel(XMLConverter.fromXML(filePath.toString(), true));
+					DefaultTreeModel dtm = new DefaultTreeModel(XMLConverter.fromXML(filePath.toString()));
 					LauncherWindow.instance.getTree().setModel(dtm);
 					LauncherWindow.instance.getTree().updateUI();
 					LauncherWindow.instance.updateUI();

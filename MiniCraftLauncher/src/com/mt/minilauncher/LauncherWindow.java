@@ -384,7 +384,7 @@ public class LauncherWindow {
 		String basePath = Initializer.jarPath.toString();
 		for (int i = 0; i < cc; i++) {
 			DefaultMutableTreeNode child = (DefaultMutableTreeNode) dtm.getChild(root, i);
-			if (dtm.isLeaf(child)) {
+			if (dtm.isLeaf(child) && (child.getUserObject() instanceof VersionObject)) {
 				VersionObject vo = (VersionObject) child.getUserObject();
 				String base = Paths.get(basePath, vo.version + ".jar").toString();
 				File file = new File(base);
