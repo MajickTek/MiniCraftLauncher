@@ -1,6 +1,6 @@
 # Building
 
-In Eclipse, you can `Right click project -> Export -> runnable jar file` and make sure the output location is this out folder.
+In Eclipse, you can `Right click project -> Export -> runnable jar file` and make sure the output location is this `out` folder.
 
 I always make sure to check "extract required libraries into generated jar`, although you can use the `package` option or have the lib raries in a seperate folder the way `FabricBootstrap` does.
 
