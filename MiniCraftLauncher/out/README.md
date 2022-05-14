@@ -14,7 +14,7 @@ Of course, the license for the launcher, `FabricBootstrap.jar`, and `Updater.jar
 
 A good way to do this is simply fork the repository and host your builds in the `Releases` section of the repo.
 
-Some packaged libraries have different licenses. It's a good idea to look at each one seperately to get an idea of the legal side of things. all included libraries have very lax licenses so there should be no issues.
+Some packaged libraries have different licenses. It's a good idea to look at each one seperately to get an idea of the legal side of things. All included libraries have very lax licenses so there should be no issues.
 
 Again, if you fork this code I would love to receive credit. I have spent a long time working on this project by myself, so even if you completely overhaul the app with a new UI I would love to know!
 
