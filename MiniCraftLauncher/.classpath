@@ -18,6 +18,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/kingt/Documents/GitHub/file-downloader/filedownloader.jar"/>
+	<classpathentry kind="lib" path="lib/filedownloader.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
