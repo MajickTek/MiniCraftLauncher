@@ -24,7 +24,6 @@ import com.mt.minilauncher.util.GetMD5FromJar;
 import com.mt.minilauncher.util.Util;
 import com.mt.minilauncher.windows.AboutPanel;
 import com.mt.minilauncher.windows.ChannelSelector;
-import com.mt.minilauncher.windows.SystemInfo;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -184,15 +183,6 @@ public class LauncherWindow {
 			}
 		});
 		helpMenu.add(referenceMenuItem);
-
-		JMenuItem systemInfoMenuItem = new JMenuItem("System Info");
-		systemInfoMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				SystemInfo si = new SystemInfo();
-				si.setVisible(true);
-			}
-		});
-		helpMenu.add(systemInfoMenuItem);
 
 		console = new JTextArea();
 		console.setEditable(false);
