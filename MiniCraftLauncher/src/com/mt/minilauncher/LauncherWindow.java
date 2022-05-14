@@ -170,7 +170,7 @@ public class LauncherWindow {
 		});
 		helpMenu.add(aboutMenuItem);
 
-		JMenuItem referenceMenuItem = new JMenuItem("Reference");
+		JMenuItem referenceMenuItem = new JMenuItem("Wiki");
 		referenceMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(Desktop.isDesktopSupported()) {
@@ -184,6 +184,9 @@ public class LauncherWindow {
 			}
 		});
 		helpMenu.add(referenceMenuItem);
+		
+		JMenuItem forceUpdateMenuItem = new JMenuItem("Force Update...");
+		helpMenu.add(forceUpdateMenuItem);
 
 		console = new JTextArea();
 		console.setEditable(false);
