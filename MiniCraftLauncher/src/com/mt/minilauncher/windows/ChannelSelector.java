@@ -211,6 +211,7 @@ public class ChannelSelector extends JDialog {
 		}
 		ChannelObject liveObject = new ChannelObject();
 		liveObject.setLive(true);
+		//TODO: The way this works is hacky and hardcoded. Change this
 		liveObject.setChannelName("MinicraftPlus");
 		liveObject.setTarget("minicraft-plus-revived");
 		model.add(0, liveObject);//Pushed to the beginning of the list
