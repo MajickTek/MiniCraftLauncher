@@ -163,7 +163,7 @@ public class ChannelSelector extends JDialog {
 
 	private void init() {
 		try {
-			Util.downloadUsingNIO("https://github.com/MajickTek/MiniCraftLauncherIndex/raw/c729faae07603bf7fe3b969f5a50ac29cec42a81/index.xml",
+			Util.downloadUsingNIO("https://github.com/MajickTek/MiniCraftLauncherIndex/raw/main/index.xml",
 					Paths.get(Initializer.indexPath.toString(), "index.xml").toString());
 			buildList();
 		} catch (IOException | ParserConfigurationException | SAXException e) {
