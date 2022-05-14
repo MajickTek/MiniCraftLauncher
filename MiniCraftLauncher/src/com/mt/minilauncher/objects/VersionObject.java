@@ -21,34 +21,9 @@ public class VersionObject implements Serializable {
 	
 	public boolean isRunning;
 	
+	public String changelog;
+	
 	public LauncherWrapper launcherWrapper;
-	
-	public VersionObject(String url, String version) {
-		this.url = url;
-		this.version = version;
-		this.isDownloaded = false;
-		this.canEdit = false;
-		this.isRunning = false;
-		launcherWrapper = new LauncherWrapper(new VanillaWrap(), LauncherWindow.instance);
-	}
-	
-	public VersionObject(String url, String version, boolean canEdit) {
-		this.url = url;
-		this.version = version;
-		this.isDownloaded = false;
-		this.canEdit = canEdit;
-		this.isRunning = false;
-		launcherWrapper = new LauncherWrapper(new VanillaWrap(), LauncherWindow.instance);
-	}
-	
-	public VersionObject(String url, String version, boolean canEdit, boolean isRunning) {
-		this.url = url;
-		this.version = version;
-		this.isDownloaded = false;
-		this.canEdit = canEdit;
-		this.isRunning = isRunning;
-		launcherWrapper = new LauncherWrapper(new VanillaWrap(), LauncherWindow.instance);
-	}
 	
 	public VersionObject() {
 		this.url = "UNKNOWN";
@@ -56,6 +31,7 @@ public class VersionObject implements Serializable {
 		this.isDownloaded = false;
 		this.canEdit = true;
 		this.isRunning = false;
+		this.changelog = "";
 		launcherWrapper = new LauncherWrapper(new VanillaWrap(), LauncherWindow.instance);
 	}
 
@@ -85,6 +61,42 @@ public class VersionObject implements Serializable {
 
 	public void setLauncherWrapper(LauncherWrapper launcherWrapper) {
 		this.launcherWrapper = launcherWrapper;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public boolean isDownloaded() {
+		return isDownloaded;
+	}
+
+	public void setDownloaded(boolean isDownloaded) {
+		this.isDownloaded = isDownloaded;
+	}
+
+	public boolean isCanEdit() {
+		return canEdit;
+	}
+
+	public void setCanEdit(boolean canEdit) {
+		this.canEdit = canEdit;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
+	}
+
+	public String getChangelog() {
+		return changelog;
+	}
+
+	public void setChangelog(String changelog) {
+		this.changelog = changelog;
 	}
 
 	@Override
