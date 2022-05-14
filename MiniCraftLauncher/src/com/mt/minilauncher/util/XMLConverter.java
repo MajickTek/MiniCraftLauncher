@@ -1,5 +1,6 @@
 package com.mt.minilauncher.util;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -18,14 +19,20 @@ import com.mt.minilauncher.objects.VersionObject;
 
 public class XMLConverter {
 	
-	public static DefaultMutableTreeNode fromXML(String filePath) throws ParserConfigurationException, SAXException, IOException {
+	public static DefaultMutableTreeNode fromXML(String filePath, boolean isFile) throws ParserConfigurationException, SAXException, IOException {
 		DefaultMutableTreeNode rootTreeNode = new DefaultMutableTreeNode("Games");
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		
 		dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
 		DocumentBuilder db = dbf.newDocumentBuilder();
 		
-		Document doc = db.parse(new File(filePath));
+		Document doc;
+		if(isFile) {
+			doc = db.parse(new File(filePath));
+		} else {
+			doc = db.parse(new ByteArrayInputStream(filePath.getBytes()));
+		}
+		
 		
 		doc.getDocumentElement().normalize();
 		

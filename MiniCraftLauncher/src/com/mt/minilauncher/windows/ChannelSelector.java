@@ -24,6 +24,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import com.mt.mclupdater.util.GithubReleaseParser;
+import com.mt.mclupdater.util.MiniCraftLauncherXML;
 import com.mt.minilauncher.Initializer;
 import com.mt.minilauncher.LauncherWindow;
 import com.mt.minilauncher.objects.ChannelObject;
@@ -105,12 +107,20 @@ public class ChannelSelector extends JDialog {
 		}
 		okButton.addActionListener(l -> {
 			try {
-				Path filePath = Paths.get(Initializer.indexPath.toString(), this.getList().getSelectedValue().target);
-				Util.downloadUsingNIO(this.getList().getSelectedValue().channelFile, filePath.toString());
-				DefaultTreeModel dtm = new DefaultTreeModel(XMLConverter.fromXML(filePath.toString()));
-				LauncherWindow.instance.getTree().setModel(dtm);
-				LauncherWindow.instance.getTree().updateUI();
-				LauncherWindow.instance.updateUI();
+				if(this.getList().getSelectedValue().isLive()) {
+					DefaultTreeModel dtm = new DefaultTreeModel(XMLConverter.fromXML(MiniCraftLauncherXML.toXML(GithubReleaseParser.parseReleases(this.getList().getSelectedValue().channelName, this.getList().getSelectedValue().target)), false));
+					LauncherWindow.instance.getTree().setModel(dtm);
+					LauncherWindow.instance.getTree().updateUI();
+					LauncherWindow.instance.updateUI();
+				} else {
+					Path filePath = Paths.get(Initializer.indexPath.toString(), this.getList().getSelectedValue().target);
+					Util.downloadUsingNIO(this.getList().getSelectedValue().channelFile, filePath.toString());
+					DefaultTreeModel dtm = new DefaultTreeModel(XMLConverter.fromXML(filePath.toString(), true));
+					LauncherWindow.instance.getTree().setModel(dtm);
+					LauncherWindow.instance.getTree().updateUI();
+					LauncherWindow.instance.updateUI();
+				}
+				
 			} catch (IOException | ParserConfigurationException | SAXException e1) {
 				e1.printStackTrace();
 			}
@@ -171,6 +181,11 @@ public class ChannelSelector extends JDialog {
 		for (int i = 0; i < objects.length; i++) {
 			model.add(i, objects[i]);
 		}
+		ChannelObject liveObject = new ChannelObject();
+		liveObject.setLive(true);
+		liveObject.setChannelName("MinicraftPlus");
+		liveObject.setTarget("minicraft-plus-revived");
+		model.add((objects.length), liveObject);
 		list.setModel(model);
 		list.updateUI();
 	}

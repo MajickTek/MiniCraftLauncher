@@ -3,6 +3,8 @@ package com.mt.minilauncher.objects;
 import java.io.Serializable;
 import java.util.Random;
 
+import com.mt.minilauncher.LauncherWindow;
+
 public class ChannelObject implements Serializable{
 	/**
 	 * 
@@ -11,8 +13,20 @@ public class ChannelObject implements Serializable{
 	public String channelFile;
 	public String channelName;
 	public String target;
+	
+	
+	LauncherWindow window;
 	boolean isLive; // use dynamically-generated XML
 	
+	
+	public ChannelObject() {
+		this.channelFile = "";
+		this.channelName = "";
+		this.target = "";
+		this.window = null;
+		this.isLive = false;
+	}
+
 	public ChannelObject(String channelFile) {
 		Random rand = new Random();
 		this.channelFile = channelFile;
@@ -36,7 +50,7 @@ public class ChannelObject implements Serializable{
 		isLive = false;
 	}
 	
-	
+
 	public String getChannelFile() {
 		return channelFile;
 	}
@@ -69,6 +83,16 @@ public class ChannelObject implements Serializable{
 		this.isLive = isLive;
 	}
 
+	
+	public LauncherWindow getWindow() {
+		return window;
+	}
+
+	public void setWindow(LauncherWindow window) {
+		this.window = window;
+	}
+
+	
 	@Override
 	public String toString() {
 		return channelName;
