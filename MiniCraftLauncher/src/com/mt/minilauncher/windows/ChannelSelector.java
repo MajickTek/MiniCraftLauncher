@@ -25,11 +25,13 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import com.mt.mclupdater.ReleaseObject;
 import com.mt.mclupdater.util.GithubReleaseParser;
 import com.mt.mclupdater.util.MiniCraftLauncherXML;
 import com.mt.minilauncher.Initializer;
 import com.mt.minilauncher.LauncherWindow;
 import com.mt.minilauncher.objects.ChannelObject;
+import com.mt.minilauncher.objects.VersionObject;
 import com.mt.minilauncher.util.Util;
 import com.mt.minilauncher.util.XMLConverter;
 
@@ -110,12 +112,32 @@ public class ChannelSelector extends JDialog {
 			try {
 				if(this.getList().getSelectedValue().isLive()) {
 					DefaultMutableTreeNode root = new DefaultMutableTreeNode("MiniCraft+");
+					DefaultTreeModel dtm = new DefaultTreeModel(root);
 					DefaultMutableTreeNode releaseNode = new DefaultMutableTreeNode("Releases");
 					DefaultMutableTreeNode preReleaseNode = new DefaultMutableTreeNode("Pre-Releases");
+					
+					ArrayList<ReleaseObject> releaseTree = GithubReleaseParser.parseReleases(this.getList().getSelectedValue().channelName, this.getList().getSelectedValue().target);
+					releaseTree.stream().filter(p -> (p.isPrerelease() == false)).forEach(r -> {
+						VersionObject tmp = new VersionObject();
+						tmp.url = r.getFileURL();
+						tmp.version = r.getName();
+						DefaultMutableTreeNode tmpNode = new DefaultMutableTreeNode();
+						tmpNode.setUserObject(tmp);
+						releaseNode.add(tmpNode);
+					});
+					
+					releaseTree.stream().filter(p -> (p.isPrerelease() == true)).forEach(r -> {
+						VersionObject tmp = new VersionObject();
+						tmp.url = r.getFileURL();
+						tmp.version = r.getName();
+						DefaultMutableTreeNode tmpNode = new DefaultMutableTreeNode();
+						tmpNode.setUserObject(tmp);
+						preReleaseNode.add(tmpNode);
+					});
 					root.add(releaseNode);
 					root.add(preReleaseNode);
 					
-					DefaultTreeModel dtm = new DefaultTreeModel(root);
+					
 					LauncherWindow.instance.getTree().setModel(dtm);
 					LauncherWindow.instance.getTree().updateUI();
 					LauncherWindow.instance.updateUI();
@@ -192,7 +214,7 @@ public class ChannelSelector extends JDialog {
 		liveObject.setLive(true);
 		liveObject.setChannelName("MinicraftPlus");
 		liveObject.setTarget("minicraft-plus-revived");
-		model.add((objects.length), liveObject);
+		model.add(0, liveObject);//Pushed to the beginning of the list
 		list.setModel(model);
 		list.updateUI();
 	}
