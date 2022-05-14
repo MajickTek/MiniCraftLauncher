@@ -119,7 +119,7 @@ public class ChannelSelector extends JDialog {
 					releaseTree.stream().filter(p -> (p.isPrerelease() == false)).forEach(r -> {
 						VersionObject tmp = new VersionObject();
 						tmp.url = r.getFileURL();
-						tmp.version = r.getName();
+						tmp.version = r.getTagName();
 						DefaultMutableTreeNode tmpNode = new DefaultMutableTreeNode();
 						tmpNode.setUserObject(tmp);
 						releaseNode.add(tmpNode);
@@ -128,7 +128,7 @@ public class ChannelSelector extends JDialog {
 					releaseTree.stream().filter(p -> (p.isPrerelease() == true)).forEach(r -> {
 						VersionObject tmp = new VersionObject();
 						tmp.url = r.getFileURL();
-						tmp.version = r.getName();
+						tmp.version = r.getTagName();
 						tmp.canEdit = false;
 						DefaultMutableTreeNode tmpNode = new DefaultMutableTreeNode();
 						tmpNode.setUserObject(tmp);
