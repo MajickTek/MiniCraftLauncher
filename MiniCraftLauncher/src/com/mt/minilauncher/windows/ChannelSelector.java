@@ -27,7 +27,6 @@ import org.xml.sax.SAXException;
 
 import com.mt.mclupdater.ReleaseObject;
 import com.mt.mclupdater.util.GithubReleaseParser;
-import com.mt.mclupdater.util.MiniCraftLauncherXML;
 import com.mt.minilauncher.Initializer;
 import com.mt.minilauncher.LauncherWindow;
 import com.mt.minilauncher.objects.ChannelObject;
