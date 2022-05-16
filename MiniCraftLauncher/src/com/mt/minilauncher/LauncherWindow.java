@@ -189,15 +189,6 @@ public class LauncherWindow {
 		});
 		helpMenu.add(wikiMenuItem);
 		
-		JMenuItem forceUpdateMenuItem = new JMenuItem("Force Update...");
-		forceUpdateMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ArrayList<ReleaseObject> releases = GithubReleaseParser.parseReleases("MajickTek", "MiniCraftLauncher");
-				ReleaseObject ro = releases.get(0);
-				Util.downloadAsset(ro, instance);
-			}
-		});
-		helpMenu.add(forceUpdateMenuItem);
 
 		console = new JTextArea();
 		console.setEditable(false);

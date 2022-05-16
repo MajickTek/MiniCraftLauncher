@@ -48,19 +48,6 @@ public class Util {
 		downloader.download();
 	}
 	
-	public static void downloadAsset(ReleaseObject ro, LauncherWindow window) {
-		Path path = Paths.get(Initializer.launcherPath.toString(), ro.getAssetName());
-		Downloader downloader = new Downloader(ro.getFileURL(), path.toString(), window.getConsole(), () -> {
-			Path output = Paths.get(Initializer.launcherPath.toString(), "bin");
-			try {
-				new ZipFile(path.toFile()).extractAll(output.toString());
-			} catch (ZipException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		});
-		downloader.download();
-	}
 	
 	public static void purgeDirectory(File dir) {
 	    for (File file: dir.listFiles()) {
