@@ -50,19 +50,6 @@ public class Initializer {
 	}
 	
 
-	public static void cleanFolders() {
-		int x = Debug.callConfirmDialog("Warning!", "This will clean all of the launcher's folders.\nYou will lose all game data and all downloaded jars.");
-		
-		if(x == Debug.OK) {
-			Util.purgeDirectory(savesDir.toFile());
-			Util.purgeDirectory(indexPath.toFile());
-			Util.purgeDirectory(jarPath.toFile());
-			touchFoldersAndFiles();
-			LauncherWindow.instance.updateUI();
-		} else {
-			return;
-		}
-	}
 	
 	public static void cleanVersion(String version) {
 		int x = Debug.callConfirmDialog("Warning!", "This will clean all of the data associated with this version.\nThis includes save files and downloaded jars.");

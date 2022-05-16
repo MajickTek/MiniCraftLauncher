@@ -150,7 +150,16 @@ public class LauncherWindow {
 		JMenuItem cleanFoldersMenuItem = new JMenuItem("Clean Folders");
 		cleanFoldersMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Initializer.cleanFolders();
+				int x = Debug.callConfirmDialog("Warning!", "This will clean all of the launcher's folders.\nYou will lose all game data and all downloaded jars.");
+				
+				if(x == Debug.OK) {
+					Util.purgeDirectory(Initializer.launcherPath.toFile());
+					Initializer.touchFoldersAndFiles();
+					updateUI();
+				} else {
+					return;
+				}
+				
 			}
 		});
 		editMenu.add(cleanFoldersMenuItem);
