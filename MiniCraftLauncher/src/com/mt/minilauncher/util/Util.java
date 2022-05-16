@@ -2,8 +2,6 @@ package com.mt.minilauncher.util;
 
 import java.awt.Desktop;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -13,17 +11,10 @@ import java.nio.channels.ReadableByteChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-
-import com.mt.mclupdater.ReleaseObject;
 import com.mt.minilauncher.Initializer;
 import com.mt.minilauncher.LauncherWindow;
 import com.mt.minilauncher.downloader.Downloader;
 import com.mt.minilauncher.objects.VersionObject;
-
-import net.lingala.zip4j.ZipFile;
-import net.lingala.zip4j.exception.ZipException;
 
 public class Util {
 	
