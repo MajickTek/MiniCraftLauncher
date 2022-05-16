@@ -16,8 +16,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
-import com.mt.mclupdater.ReleaseObject;
-import com.mt.mclupdater.util.GithubReleaseParser;
 import com.mt.minilauncher.launchwrap.FabricWrap;
 import com.mt.minilauncher.launchwrap.VanillaWrap;
 import com.mt.minilauncher.objects.EmptyObject;
@@ -30,7 +28,6 @@ import com.mt.minilauncher.windows.ChannelSelector;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.ButtonGroup;
@@ -45,7 +42,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JToolBar;
 import javax.swing.JButton;

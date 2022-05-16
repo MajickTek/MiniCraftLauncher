@@ -76,37 +76,4 @@ public class Util {
 		}
 	}
 	
-	/**
-	 * Parses a given string into a boolean.
-	 * <br />
-	 * Options (displayed as ternary operators):
-	 * <br />
-	 * foo ? true : false
-	 * <br />
-	 * foo ? yes : no
-	 * <br />
-	 * foo ? 1 : 0
-	 * <br />
-	 * The function is falsey, meaning if the text does not equal anything from the above examples, it will return false.
-	 * @param bool a 1-word (1 token) String matching one of the above examples
-	 * @return true or false
-	 */
-	public static boolean parseBoolean(String bool) {
-		switch(bool) {
-		case "true":
-			return true;
-		case "false":
-			return false;
-		case "yes":
-			return true;
-		case "no":
-			return false;
-		case "1":
-			return true;
-		case "0":
-			return false;
-		default:
-			return false;
-		}
-	}
 }
