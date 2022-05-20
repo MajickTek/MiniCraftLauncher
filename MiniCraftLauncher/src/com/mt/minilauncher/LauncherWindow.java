@@ -26,6 +26,8 @@ import com.mt.minilauncher.util.Util;
 import com.mt.minilauncher.windows.AboutPanel;
 import com.mt.minilauncher.windows.ChannelSelector;
 
+import de.skuzzle.semantic.Version;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -49,7 +51,8 @@ import java.awt.Toolkit;
 
 public class LauncherWindow {
 
-	public static String version = "Release 1.6.2.1";
+	public static Version version = Version.parseVersion("1.6.3-1");
+	
 	public static LauncherWindow instance;
 	public JFrame frmLauncher;
 	private JTree tree;
