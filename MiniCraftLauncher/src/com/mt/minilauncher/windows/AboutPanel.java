@@ -33,7 +33,7 @@ public class AboutPanel extends JPanel {
 		htmlPane.setText("<p><b>MiniCraftLauncher</b> by <b>MajickTek</b></p>\n"
 				+ "<p>Make sure you have the latest version! automatic updates aren't available yet.</p>\n"
 				+ String.format("<p><b>Current Version:</b> %s</p>%n", LauncherWindow.version)
-				+ "<p>Older versions might also break because of format changes to the index repo.</p>\n\n"
+				+ "<p>do not bother downgrading, older versions may not work properly. Open an issue on GitHub instead.</p>\n\n"
 				+ "<a href=\"https://github.com/MajickTek/MiniCraftLauncher\">Launcher source code/releases</a>\n"
 				+ "<br />\n<a href=\"https://github.com/MajickTek/MiniCraftLauncherIndex\">Version index repo and archive</a>\n\n");
 		

@@ -49,7 +49,7 @@ import java.awt.Toolkit;
 
 public class LauncherWindow {
 
-	public static String version = "Release 1.6.3";
+	public static String version = "Release 1.6.2.1";
 	public static LauncherWindow instance;
 	public JFrame frmLauncher;
 	private JTree tree;
