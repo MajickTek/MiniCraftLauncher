@@ -48,6 +48,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JToolBar;
 import javax.swing.JButton;
 import java.awt.Toolkit;
+import javax.swing.JToggleButton;
 
 public class LauncherWindow {
 
@@ -384,6 +385,18 @@ public class LauncherWindow {
 			}
 		});
 		toolBar.add(refreshButton);
+		
+		JToggleButton toggleConsoleButton = new JToggleButton("Show Console");
+		toggleConsoleButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(toggleConsoleButton.isSelected()) {
+					toggleConsoleButton.setText("Hide Console");
+				} else {
+					toggleConsoleButton.setText("Show Console");
+				}
+			}
+		});
+		toolBar.add(toggleConsoleButton);
 		updateUI();
 	}
 
