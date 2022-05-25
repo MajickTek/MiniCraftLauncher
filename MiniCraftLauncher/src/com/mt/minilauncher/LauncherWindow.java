@@ -392,16 +392,10 @@ public class LauncherWindow {
 		});
 		toolBar.add(refreshButton);
 		
-		JToggleButton toggleConsoleButton = new JToggleButton("Show Console");
+		JToggleButton toggleConsoleButton = new JToggleButton("Toggle Console");
 		toggleConsoleButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(toggleConsoleButton.isSelected()) {
-					console.setVisible(true);
-					toggleConsoleButton.setText("Hide Console");
-				} else {
-					console.setVisible(false);
-					toggleConsoleButton.setText("Show Console");
-				}
+				console.setVisible(!console.isVisible());
 			}
 		});
 		toolBar.add(toggleConsoleButton);
