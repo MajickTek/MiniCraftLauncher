@@ -28,9 +28,9 @@ public class FabricWrap implements IWrap {
 				
 				File f = new File("FabricBootstrap.jar");
 				if (!f.exists()) {
-					window.getConsole().setText("Failed to use FabricWrap, could not find FabricBootstrap.jar!");
+					window.getProgressBar().setText("Failed to use FabricWrap, could not find FabricBootstrap.jar!");
 				} else {
-					window.getConsole().setText(
+					window.getProgressBar().setText(
 							"Found FabricBootstrap.jar! Attempting to launch Fabric. Assuming the parameters have not changed.");
 					try {
 						// FabricBootstrap expects 3 arguments: the version folder, the jar file, and
@@ -67,7 +67,7 @@ public class FabricWrap implements IWrap {
 		if(!vo.isRunning) {
 			gameThread.start();
 		} else {
-			window.getConsole().setText("This version is already running!");
+			window.getProgressBar().setText("This version is already running!");
 		}
 
 	}

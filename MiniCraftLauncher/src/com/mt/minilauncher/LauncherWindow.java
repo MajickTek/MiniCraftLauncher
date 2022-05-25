@@ -57,7 +57,7 @@ public class LauncherWindow {
 	public static LauncherWindow instance;
 	public JFrame frmLauncher;
 	private JTree tree;
-	private JTextArea console;
+	private JTextArea progressBar;
 	private JCheckBoxMenuItem hideLauncherMenuItem;
 	/**
 	 * Launch the application.
@@ -199,11 +199,11 @@ public class LauncherWindow {
 		helpMenu.add(wikiMenuItem);
 		
 
-		console = new JTextArea();
-		console.setEditable(false);
-		console.setBackground(Color.BLACK);
-		console.setForeground(Color.GREEN);
-		frmLauncher.getContentPane().add(console, BorderLayout.NORTH);
+		progressBar = new JTextArea();
+		progressBar.setEditable(false);
+		progressBar.setBackground(Color.BLACK);
+		progressBar.setForeground(Color.GREEN);
+		frmLauncher.getContentPane().add(progressBar, BorderLayout.NORTH);
 
 		JScrollPane scrollPane = new JScrollPane();
 		frmLauncher.getContentPane().add(scrollPane, BorderLayout.CENTER);
@@ -404,8 +404,8 @@ public class LauncherWindow {
 		return tree;
 	}
 
-	public JTextArea getConsole() {
-		return console;
+	public JTextArea getProgressBar() {
+		return progressBar;
 	}
 
 	public void updateUI() {

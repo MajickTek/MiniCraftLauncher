@@ -31,7 +31,7 @@ public class Util {
 		String path = Paths.get(Initializer.jarPath.toString(), vo.version + ".jar").toString();
 		System.out.println(String.format("Downloading: [URL:%s, path: %s]", vo.getURL(), path));
 		Downloader downloader = new Downloader(vo.getURL(),
-				path, window.getConsole(),
+				path, window.getProgressBar(),
 				() -> {// callback function which runs when download is finished (at 100% and hasn't failed)
 					vo.isDownloaded = true;
 					window.getTree().updateUI();
