@@ -25,6 +25,7 @@ import com.mt.minilauncher.util.GetMD5FromJar;
 import com.mt.minilauncher.util.Util;
 import com.mt.minilauncher.windows.AboutPanel;
 import com.mt.minilauncher.windows.ChannelSelector;
+import com.mt.minilauncher.windows.Console;
 
 import de.skuzzle.semantic.Version;
 
@@ -59,6 +60,8 @@ public class LauncherWindow {
 	private JTree tree;
 	private JTextArea progressBar;
 	private JCheckBoxMenuItem hideLauncherMenuItem;
+	private Console console;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -95,6 +98,9 @@ public class LauncherWindow {
 	private void initialize() {
 		instance = this;
 		Initializer.touchFoldersAndFiles();
+		console = new Console();
+		System.setOut(console.getCon());
+		System.setErr(console.getCon());
 		frmLauncher = new JFrame();
 		frmLauncher.setTitle(String.format("Launcher [%s]", version));
 		frmLauncher.setBounds(100, 100, 800, 600);
@@ -390,8 +396,10 @@ public class LauncherWindow {
 		toggleConsoleButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(toggleConsoleButton.isSelected()) {
+					console.setVisible(true);
 					toggleConsoleButton.setText("Hide Console");
 				} else {
+					console.setVisible(false);
 					toggleConsoleButton.setText("Show Console");
 				}
 			}
