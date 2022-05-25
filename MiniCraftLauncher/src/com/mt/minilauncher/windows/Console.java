@@ -14,6 +14,10 @@ import com.mt.minilauncher.util.TextAreaOutputStream;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import java.awt.Color;
+import javax.swing.JToolBar;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Console extends JFrame {
 
@@ -25,6 +29,8 @@ public class Console extends JFrame {
 	
 	private JPanel contentPane;
 	private JTextArea textArea;
+	private JToolBar toolBar;
+	private JButton btnNewButton;
 
 	/**
 	 * Create the frame.
@@ -48,6 +54,17 @@ public class Console extends JFrame {
 		textArea.setBackground(Color.BLACK);
 		scrollPane.setViewportView(textArea);
 		con = new PrintStream(new TextAreaOutputStream(textArea, 10000));
+		
+		toolBar = new JToolBar();
+		contentPane.add(toolBar, BorderLayout.SOUTH);
+		
+		btnNewButton = new JButton("Clear");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textArea.setText("");
+			}
+		});
+		toolBar.add(btnNewButton);
 	}
 
 	public JTextArea getTextArea() {
