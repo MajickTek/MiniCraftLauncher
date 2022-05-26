@@ -32,7 +32,7 @@ public class EditUtil {
         changelogURLField.setEditable(vo != null ? canEditCheckBox.isSelected(): false);
         versionField.setEditable(vo != null ? canEditCheckBox.isSelected() : false);
         
-        dialogPanel.add(new JLabel("Allow Editing (DANGEROUS!)"));
+        dialogPanel.add(new JLabel("Allow Editing?"));
         dialogPanel.add(canEditCheckBox);
         dialogPanel.add(new JLabel("Download URL:"));
         dialogPanel.add(urlField);
@@ -51,7 +51,7 @@ public class EditUtil {
         	urlField.setEditable(!urlField.isEditable());
         	versionField.setEditable(!versionField.isEditable());
         });
-        int result = JOptionPane.showConfirmDialog(null, dialogPanel, "Edit Version \"Profile\"", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        int result = JOptionPane.showConfirmDialog(null, dialogPanel, String.format("Edit Version \"%s\"", vo.version), JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
         if(result == JOptionPane.OK_OPTION && vo != null) {
         	vo.url = urlField.getText();
         	vo.version = versionField.getText();
