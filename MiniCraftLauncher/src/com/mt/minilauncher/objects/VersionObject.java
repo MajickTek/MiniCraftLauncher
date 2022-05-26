@@ -13,15 +13,14 @@ public class VersionObject implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public String url;
-	public String version;
+	public String url, version, changelogURL;
 	public boolean isDownloaded;
 	
 	public boolean canEdit;
 	
 	public boolean isRunning;
+
 	
-	public String changelog;
 	
 	public LauncherWrapper launcherWrapper;
 	
@@ -31,7 +30,7 @@ public class VersionObject implements Serializable {
 		this.isDownloaded = false;
 		this.canEdit = true;
 		this.isRunning = false;
-		this.changelog = "";
+		this.changelogURL = "";
 		launcherWrapper = new LauncherWrapper(new VanillaWrap(), LauncherWindow.instance);
 	}
 
@@ -91,12 +90,12 @@ public class VersionObject implements Serializable {
 		this.version = version;
 	}
 
-	public String getChangelog() {
-		return changelog;
+	public String getChangelogURL() {
+		return changelogURL;
 	}
 
-	public void setChangelog(String changelog) {
-		this.changelog = changelog;
+	public void setChangelogURL(String changelogURL) {
+		this.changelogURL = changelogURL;
 	}
 
 	@Override
@@ -104,7 +103,4 @@ public class VersionObject implements Serializable {
 		return String.format("%s [%s]", version, getDownloadStatus());
 	}
 	
-	public String toVerboseString() {
-		return "VersionObject [url=" + url + ", version=" + version + ", isDownloaded=" + isDownloaded + ", canEdit=" + canEdit + "]";
-	}
 }

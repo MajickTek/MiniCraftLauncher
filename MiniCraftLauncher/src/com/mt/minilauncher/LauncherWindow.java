@@ -44,7 +44,10 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JToolBar;
 import javax.swing.JButton;
@@ -354,15 +357,40 @@ public class LauncherWindow {
 							JTextArea jta = new JTextArea();
 							jsp.setViewportView(jta);
 							
+							Path changelogPath = Paths.get(Initializer.jarPath.toString(), vo.version + "-changelog.txt");
+							
+							try {
+								if(!changelogPath.toFile().exists()) {
+									if(!(vo.changelogURL.isBlank() || vo.changelogURL.isEmpty())) {
+										Util.downloadUsingNIO(vo.changelogURL, changelogPath.toString());
+									}
+								}
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
 							jta.setText("<!--Markdown rendering is not supported. As soon as it is, you won't see this message anymore.-->\n\n");
 							jta.append("<!--BEGIN CHANGELOG-->\n");
-							jta.append(vo.changelog);
+							if(changelogPath.toFile().exists()) {
+								try {
+									List<String> lines = Files.readAllLines(changelogPath);
+									lines.forEach(l -> {
+										jta.append(String.format("%s%n", l));
+									});
+								} catch (IOException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+							} else {
+								jta.append("<!--No changelog was found!-->\n");
+							}
 							jta.append("\n\n");
 							jta.append("<!--END CHANGELOG-->");
 							jta.setEditable(false);
 							frame.add(jsp, BorderLayout.CENTER);
 							frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 							frame.setVisible(true);
+							jta.setCaretPosition(0);
 						});
 						
 						menu.add(changelogMenu);

@@ -119,9 +119,11 @@ public class ChannelSelector extends JDialog {
 					ArrayList<ReleaseObject> releaseTree = GithubReleaseParser.parseReleases(this.getList().getSelectedValue().channelName, this.getList().getSelectedValue().target);
 					releaseTree.stream().filter(r -> (r.isPrerelease() == false)).forEach(ro -> {
 						VersionObject tmp = new VersionObject();
-						AssetObject ao = ro.getAsset("minicraft.jar");
-						if(!(ao == null)) {
-							tmp.url = ao.getUrl();
+						AssetObject jar = ro.getAsset("minicraft.jar");
+						AssetObject changelog = ro.getAsset("changelog.txt");
+						if(jar != null && changelog != null) {
+							tmp.url = jar.getUrl();
+							tmp.changelogURL = changelog.getUrl();
 						}
 						tmp.version = ro.getTagName();
 						tmp.canEdit = false;
@@ -132,9 +134,11 @@ public class ChannelSelector extends JDialog {
 					
 					releaseTree.stream().filter(r -> (r.isPrerelease() == true)).forEach(ro -> {
 						VersionObject tmp = new VersionObject();
-						AssetObject ao = ro.getAsset("minicraft.jar");
-						if(!(ao == null)) {
-							tmp.url = ao.getUrl();
+						AssetObject jar = ro.getAsset("minicraft.jar");
+						AssetObject changelog = ro.getAsset("changelog.txt");
+						if(jar != null && changelog != null) {
+							tmp.url = jar.getUrl();
+							tmp.changelogURL = changelog.getUrl();
 						}
 						tmp.version = ro.getTagName();
 						tmp.canEdit = false;
