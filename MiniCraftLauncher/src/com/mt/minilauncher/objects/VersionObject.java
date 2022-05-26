@@ -13,7 +13,7 @@ public class VersionObject implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public String url, version, changelogURL;
+	public String url, version, changelogURL, description;
 	public boolean isDownloaded;
 	
 	public boolean canEdit;
@@ -25,12 +25,13 @@ public class VersionObject implements Serializable {
 	public LauncherWrapper launcherWrapper;
 	
 	public VersionObject() {
-		this.url = "UNKNOWN";
-		this.version = "UNKNOWN";
+		this.url = "";
+		this.version = "";
 		this.isDownloaded = false;
 		this.canEdit = true;
 		this.isRunning = false;
 		this.changelogURL = "";
+		this.description = "";
 		launcherWrapper = new LauncherWrapper(new VanillaWrap(), LauncherWindow.instance);
 	}
 
@@ -96,6 +97,14 @@ public class VersionObject implements Serializable {
 
 	public void setChangelogURL(String changelogURL) {
 		this.changelogURL = changelogURL;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@Override

@@ -125,6 +125,7 @@ public class ChannelSelector extends JDialog {
 							tmp.url = jar.getUrl();
 							tmp.changelogURL = changelog.getUrl();
 						}
+						tmp.description = ro.getDescription();
 						tmp.version = ro.getTagName();
 						tmp.canEdit = false;
 						DefaultMutableTreeNode tmpNode = new DefaultMutableTreeNode();
@@ -140,6 +141,7 @@ public class ChannelSelector extends JDialog {
 							tmp.url = jar.getUrl();
 							tmp.changelogURL = changelog.getUrl();
 						}
+						tmp.description = ro.getDescription();
 						tmp.version = ro.getTagName();
 						tmp.canEdit = false;
 						DefaultMutableTreeNode tmpNode = new DefaultMutableTreeNode();

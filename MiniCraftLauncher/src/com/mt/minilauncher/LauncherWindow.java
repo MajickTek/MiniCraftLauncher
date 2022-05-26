@@ -24,6 +24,7 @@ import com.mt.minilauncher.util.EditUtil;
 import com.mt.minilauncher.util.GetMD5FromJar;
 import com.mt.minilauncher.util.Util;
 import com.mt.minilauncher.windows.AboutPanel;
+import com.mt.minilauncher.windows.ChangelogViewer;
 import com.mt.minilauncher.windows.ChannelSelector;
 import com.mt.minilauncher.windows.Console;
 
@@ -350,12 +351,8 @@ public class LauncherWindow {
 						
 						JMenuItem changelogMenu = new JMenuItem("View Changelog");
 						changelogMenu.addActionListener(a -> {
-							JFrame frame = new JFrame("Changelog");
-							frame.setSize(400, 400);
-							frame.setLayout(new BorderLayout());
-							JScrollPane jsp = new JScrollPane();
-							JTextArea jta = new JTextArea();
-							jsp.setViewportView(jta);
+							ChangelogViewer cv = new ChangelogViewer();
+							
 							
 							Path changelogPath = Paths.get(Initializer.jarPath.toString(), vo.version + "-changelog.txt");
 							
@@ -369,28 +366,23 @@ public class LauncherWindow {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
-							jta.setText("<!--Markdown rendering is not supported. As soon as it is, you won't see this message anymore.-->\n\n");
-							jta.append("<!--BEGIN CHANGELOG-->\n");
 							if(changelogPath.toFile().exists()) {
 								try {
 									List<String> lines = Files.readAllLines(changelogPath);
 									lines.forEach(l -> {
-										jta.append(String.format("%s%n", l));
+										cv.getChangelog().append(String.format("%s%n", l));
 									});
 								} catch (IOException e1) {
 									// TODO Auto-generated catch block
 									e1.printStackTrace();
 								}
 							} else {
-								jta.append("<!--No changelog was found!-->\n");
+								cv.getChangelog().append("No changelog was found!\n");
 							}
-							jta.append("\n\n");
-							jta.append("<!--END CHANGELOG-->");
-							jta.setEditable(false);
-							frame.add(jsp, BorderLayout.CENTER);
-							frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-							frame.setVisible(true);
-							jta.setCaretPosition(0);
+							
+							cv.getDescription().setText(vo.description);
+							cv.scrollTop();
+							cv.setVisible(true);
 						});
 						
 						menu.add(changelogMenu);
