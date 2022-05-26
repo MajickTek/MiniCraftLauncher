@@ -25,6 +25,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import com.mt.mclupdater.AssetObject;
 import com.mt.mclupdater.ReleaseObject;
 import com.mt.mclupdater.util.GithubReleaseParser;
 import com.mt.minilauncher.Initializer;
@@ -116,22 +117,26 @@ public class ChannelSelector extends JDialog {
 					DefaultMutableTreeNode preReleaseNode = new DefaultMutableTreeNode("Pre-Releases");
 					
 					ArrayList<ReleaseObject> releaseTree = GithubReleaseParser.parseReleases(this.getList().getSelectedValue().channelName, this.getList().getSelectedValue().target);
-					releaseTree.stream().filter(p -> (p.isPrerelease() == false)).forEach(r -> {
+					releaseTree.stream().filter(r -> (r.isPrerelease() == false)).forEach(ro -> {
 						VersionObject tmp = new VersionObject();
-						tmp.url = r.getFileURL();
-						tmp.version = r.getTagName();
-						tmp.changelog = r.getDescription();
+						AssetObject ao = ro.getAsset("minicraft.jar");
+						if(!(ao == null)) {
+							tmp.url = ao.getUrl();
+						}
+						tmp.version = ro.getTagName();
 						tmp.canEdit = false;
 						DefaultMutableTreeNode tmpNode = new DefaultMutableTreeNode();
 						tmpNode.setUserObject(tmp);
 						releaseNode.add(tmpNode);
 					});
 					
-					releaseTree.stream().filter(p -> (p.isPrerelease() == true)).forEach(r -> {
+					releaseTree.stream().filter(r -> (r.isPrerelease() == true)).forEach(ro -> {
 						VersionObject tmp = new VersionObject();
-						tmp.url = r.getFileURL();
-						tmp.version = r.getTagName();
-						tmp.changelog = r.getDescription();
+						AssetObject ao = ro.getAsset("minicraft.jar");
+						if(!(ao == null)) {
+							tmp.url = ao.getUrl();
+						}
+						tmp.version = ro.getTagName();
 						tmp.canEdit = false;
 						DefaultMutableTreeNode tmpNode = new DefaultMutableTreeNode();
 						tmpNode.setUserObject(tmp);
