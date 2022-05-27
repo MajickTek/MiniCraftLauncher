@@ -8,9 +8,7 @@ public class ChannelObject implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public String channelFile;
-	public String channelName;
-	public String target;
+	public String channelFile, channelName, target, liveUsername, liveRepoName;
 	
 	
 	LauncherWindow window;
@@ -21,6 +19,8 @@ public class ChannelObject implements Serializable{
 		this.channelFile = "";
 		this.channelName = "";
 		this.target = "";
+		this.liveUsername = "";
+		this.liveRepoName = "";
 		this.window = null;
 		this.isLive = false;
 	}
@@ -66,7 +66,22 @@ public class ChannelObject implements Serializable{
 		this.window = window;
 	}
 
-	
+	public String getLiveUsername() {
+		return liveUsername;
+	}
+
+	public void setLiveUsername(String liveUsername) {
+		this.liveUsername = liveUsername;
+	}
+
+	public String getLiveRepoName() {
+		return liveRepoName;
+	}
+
+	public void setLiveRepoName(String liveRepoName) {
+		this.liveRepoName = liveRepoName;
+	}
+
 	@Override
 	public String toString() {
 		return channelName;

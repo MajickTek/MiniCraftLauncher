@@ -116,7 +116,7 @@ public class ChannelSelector extends JDialog {
 					DefaultMutableTreeNode releaseNode = new DefaultMutableTreeNode("Releases");
 					DefaultMutableTreeNode preReleaseNode = new DefaultMutableTreeNode("Pre-Releases");
 					
-					ArrayList<ReleaseObject> releaseTree = GithubReleaseParser.parseReleases(this.getList().getSelectedValue().channelName, this.getList().getSelectedValue().target);
+					ArrayList<ReleaseObject> releaseTree = GithubReleaseParser.parseReleases(this.getList().getSelectedValue().liveUsername, this.getList().getSelectedValue().liveRepoName);
 					releaseTree.stream().filter(r -> (r.isPrerelease() == false)).forEach(ro -> {
 						VersionObject tmp = new VersionObject();
 						AssetObject jar = ro.getAsset("minicraft.jar");
@@ -230,9 +230,9 @@ public class ChannelSelector extends JDialog {
 		}
 		ChannelObject liveObject = new ChannelObject();
 		liveObject.setLive(true);
-		//TODO: The way this works is hacky and hardcoded. Change this
-		liveObject.setChannelName("MinicraftPlus");
-		liveObject.setTarget("minicraft-plus-revived");
+		
+		liveObject.setLiveUsername("MinicraftPlus");
+		liveObject.setLiveRepoName("minicraft-plus-revived");
 		model.add(0, liveObject);//Pushed to the beginning of the list
 		list.setModel(model);
 		list.updateUI();
