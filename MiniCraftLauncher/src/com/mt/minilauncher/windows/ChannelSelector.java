@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -115,41 +116,15 @@ public class ChannelSelector extends JDialog {
 					DefaultTreeModel dtm = new DefaultTreeModel(root);
 					DefaultMutableTreeNode releaseNode = new DefaultMutableTreeNode("Releases");
 					DefaultMutableTreeNode preReleaseNode = new DefaultMutableTreeNode("Pre-Releases");
+//					DefaultMutableTreeNode tmpNode = new DefaultMutableTreeNode();
+//					tmpNode.setUserObject(versionObject);
+//					preReleaseNode.add(tmpNode);
+					GithubAPI[] releaseTree = GithubReleaseParser.parseReleases(this.getList().getSelectedValue().liveUsername, this.getList().getSelectedValue().liveRepoName);
+					ArrayList<GithubAPI> releases = new ArrayList<>(Arrays.asList(releaseTree));
 					
-					ArrayList<GithubAPI> releaseTree = GithubReleaseParser.parseReleases(this.getList().getSelectedValue().liveUsername, this.getList().getSelectedValue().liveRepoName);
-					releaseTree.stream().filter(r -> (r.getPrerelease() == false)).forEach(release -> {
-						VersionObject tmp = new VersionObject();
-						tmp.canEdit = false;
-						tmp.description = release.getBody();
-						release.getAssets().forEach(asset -> {
-							if(asset.getName().toLowerCase().contains("minicraft")) {
-								tmp.url = asset.getBrowserDownloadURL();
-							}
-							if(asset.getName().toLowerCase().contains("changelog")) {
-								tmp.changelogURL = asset.getBrowserDownloadURL();
-							}
-						});
+					
+					releases.stream().filter(r -> (r.getPrerelease() == false)).forEach(release -> {
 						
-						DefaultMutableTreeNode tmpNode = new DefaultMutableTreeNode();
-						tmpNode.setUserObject(tmp);
-						releaseNode.add(tmpNode);
-					});
-					
-					releaseTree.stream().filter(r -> (r.getPrerelease() == true)).forEach(release -> {
-						VersionObject tmp = new VersionObject();
-						tmp.canEdit = false;
-						tmp.description = release.getBody();
-						release.getAssets().forEach(asset -> {
-							if(asset.getName().toLowerCase().contains("minicraft")) {
-								tmp.url = asset.getBrowserDownloadURL();
-							}
-							if(asset.getName().toLowerCase().contains("changelog")) {
-								tmp.changelogURL = asset.getBrowserDownloadURL();
-							}
-						});
-						DefaultMutableTreeNode tmpNode = new DefaultMutableTreeNode();
-						tmpNode.setUserObject(tmp);
-						preReleaseNode.add(tmpNode);
 					});
 					root.add(releaseNode);
 					root.add(preReleaseNode);
