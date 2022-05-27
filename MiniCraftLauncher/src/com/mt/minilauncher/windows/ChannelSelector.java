@@ -119,15 +119,11 @@ public class ChannelSelector extends JDialog {
 					ArrayList<ReleaseObject> releaseTree = GithubReleaseParser.parseReleases(this.getList().getSelectedValue().liveUsername, this.getList().getSelectedValue().liveRepoName);
 					releaseTree.stream().filter(r -> (r.isPrerelease() == false)).forEach(ro -> {
 						VersionObject tmp = new VersionObject();
-						AssetObject jar = ro.getAsset("minicraft.jar");
-						AssetObject changelog = ro.getAsset("changelog.txt");
-						if(jar != null && changelog != null) {
-							tmp.url = jar.getUrl();
-							tmp.changelogURL = changelog.getUrl();
-						}
-						tmp.description = ro.getDescription();
-						tmp.version = ro.getTagName();
 						tmp.canEdit = false;
+						tmp.version = ro.getTagName();
+						tmp.description = ro.getDescription();
+						
+						System.out.println(ro.getName() + ": " + ro.getAssets().get(0));
 						DefaultMutableTreeNode tmpNode = new DefaultMutableTreeNode();
 						tmpNode.setUserObject(tmp);
 						releaseNode.add(tmpNode);
@@ -135,15 +131,7 @@ public class ChannelSelector extends JDialog {
 					
 					releaseTree.stream().filter(r -> (r.isPrerelease() == true)).forEach(ro -> {
 						VersionObject tmp = new VersionObject();
-						AssetObject jar = ro.getAsset("minicraft.jar");
-						AssetObject changelog = ro.getAsset("changelog.txt");
-						if(jar != null && changelog != null) {
-							tmp.url = jar.getUrl();
-							tmp.changelogURL = changelog.getUrl();
-						}
-						tmp.description = ro.getDescription();
-						tmp.version = ro.getTagName();
-						tmp.canEdit = false;
+						
 						DefaultMutableTreeNode tmpNode = new DefaultMutableTreeNode();
 						tmpNode.setUserObject(tmp);
 						preReleaseNode.add(tmpNode);
@@ -230,10 +218,10 @@ public class ChannelSelector extends JDialog {
 		}
 		ChannelObject liveObject = new ChannelObject();
 		liveObject.setLive(true);
-		
+		liveObject.setChannelName("MinicraftPlus");
 		liveObject.setLiveUsername("MinicraftPlus");
 		liveObject.setLiveRepoName("minicraft-plus-revived");
-		model.add(0, liveObject);//Pushed to the beginning of the list
+		model.add(0, liveObject);// Pushed to the beginning of the list
 		list.setModel(model);
 		list.updateUI();
 	}
@@ -249,6 +237,5 @@ public class ChannelSelector extends JDialog {
 	public JButton getCancelButton() {
 		return cancelButton;
 	}
-	
-	
+
 }
