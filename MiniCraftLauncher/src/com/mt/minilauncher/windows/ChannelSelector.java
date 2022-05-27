@@ -25,8 +25,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import com.mt.mclupdater.AssetObject;
-import com.mt.mclupdater.ReleaseObject;
 import com.mt.mclupdater.util.GithubReleaseParser;
 import com.mt.minilauncher.Initializer;
 import com.mt.minilauncher.LauncherWindow;
@@ -34,6 +32,8 @@ import com.mt.minilauncher.objects.ChannelObject;
 import com.mt.minilauncher.objects.VersionObject;
 import com.mt.minilauncher.util.Util;
 import com.mt.minilauncher.util.XMLConverter;
+
+import io.quicktype.GithubAPI;
 
 import javax.swing.JScrollPane;
 import javax.swing.JList;
@@ -116,22 +116,37 @@ public class ChannelSelector extends JDialog {
 					DefaultMutableTreeNode releaseNode = new DefaultMutableTreeNode("Releases");
 					DefaultMutableTreeNode preReleaseNode = new DefaultMutableTreeNode("Pre-Releases");
 					
-					ArrayList<ReleaseObject> releaseTree = GithubReleaseParser.parseReleases(this.getList().getSelectedValue().liveUsername, this.getList().getSelectedValue().liveRepoName);
-					releaseTree.stream().filter(r -> (r.isPrerelease() == false)).forEach(ro -> {
+					ArrayList<GithubAPI> releaseTree = GithubReleaseParser.parseReleases(this.getList().getSelectedValue().liveUsername, this.getList().getSelectedValue().liveRepoName);
+					releaseTree.stream().filter(r -> (r.getPrerelease() == false)).forEach(release -> {
 						VersionObject tmp = new VersionObject();
 						tmp.canEdit = false;
-						tmp.version = ro.getTagName();
-						tmp.description = ro.getDescription();
+						tmp.description = release.getBody();
+						release.getAssets().forEach(asset -> {
+							if(asset.getName().toLowerCase().contains("minicraft")) {
+								tmp.url = asset.getBrowserDownloadURL();
+							}
+							if(asset.getName().toLowerCase().contains("changelog")) {
+								tmp.changelogURL = asset.getBrowserDownloadURL();
+							}
+						});
 						
-						System.out.println(ro.getName() + ": " + ro.getAssets().get(0));
 						DefaultMutableTreeNode tmpNode = new DefaultMutableTreeNode();
 						tmpNode.setUserObject(tmp);
 						releaseNode.add(tmpNode);
 					});
 					
-					releaseTree.stream().filter(r -> (r.isPrerelease() == true)).forEach(ro -> {
+					releaseTree.stream().filter(r -> (r.getPrerelease() == true)).forEach(release -> {
 						VersionObject tmp = new VersionObject();
-						
+						tmp.canEdit = false;
+						tmp.description = release.getBody();
+						release.getAssets().forEach(asset -> {
+							if(asset.getName().toLowerCase().contains("minicraft")) {
+								tmp.url = asset.getBrowserDownloadURL();
+							}
+							if(asset.getName().toLowerCase().contains("changelog")) {
+								tmp.changelogURL = asset.getBrowserDownloadURL();
+							}
+						});
 						DefaultMutableTreeNode tmpNode = new DefaultMutableTreeNode();
 						tmpNode.setUserObject(tmp);
 						preReleaseNode.add(tmpNode);
