@@ -34,6 +34,7 @@ import com.mt.minilauncher.objects.VersionObject;
 import com.mt.minilauncher.util.Util;
 import com.mt.minilauncher.util.XMLConverter;
 
+import io.quicktype.Asset;
 import io.quicktype.GithubAPI;
 
 import javax.swing.JScrollPane;
@@ -116,15 +117,47 @@ public class ChannelSelector extends JDialog {
 					DefaultTreeModel dtm = new DefaultTreeModel(root);
 					DefaultMutableTreeNode releaseNode = new DefaultMutableTreeNode("Releases");
 					DefaultMutableTreeNode preReleaseNode = new DefaultMutableTreeNode("Pre-Releases");
-//					DefaultMutableTreeNode tmpNode = new DefaultMutableTreeNode();
-//					tmpNode.setUserObject(versionObject);
-//					preReleaseNode.add(tmpNode);
+
 					GithubAPI[] releaseTree = GithubReleaseParser.parseReleases(this.getList().getSelectedValue().liveUsername, this.getList().getSelectedValue().liveRepoName);
 					ArrayList<GithubAPI> releases = new ArrayList<>(Arrays.asList(releaseTree));
 					
 					
 					releases.stream().filter(r -> (r.getPrerelease() == false)).forEach(release -> {
+						VersionObject vo = new VersionObject();
+						vo.canEdit = false;
+						vo.description = release.getBody();
+						vo.version = release.getTagName();
 						
+						ArrayList<Asset> assets = new ArrayList<>(Arrays.asList(release.getAssets()));
+						assets.stream().filter(a -> (a.getName().contains(".jar"))).forEach(asset -> {
+							vo.url = asset.getBrowserDownloadURL();
+						});
+						assets.stream().filter(a -> (a.getName().toLowerCase().contains("changelog"))).forEach(asset -> {
+							vo.changelogURL = asset.getBrowserDownloadURL();
+						});
+						
+						DefaultMutableTreeNode tmpNode = new DefaultMutableTreeNode();
+						tmpNode.setUserObject(vo);
+						releaseNode.add(tmpNode);
+					});
+					
+					releases.stream().filter(r -> (r.getPrerelease() == true)).forEach(release -> {
+						VersionObject vo = new VersionObject();
+						vo.canEdit = false;
+						vo.description = release.getBody();
+						vo.version = release.getTagName();
+
+						ArrayList<Asset> assets = new ArrayList<>(Arrays.asList(release.getAssets()));
+						assets.stream().filter(a -> (a.getName().contains(".jar"))).forEach(asset -> {
+							vo.url = asset.getBrowserDownloadURL();
+						});
+						assets.stream().filter(a -> (a.getName().toLowerCase().contains("changelog"))).forEach(asset -> {
+							vo.changelogURL = asset.getBrowserDownloadURL();
+						});
+						
+						DefaultMutableTreeNode tmpNode = new DefaultMutableTreeNode();
+						tmpNode.setUserObject(vo);
+						preReleaseNode.add(tmpNode);
 					});
 					root.add(releaseNode);
 					root.add(preReleaseNode);
