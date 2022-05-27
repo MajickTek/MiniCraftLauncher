@@ -213,7 +213,11 @@ public class ChannelSelector extends JDialog {
 					String target = urlElement.getAttribute("target");
 					String url = (urlElement.getTextContent().startsWith("http://")
 							|| urlElement.getTextContent().startsWith("https://")) ? urlElement.getTextContent() : "";
-					tempList.add(new ChannelObject(url, indexName, target));
+					ChannelObject co = new ChannelObject();
+					co.channelFile = url;
+					co.channelName = indexName;
+					co.target = target;
+					tempList.add(co);
 				}
 			}
 		}

@@ -1,8 +1,6 @@
 package com.mt.minilauncher.objects;
 
 import java.io.Serializable;
-import java.util.Random;
-
 import com.mt.minilauncher.LauncherWindow;
 
 public class ChannelObject implements Serializable{
@@ -26,30 +24,6 @@ public class ChannelObject implements Serializable{
 		this.window = null;
 		this.isLive = false;
 	}
-
-	public ChannelObject(String channelFile) {
-		Random rand = new Random();
-		this.channelFile = channelFile;
-		this.channelName = "Channel " + rand.nextInt(0, 256);
-		this.target = "index" + rand.nextInt(0, 256) + ".xml";
-		isLive = false;
-	}
-
-	public ChannelObject(String channelFile, String channelName) {
-		Random rand = new Random();
-		this.channelFile = channelFile;
-		this.channelName = channelName;
-		this.target = "index" + rand.nextInt(0, 256) + ".xml";
-		isLive = false;
-	}
-	
-	public ChannelObject(String channelFile, String channelName, String target) {
-		this.channelFile = channelFile;
-		this.channelName = channelName;
-		this.target = target;
-		isLive = false;
-	}
-	
 
 	public String getChannelFile() {
 		return channelFile;
