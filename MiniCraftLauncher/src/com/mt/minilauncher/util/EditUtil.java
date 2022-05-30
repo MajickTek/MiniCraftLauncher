@@ -49,6 +49,7 @@ public class EditUtil {
         
         canEditCheckBox.addActionListener(listener -> {
         	urlField.setEditable(!urlField.isEditable());
+        	changelogURLField.setEditable(!changelogURLField.isEditable());
         	versionField.setEditable(!versionField.isEditable());
         });
         int result = JOptionPane.showConfirmDialog(null, dialogPanel, String.format("Edit Version \"%s\"", vo.version), JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);

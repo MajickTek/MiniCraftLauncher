@@ -132,7 +132,7 @@ public class ChannelSelector extends JDialog {
 						assets.stream().filter(a -> (a.getName().contains(".jar"))).forEach(asset -> {
 							vo.url = asset.getBrowserDownloadURL();
 						});
-						assets.stream().filter(a -> (a.getName().toLowerCase().contains("changelog"))).forEach(asset -> {
+						assets.stream().filter(a -> (a.getName().equalsIgnoreCase("changelog.txt"))).forEach(asset -> {
 							vo.changelogURL = asset.getBrowserDownloadURL();
 						});
 						
