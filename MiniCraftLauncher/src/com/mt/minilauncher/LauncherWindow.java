@@ -266,7 +266,7 @@ public class LauncherWindow {
 						JMenuItem saveFolderMenu = new JMenuItem("Open Save Folder");
 						JMenuItem modFolderMenu = new JMenuItem("Open Mods Folder");
 						JMenuItem MD5Menu = new JMenuItem("Get MD5 Hash");
-						
+						MD5Menu.setEnabled(vo.isDownloaded);
 
 						editMenu.addActionListener(a -> {
 							node.setUserObject(EditUtil.editInfo(vo));
