@@ -15,6 +15,7 @@ import com.mt.minilauncher.Initializer;
 import com.mt.minilauncher.LauncherWindow;
 import com.mt.minilauncher.downloader.Downloader;
 import com.mt.minilauncher.objects.VersionObject;
+import com.mt.minilauncher.windows.DownloadDialog;
 
 public class Util {
 	
@@ -30,12 +31,22 @@ public class Util {
 	public static void downloadJar(VersionObject vo, LauncherWindow window) {
 		String path = Paths.get(Initializer.jarPath.toString(), vo.version + ".jar").toString();
 		System.out.println(String.format("Downloading: [URL:%s, path: %s]", vo.getURL(), path));
-		Downloader downloader = new Downloader(vo.getURL(),
-				path, window.getProgressBar(),
-				() -> {// callback function which runs when download is finished (at 100% and hasn't failed)
-					vo.isDownloaded = true;
-					window.getTree().updateUI();
-				});
+		DownloadDialog dd = new DownloadDialog();
+		dd.setVisible(true);
+		Downloader downloader = new Downloader();
+		downloader.setUrl(vo.url);
+		downloader.setLocalLocation(path);
+		downloader.setJTextArea(window.getProgressBar());
+		downloader.setDownloadProgressCallback((f) -> {
+			dd.getProgressBar().setValue((int) Double.parseDouble(f.getPercentComplete().replace('%', ' ').strip()));
+			dd.getLabel().setText("Downloading: " + f.getPercentComplete());
+			dd.setTitle("Downloading: " + f.getPercentComplete());
+		});
+		downloader.setDownloadFinishedCallback((f) -> {
+			dd.dispose();
+			vo.isDownloaded = true;
+			window.getTree().updateUI();
+		});
 		downloader.download();
 	}
 	

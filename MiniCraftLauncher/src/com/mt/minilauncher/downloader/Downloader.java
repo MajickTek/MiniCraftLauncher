@@ -4,54 +4,44 @@ import javax.swing.JTextArea;
 
 import com.littlebigberry.httpfiledownloader.FileDownloader;
 import com.littlebigberry.httpfiledownloader.FileDownloaderDelegate;
-import com.mt.minilauncher.util.Callback;
 
 public class Downloader implements FileDownloaderDelegate{
 
 	String url, localLocation;
 	JTextArea jta;
 	
-	Callback callback;
+	DownloaderCallback downloadStartCallback, downloadFinishedCallback, downloadProgressCallback, downloadFailCallback;
 	
-	public Downloader(String url, String localLocation) {
-		this.url = url;
-		this.localLocation = localLocation;
-		jta = null;
-		callback = null;
-	}
-
-	public Downloader(String url, String localLocation, JTextArea jta) {
-		this.url = url;
-		this.localLocation = localLocation;
-		this.jta = jta;
-		callback = null;
-	}
+	FileDownloader fileDownloader;
 	
-	public Downloader(String url, String localLocation, JTextArea jta, Callback onFinish) {
-		this.url = url;
-		this.localLocation = localLocation;
-		this.jta = jta;
-		callback = onFinish;
-	}
-	
-	public Downloader(String url, String localLocation, Callback onFinish) {
-		this.url = url;
-		this.localLocation = localLocation;
+	public Downloader() {
+		this.fileDownloader = new FileDownloader(this);
+		this.url = "";
+		this.localLocation = "";
 		this.jta = null;
-		callback = onFinish;
+		
+		this.downloadStartCallback = null;
+		this.downloadFinishedCallback = null;
+		this.downloadProgressCallback = null;
+		this.downloadFailCallback = null;
 	}
+	
 	
 	public void download() {
-		FileDownloader fileDownloader = new FileDownloader(this);
-		fileDownloader.setUrl(url);
-		fileDownloader.setLocalLocation(localLocation);
-		fileDownloader.beginDownload();
+		if((!url.isBlank() && !url.isEmpty()) && (!localLocation.isBlank() && !localLocation.isEmpty())) {
+			fileDownloader.setUrl(url);
+			fileDownloader.setLocalLocation(localLocation);
+			fileDownloader.beginDownload();
+		}
 	}
 	
 	@Override
 	public void didStartDownload(FileDownloader fileDownloader) {
 		if(jta != null) {
 			jta.setText("Starting download...");
+		}
+		if(downloadStartCallback != null) {
+			downloadStartCallback.call(fileDownloader);
 		}
 	}
 
@@ -60,6 +50,9 @@ public class Downloader implements FileDownloaderDelegate{
 		if(jta != null) {
 			jta.setText("Downloading: " + fileDownloader.getPercentComplete());
 		}
+		if(downloadProgressCallback != null) {
+			downloadProgressCallback.call(fileDownloader);
+		}
 	}
 
 	@Override
@@ -67,14 +60,98 @@ public class Downloader implements FileDownloaderDelegate{
 		if(jta != null) {
 			jta.setText("Ready to play!");
 		}
-		if(callback != null) {
-			callback.call();
+		if(downloadFinishedCallback != null) {
+			downloadFinishedCallback.call(fileDownloader);
 		}
 	}
 
 	@Override
 	public void didFailDownload(FileDownloader fileDownloader) {
 		System.err.println("Error");
+		if(downloadFailCallback != null) {
+			downloadFailCallback.call(fileDownloader);
+		}
 	}
+
+
+	public String getUrl() {
+		return url;
+	}
+
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+
+	public String getLocalLocation() {
+		return localLocation;
+	}
+
+
+	public void setLocalLocation(String localLocation) {
+		this.localLocation = localLocation;
+	}
+
+
+	public JTextArea getJTextArea() {
+		return jta;
+	}
+
+
+	public void setJTextArea(JTextArea jta) {
+		this.jta = jta;
+	}
+
+
+	public DownloaderCallback getDownloadFinishedCallback() {
+		return downloadFinishedCallback;
+	}
+
+
+	public void setDownloadFinishedCallback(DownloaderCallback downloadFinishedCallback) {
+		this.downloadFinishedCallback = downloadFinishedCallback;
+	}
+
+
+	public DownloaderCallback getDownloadProgressCallback() {
+		return downloadProgressCallback;
+	}
+
+
+	public void setDownloadProgressCallback(DownloaderCallback downloadProgressCallback) {
+		this.downloadProgressCallback = downloadProgressCallback;
+	}
+
+
+	public DownloaderCallback getDownloadStartCallback() {
+		return downloadStartCallback;
+	}
+
+
+	public void setDownloadStartCallback(DownloaderCallback downloadStartCallback) {
+		this.downloadStartCallback = downloadStartCallback;
+	}
+
+
+	public DownloaderCallback getDownloadFailCallback() {
+		return downloadFailCallback;
+	}
+
+
+	public void setDownloadFailCallback(DownloaderCallback downloadFailCallback) {
+		this.downloadFailCallback = downloadFailCallback;
+	}
+
+
+	public FileDownloader getFileDownloader() {
+		return fileDownloader;
+	}
+
+
+	public void setFileDownloader(FileDownloader fileDownloader) {
+		this.fileDownloader = fileDownloader;
+	}
+	
 	
 }
