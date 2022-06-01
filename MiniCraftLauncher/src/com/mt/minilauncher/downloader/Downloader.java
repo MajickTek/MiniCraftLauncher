@@ -8,8 +8,7 @@ import com.littlebigberry.httpfiledownloader.FileDownloaderDelegate;
 public class Downloader implements FileDownloaderDelegate{
 
 	String url, localLocation;
-	JTextArea jta;
-	
+
 	DownloaderCallback downloadStartCallback, downloadFinishedCallback, downloadProgressCallback, downloadFailCallback;
 	
 	FileDownloader fileDownloader;
@@ -18,7 +17,7 @@ public class Downloader implements FileDownloaderDelegate{
 		this.fileDownloader = new FileDownloader(this);
 		this.url = "";
 		this.localLocation = "";
-		this.jta = null;
+		
 		
 		this.downloadStartCallback = null;
 		this.downloadFinishedCallback = null;
@@ -37,9 +36,7 @@ public class Downloader implements FileDownloaderDelegate{
 	
 	@Override
 	public void didStartDownload(FileDownloader fileDownloader) {
-		if(jta != null) {
-			jta.setText("Starting download...");
-		}
+		
 		if(downloadStartCallback != null) {
 			downloadStartCallback.call(fileDownloader);
 		}
@@ -47,9 +44,7 @@ public class Downloader implements FileDownloaderDelegate{
 
 	@Override
 	public void didProgressDownload(FileDownloader fileDownloader) {
-		if(jta != null) {
-			jta.setText("Downloading: " + fileDownloader.getPercentComplete());
-		}
+		
 		if(downloadProgressCallback != null) {
 			downloadProgressCallback.call(fileDownloader);
 		}
@@ -57,9 +52,7 @@ public class Downloader implements FileDownloaderDelegate{
 
 	@Override
 	public void didFinishDownload(FileDownloader fileDownloader) {
-		if(jta != null) {
-			jta.setText("Ready to play!");
-		}
+		
 		if(downloadFinishedCallback != null) {
 			downloadFinishedCallback.call(fileDownloader);
 		}
@@ -91,16 +84,6 @@ public class Downloader implements FileDownloaderDelegate{
 
 	public void setLocalLocation(String localLocation) {
 		this.localLocation = localLocation;
-	}
-
-
-	public JTextArea getJTextArea() {
-		return jta;
-	}
-
-
-	public void setJTextArea(JTextArea jta) {
-		this.jta = jta;
 	}
 
 

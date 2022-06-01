@@ -15,7 +15,6 @@ import com.mt.minilauncher.Initializer;
 import com.mt.minilauncher.LauncherWindow;
 import com.mt.minilauncher.downloader.Downloader;
 import com.mt.minilauncher.objects.VersionObject;
-import com.mt.minilauncher.windows.DownloadDialog;
 
 public class Util {
 	
@@ -31,8 +30,8 @@ public class Util {
 	public static void downloadJar(VersionObject vo, LauncherWindow window) {
 		String path = Paths.get(Initializer.jarPath.toString(), vo.version + ".jar").toString();
 		System.out.println(String.format("Downloading: [URL:%s, path: %s]", vo.getURL(), path));
-		//DownloadDialog dd = new DownloadDialog();
-		//dd.setVisible(true);
+
+
 		Downloader downloader = new Downloader();
 		downloader.setUrl(vo.url);
 		downloader.setLocalLocation(path);
@@ -40,7 +39,7 @@ public class Util {
 		downloader.setDownloadProgressCallback((f) -> {
 			window.getProgressBar().setValue((int) Double.parseDouble(f.getPercentComplete().replace('%', ' ').strip()));
 			window.getProgressBarLabel().setText("Downloading: " + f.getPercentComplete());
-//			dd.setTitle("Downloading: " + f.getPercentComplete());
+
 		});
 		downloader.setDownloadFinishedCallback((f) -> {
 			window.getProgressBarLabel().setText("Ready to Play! [" + vo.version + "]");
