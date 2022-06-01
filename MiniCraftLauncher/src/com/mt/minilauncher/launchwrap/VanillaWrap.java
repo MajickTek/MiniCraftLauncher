@@ -46,7 +46,7 @@ public class VanillaWrap implements IWrap{
 		if(!vo.isRunning) {
 			gameThread.start();
 		} else {
-			window.getProgressBar().setText("This version is already running!");
+			System.out.println("User attempted to launch a version that is already running: " + vo.version);
 		}
 		
 		

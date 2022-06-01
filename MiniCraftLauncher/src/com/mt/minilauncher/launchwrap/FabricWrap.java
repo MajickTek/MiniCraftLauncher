@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 
+import com.mt.minilauncher.Debug;
 import com.mt.minilauncher.Initializer;
 import com.mt.minilauncher.LauncherWindow;
 import com.mt.minilauncher.objects.VersionObject;
@@ -28,10 +29,11 @@ public class FabricWrap implements IWrap {
 				
 				File f = new File("FabricBootstrap.jar");
 				if (!f.exists()) {
-					window.getProgressBar().setText("Failed to use FabricWrap, could not find FabricBootstrap.jar!");
+					String error = "Failed to use FabricWrap, could not find FabricBootstrap.jar!";
+					System.err.println(error);
+					Debug.callCrashDialog("Fabric Loader", error, Debug.ERR);
 				} else {
-					window.getProgressBar().setText(
-							"Found FabricBootstrap.jar! Attempting to launch Fabric. Assuming the parameters have not changed.");
+					System.out.println("Found FabricBootstrap.jar! Attempting to launch Fabric. Assuming the parameters have not changed.");
 					try {
 						// FabricBootstrap expects 3 arguments: the version folder, the jar file, and
 						// the launcher folder
@@ -67,7 +69,7 @@ public class FabricWrap implements IWrap {
 		if(!vo.isRunning) {
 			gameThread.start();
 		} else {
-			window.getProgressBar().setText("This version is already running!");
+			System.out.println("User attempted to launch a version that is already running: " + vo.version);
 		}
 
 	}

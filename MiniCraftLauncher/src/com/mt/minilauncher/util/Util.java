@@ -31,19 +31,19 @@ public class Util {
 	public static void downloadJar(VersionObject vo, LauncherWindow window) {
 		String path = Paths.get(Initializer.jarPath.toString(), vo.version + ".jar").toString();
 		System.out.println(String.format("Downloading: [URL:%s, path: %s]", vo.getURL(), path));
-		DownloadDialog dd = new DownloadDialog();
-		dd.setVisible(true);
+		//DownloadDialog dd = new DownloadDialog();
+		//dd.setVisible(true);
 		Downloader downloader = new Downloader();
 		downloader.setUrl(vo.url);
 		downloader.setLocalLocation(path);
-		downloader.setJTextArea(window.getProgressBar());
+		
 		downloader.setDownloadProgressCallback((f) -> {
-			dd.getProgressBar().setValue((int) Double.parseDouble(f.getPercentComplete().replace('%', ' ').strip()));
-			dd.getLabel().setText("Downloading: " + f.getPercentComplete());
-			dd.setTitle("Downloading: " + f.getPercentComplete());
+			window.getProgressBar().setValue((int) Double.parseDouble(f.getPercentComplete().replace('%', ' ').strip()));
+			window.getProgressBarLabel().setText("Downloading: " + f.getPercentComplete());
+//			dd.setTitle("Downloading: " + f.getPercentComplete());
 		});
 		downloader.setDownloadFinishedCallback((f) -> {
-			dd.dispose();
+			window.getProgressBarLabel().setText("Ready to Play! [" + vo.version + "]");
 			vo.isDownloaded = true;
 			window.getTree().updateUI();
 		});

@@ -4,7 +4,6 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import java.awt.BorderLayout;
@@ -36,7 +35,6 @@ import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBoxMenuItem;
-import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -54,6 +52,10 @@ import javax.swing.JToolBar;
 import javax.swing.JButton;
 import java.awt.Toolkit;
 import javax.swing.JToggleButton;
+import javax.swing.JProgressBar;
+import javax.swing.JPanel;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
 
 public class LauncherWindow {
 
@@ -62,9 +64,10 @@ public class LauncherWindow {
 	public static LauncherWindow instance;
 	public JFrame frmLauncher;
 	private JTree tree;
-	private JTextArea progressBar;
 	private JCheckBoxMenuItem hideLauncherMenuItem;
 	private Console console;
+	private JProgressBar progressBar;
+	private JLabel progressBarLabel;
 	
 	/**
 	 * Launch the application.
@@ -207,13 +210,6 @@ public class LauncherWindow {
 			}
 		});
 		helpMenu.add(wikiMenuItem);
-		
-
-		progressBar = new JTextArea();
-		progressBar.setEditable(false);
-		progressBar.setBackground(Color.BLACK);
-		progressBar.setForeground(Color.GREEN);
-		frmLauncher.getContentPane().add(progressBar, BorderLayout.NORTH);
 
 		JScrollPane scrollPane = new JScrollPane();
 		frmLauncher.getContentPane().add(scrollPane, BorderLayout.CENTER);
@@ -419,6 +415,17 @@ public class LauncherWindow {
 			}
 		});
 		toolBar.add(toggleConsoleButton);
+		
+		JPanel panel = new JPanel();
+		frmLauncher.getContentPane().add(panel, BorderLayout.NORTH);
+		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+		
+		progressBarLabel = new JLabel("->");
+		panel.add(progressBarLabel);
+		
+		progressBar = new JProgressBar();
+		progressBarLabel.setLabelFor(progressBar);
+		panel.add(progressBar);
 		updateUI();
 	}
 
@@ -426,9 +433,6 @@ public class LauncherWindow {
 		return tree;
 	}
 
-	public JTextArea getProgressBar() {
-		return progressBar;
-	}
 
 	public void updateUI() {
 		DefaultTreeModel dtm = (DefaultTreeModel) tree.getModel();
@@ -462,5 +466,12 @@ public class LauncherWindow {
 
 	public JCheckBoxMenuItem getHideLauncherMenuItem() {
 		return hideLauncherMenuItem;
+	}
+	
+	public JProgressBar getProgressBar() {
+		return progressBar;
+	}
+	public JLabel getProgressBarLabel() {
+		return progressBarLabel;
 	}
 }
