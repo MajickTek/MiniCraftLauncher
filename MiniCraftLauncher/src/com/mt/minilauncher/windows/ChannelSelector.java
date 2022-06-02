@@ -2,6 +2,7 @@ package com.mt.minilauncher.windows;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -74,6 +75,7 @@ public class ChannelSelector extends JDialog {
 		setTitle("Channel Selector");
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
+		setIconImage(Toolkit.getDefaultToolkit().getImage(LauncherWindow.class.getResource("/minicraftplus.png")));
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new BorderLayout(0, 0));
