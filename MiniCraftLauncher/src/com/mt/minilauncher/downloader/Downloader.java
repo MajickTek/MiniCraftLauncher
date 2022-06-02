@@ -1,7 +1,5 @@
 package com.mt.minilauncher.downloader;
 
-import javax.swing.JTextArea;
-
 import com.littlebigberry.httpfiledownloader.FileDownloader;
 import com.littlebigberry.httpfiledownloader.FileDownloaderDelegate;
 
