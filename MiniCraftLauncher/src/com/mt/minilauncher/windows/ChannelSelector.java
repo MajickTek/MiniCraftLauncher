@@ -120,7 +120,7 @@ public class ChannelSelector extends JDialog {
 					DefaultMutableTreeNode releaseNode = new DefaultMutableTreeNode("Releases");
 					DefaultMutableTreeNode preReleaseNode = new DefaultMutableTreeNode("Pre-Releases");
 
-					GithubAPI[] releaseTree = GithubReleaseParser.parseReleases(this.getList().getSelectedValue().liveUsername, this.getList().getSelectedValue().liveRepoName);
+					GithubAPI[] releaseTree = GithubReleaseParser.parseReleases(this.getList().getSelectedValue().liveUsername, this.getList().getSelectedValue().liveRepoName, 1);
 					ArrayList<GithubAPI> releases = new ArrayList<>(Arrays.asList(releaseTree));
 					
 					
