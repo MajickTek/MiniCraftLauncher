@@ -15,6 +15,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
+
 import com.mt.minilauncher.launchwrap.FabricWrap;
 import com.mt.minilauncher.launchwrap.VanillaWrap;
 import com.mt.minilauncher.objects.EmptyObject;
@@ -330,20 +331,25 @@ public class LauncherWindow {
 						ButtonGroup runWithGroup = new ButtonGroup();
 						//TODO: Make wrapper selection more dynamic
 						JMenu runWithMenu = new JMenu("Run With");
+						
 						JRadioButtonMenuItem runVanilla = new JRadioButtonMenuItem("Vanilla / No Mods");
 						runVanilla.setSelected((vo.launcherWrapper.getWrapper() instanceof VanillaWrap)? true: false);
 						runVanilla.addActionListener(l -> {
 							vo.getLauncherWrapper().setWrapper(new VanillaWrap());
 						});
+						
 						JRadioButtonMenuItem runFabric = new JRadioButtonMenuItem("Fabric");
 						runFabric.setSelected((vo.launcherWrapper.getWrapper() instanceof FabricWrap)? true: false);
 						runFabric.addActionListener(l -> {
 							vo.getLauncherWrapper().setWrapper(new FabricWrap());
 						});
+						
+						
 						runWithGroup.add(runVanilla);
 						runWithGroup.add(runFabric);
 						runWithMenu.add(runVanilla);
 						runWithMenu.add(runFabric);
+						
 						
 						JMenuItem changelogMenu = new JMenuItem("View Changelog");
 						changelogMenu.addActionListener(a -> {
@@ -474,4 +480,14 @@ public class LauncherWindow {
 	public JLabel getProgressBarLabel() {
 		return progressBarLabel;
 	}
+
+	public Console getConsole() {
+		return console;
+	}
+
+	public void setConsole(Console console) {
+		this.console = console;
+	}
+	
+	
 }

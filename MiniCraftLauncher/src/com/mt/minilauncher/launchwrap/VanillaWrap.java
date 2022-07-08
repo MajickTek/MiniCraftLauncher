@@ -1,5 +1,7 @@
 package com.mt.minilauncher.launchwrap;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.IOException;
 import java.nio.file.Paths;
 
@@ -17,13 +19,22 @@ public class VanillaWrap implements IWrap{
 			public void run() {
 				String vPath = Paths.get(Initializer.savesDir.toString(), version).toString();
 				try {
-					Process ps = new ProcessBuilder().inheritIO().command("java", "-jar", path, "--savedir", vPath).start();
-					//Process ps = Runtime.getRuntime().exec(new String[] {"java", "-jar", path, "--savedir", vPath});
+					ProcessBuilder pb = new ProcessBuilder().command("java", "-jar", path, "--savedir", vPath);
+					pb.redirectErrorStream(true);
+					Process ps = pb.start();
+					
 					
 					vo.setRunning(true);
 					if(window.getHideLauncherMenuItem().isSelected()) {
 						window.frmLauncher.setVisible(false);
 					}
+					
+					String line;
+					BufferedReader in = new BufferedReader(new InputStreamReader(ps.getInputStream()));
+					while ((line = in.readLine()) != null) {
+					    System.out.println(line);
+					}
+					in.close();
 					
 					try {
 						ps.waitFor();
@@ -51,6 +62,11 @@ public class VanillaWrap implements IWrap{
 		
 		
 		
+	}
+
+	@Override
+	public String getWrapperName() {
+		return "VanillaWrap";
 	}
 
 }
