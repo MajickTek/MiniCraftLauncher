@@ -60,7 +60,7 @@ import javax.swing.JLabel;
 
 public class LauncherWindow {
 
-	public static Version version = Version.parseVersion("1.6.3-3");
+	public static Version version = Version.parseVersion("1.6.3");
 	
 	public static LauncherWindow instance;
 	public JFrame frmLauncher;
