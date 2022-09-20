@@ -192,7 +192,8 @@ public class LauncherWindow {
 		JMenuItem aboutMenuItem = new JMenuItem("About");
 		aboutMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Debug.callCrashDialog("About", new AboutPanel(), Debug.TST);
+				//TODO: dialogs cannot have embedded panels in SWT - eventually will fix with jface
+				//Debug.callCrashDialog("About", new AboutPanel(), Debug.TST);
 			}
 		});
 		helpMenu.add(aboutMenuItem);
@@ -320,7 +321,7 @@ public class LauncherWindow {
 								try {
 									JTextField textField = new JTextField(GetMD5FromJar.getMD5Checksum(Paths.get(Initializer.jarPath.toString(), vo.version + ".jar").toString()));
 									textField.setEditable(false);
-									Debug.callCrashDialog("MD5 Hash", textField, Debug.INF);
+									//TODO: Debug.callCrashDialog("MD5 Hash", textField, Debug.INF);
 								} catch (Exception e1) {
 									// TODO Auto-generated catch block
 									e1.printStackTrace();

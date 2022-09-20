@@ -1,55 +1,73 @@
 package com.mt.minilauncher;
 
-import javax.swing.JOptionPane;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
 
 public class Debug {
+	public static Shell parent;
 	
 	/**
-	 * Equal to JOptionPane.INFORMATION_MESSAGE
+	 * Debug class using SWT dialogs
+	 * @param parent The main window to parent to
 	 */
-    public static int INF = JOptionPane.INFORMATION_MESSAGE;
-    
-    /**
-     * Equal to JOptionPane.ERROR_MESSAGE
-     */
-    public static int ERR = JOptionPane.ERROR_MESSAGE;
-    
-    /**
-     * Equal to JOptionPane.PLAIN_MESSAGE
-     */
-    public static int TST = JOptionPane.PLAIN_MESSAGE;
-    
-    /**
-     * Equal to JOptionPane.WARNING_MESSAGE
-     */
-    public static int WARN = JOptionPane.WARNING_MESSAGE;
-
-    
-    /**
-     * Equal to JOptionPane.OK_CANCEL_OPTION
-     */
-    public static int OK_CANCEL = JOptionPane.OK_CANCEL_OPTION;
-    
-    /**
-     * Equal to JOptionPane.OK_OPTION
-     */
-    public static int OK = JOptionPane.OK_OPTION;
-    
-    /**
-     * Equal to JOptionPane.CANCEL_OPTION
-     */
-    public static int CANCEL = JOptionPane.CANCEL_OPTION;
-    
-    public static void callCrashDialog(String title, String message, int msgtype) {
-        JOptionPane.showMessageDialog(null, message, title, msgtype);
-    }
-
-    public static void callCrashDialog(String title, Object message, int msgtype) {
-        JOptionPane.showMessageDialog(null, message, title, msgtype);
-    }
-    
-    public static int callConfirmDialog(String title, String message) {
-		return JOptionPane.showConfirmDialog(null, message, title, OK_CANCEL);
-    }
-    
+	public Debug(Shell parent) {
+		Debug.parent = parent;
+	}
+	
+	/**
+	 * Information icon
+	 */
+	public static final int INF = SWT.ICON_INFORMATION;
+	
+	/**
+	 * Error icon
+	 */
+	public static final int ERR = SWT.ICON_ERROR;
+	
+	/**
+	 * Test icon
+	 */
+	public static final int TST = SWT.ICON_WORKING;
+	
+	/**
+	 * Warning icon
+	 */
+	public static final int WARN = SWT.ICON_WARNING;
+	
+	/**
+	 * Prompt/Question icon
+	 */
+	public static final int PROMPT = SWT.ICON_QUESTION;
+	
+	/**
+	 * Integer constant for adding a pair of OK and Cancel buttons
+	 */
+	public static final int OK_CANCEL = (SWT.OK | SWT.CANCEL);
+	
+	/**
+	 * Integer constant for OK Button
+	 */
+	public static final int OK = SWT.OK;
+	
+	/**
+	 * Integer constant for Cancel button
+	 */
+	public static final int CANCEL = SWT.CANCEL;
+	
+	public static void callCrashDialog(String title, String message, int messagetype) {
+		MessageBox dialog = new MessageBox(parent, messagetype);
+		dialog.setText(title);
+		dialog.setMessage(message);
+		
+		dialog.open();
+	}
+	
+	public static int callConfirmDialog(String title, String message) {
+		MessageBox dialog = new MessageBox(parent, PROMPT | OK_CANCEL);
+		dialog.setText(title);
+		dialog.setMessage(message);
+		
+		return dialog.open();
+	}
 }
