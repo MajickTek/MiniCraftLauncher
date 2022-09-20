@@ -11,6 +11,8 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ProgressBar;
+import org.eclipse.swt.widgets.ToolItem;
+import org.eclipse.swt.widgets.MenuItem;
 
 public class LauncherWindowSWT {
 
@@ -59,11 +61,26 @@ public class LauncherWindowSWT {
 		Menu menu = new Menu(shlLauncher, SWT.BAR);
 		shlLauncher.setMenuBar(menu);
 		
+		MenuItem mntmFile = new MenuItem(menu, SWT.CASCADE);
+		mntmFile.setText("File");
+		
+		Menu menu_1 = new Menu(mntmFile);
+		mntmFile.setMenu(menu_1);
+		
+		MenuItem mntmExit = new MenuItem(menu_1, SWT.NONE);
+		mntmExit.setText("Exit");
+		
 		Tree tree = new Tree(shlLauncher, SWT.BORDER);
 		tree.setLayoutData(BorderLayout.CENTER);
 		
 		ToolBar toolBar = new ToolBar(shlLauncher, SWT.FLAT | SWT.RIGHT);
 		toolBar.setLayoutData(BorderLayout.SOUTH);
+		
+		ToolItem tltmRefresh = new ToolItem(toolBar, SWT.NONE);
+		tltmRefresh.setText("Refresh");
+		
+		ToolItem tltmToggleConsole = new ToolItem(toolBar, SWT.CHECK);
+		tltmToggleConsole.setText("Toggle Console");
 		
 		ProgressBar progressBar = new ProgressBar(shlLauncher, SWT.NONE);
 		progressBar.setLayoutData(BorderLayout.NORTH);
