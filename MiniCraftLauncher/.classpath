@@ -19,6 +19,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/filedownloader.jar"/>
+	<classpathentry kind="lib" path="lib/swt.jar" sourcepath="lib/swt-src.zip"/>
 	<classpathentry kind="lib" path="lib/Updater.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
