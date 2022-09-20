@@ -319,9 +319,9 @@ public class LauncherWindow {
 						MD5Menu.addActionListener(a -> {
 							if(vo.isDownloaded) {
 								try {
-									JTextField textField = new JTextField(GetMD5FromJar.getMD5Checksum(Paths.get(Initializer.jarPath.toString(), vo.version + ".jar").toString()));
-									textField.setEditable(false);
-									//TODO: Debug.callCrashDialog("MD5 Hash", textField, Debug.INF);
+									String hash = GetMD5FromJar.getMD5Checksum(Paths.get(Initializer.jarPath.toString(), vo.version + ".jar").toString());
+									
+									Debug.callCrashDialog("MD5 Hash", hash, Debug.INF | Debug.OK);
 								} catch (Exception e1) {
 									// TODO Auto-generated catch block
 									e1.printStackTrace();
