@@ -18,9 +18,20 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/com.ibm.icu_67.1.0.v20200706-1749.jar"/>
 	<classpathentry kind="lib" path="lib/filedownloader.jar"/>
-	<classpathentry kind="lib" path="lib/swt.jar" sourcepath="lib/swt-src.zip"/>
-	<classpathentry kind="lib" path="lib/Updater.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.core.commands_3.10.200.v20220512-0851.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.core.runtime_3.26.0.v20220813-0916.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.equinox.common_3.16.200.v20220817-1601.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.equinox.registry_3.11.200.v20220817-1601.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.jface_3.27.0.v20220817-1444.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.jface.text_3.21.0.v20220817-1340.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.osgi_3.18.100.v20220817-1601.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.swt.win32.win32.x86_64_3.121.0.v20220829-1402.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.text_3.12.200.v20220817-1340.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.ui.forms_3.11.400.v20220817-1444.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.ui.workbench_3.126.0.v20220823-0718.jar"/>
 	<classpathentry kind="lib" path="lib/swing2swt.jar"/>
+	<classpathentry kind="lib" path="lib/Updater.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
