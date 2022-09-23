@@ -12,9 +12,23 @@ import java.nio.channels.ReadableByteChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+
+import javax.xml.XMLConstants;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
 import com.mt.minilauncher.Initializer;
 import com.mt.minilauncher.LauncherWindow;
 import com.mt.minilauncher.downloader.Downloader;
+import com.mt.minilauncher.objects.ChannelObject;
 import com.mt.minilauncher.objects.VersionObject;
 
 public class Util {
@@ -121,6 +135,56 @@ public class Util {
 		if(Desktop.isDesktopSupported()) {
 			Desktop.getDesktop().browse(new URL(url).toURI());
 		}
+	}
+
+	/**
+	 * Builds an ArrayList of available channels from the internet
+	 * @return ArrayList of ChannelObjects populated with XML data
+	 * @throws ParserConfigurationException 
+	 * @throws IOException 
+	 * @throws SAXException 
+	 */
+	public static ArrayList<ChannelObject> buildChannelList() throws ParserConfigurationException, SAXException, IOException {
+		ArrayList<ChannelObject> tempList = new ArrayList<>();
+		
+		ChannelObject liveObject = new ChannelObject();
+		liveObject.setLive(true);
+		liveObject.setChannelName("MinicraftPlus");
+		liveObject.setLiveUsername("MinicraftPlus");
+		liveObject.setLiveRepoName("minicraft-plus-revived");
+		tempList.add(liveObject);
+		
+		Path indexPath = Paths.get(Initializer.indexPath.toString(), "index.xml");
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+
+		dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+		DocumentBuilder db = dbf.newDocumentBuilder();
+		Document doc = db.parse(indexPath.toFile());
+
+		doc.getDocumentElement().normalize();
+		
+		NodeList indexList = doc.getElementsByTagName("index");
+		for (int i = 0; i < indexList.getLength(); i++) {
+			Node indexNode = indexList.item(i);
+			if (indexNode.getNodeType() == Node.ELEMENT_NODE) {
+				Element indexElement = (Element) indexNode;
+				String indexName = indexElement.getAttribute("name");
+				NodeList urlList = indexElement.getElementsByTagName("url");
+				Node urlNode = urlList.item(0);
+				if (urlNode.getNodeType() == Node.ELEMENT_NODE) {
+					Element urlElement = (Element) urlNode;
+					String target = urlElement.getAttribute("target");
+					String url = (urlElement.getTextContent().startsWith("http://")
+							|| urlElement.getTextContent().startsWith("https://")) ? urlElement.getTextContent() : "";
+					ChannelObject co = new ChannelObject();
+					co.channelFile = url;
+					co.channelName = indexName;
+					co.target = target;
+					tempList.add(co);
+				}
+			}
+		}
+		return tempList;
 	}
 	
 }

@@ -4,6 +4,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.xml.sax.SAXException;
 
 import com.mt.minilauncher.objects.ChannelObject;
 import com.mt.minilauncher.objects.GenericLabelProvider;
@@ -16,6 +17,8 @@ import org.eclipse.swt.widgets.Menu;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.swt.SWT;
@@ -127,11 +130,14 @@ public class LauncherWindow {
 				ld.setContentProvider(ArrayContentProvider.getInstance());
 				ld.setLabelProvider(GenericLabelProvider.getInstance());
 				
-				ArrayList<ChannelObject> test = new ArrayList<>();
-				ChannelObject co = new ChannelObject();
-				co.channelName = "hello";
-				test.add(co);
-				ld.setInput(test);
+				ld.setTitle("Channel Selector");
+				ld.setMessage("Please select a channel to download versions from:");
+				try {
+					ld.setInput(Util.buildChannelList());
+				} catch (ParserConfigurationException | SAXException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
 				ld.open();
 				
