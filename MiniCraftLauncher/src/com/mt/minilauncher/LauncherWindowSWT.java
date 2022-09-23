@@ -4,8 +4,14 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.wb.swt.SWTResourceManager;
+
+import com.mt.minilauncher.util.Util;
+
 import swing2swt.layout.BorderLayout;
 import org.eclipse.swt.widgets.Menu;
+
+import java.io.IOException;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.ToolBar;
@@ -13,6 +19,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 
 public class LauncherWindowSWT {
 
@@ -35,6 +43,7 @@ public class LauncherWindowSWT {
 	 * Open the window.
 	 */
 	public void open() {
+		Initializer.touchFoldersAndFiles();
 		Display display = Display.getDefault();
 		createContents();
 		shlLauncher.open();
@@ -61,14 +70,58 @@ public class LauncherWindowSWT {
 		Menu menu = new Menu(shlLauncher, SWT.BAR);
 		shlLauncher.setMenuBar(menu);
 		
-		MenuItem mntmFile = new MenuItem(menu, SWT.CASCADE);
-		mntmFile.setText("File");
+		MenuItem fileMenu = new MenuItem(menu, SWT.CASCADE);
+		fileMenu.setText("File");
 		
-		Menu menu_1 = new Menu(mntmFile);
-		mntmFile.setMenu(menu_1);
+		Menu fileMenuContainer = new Menu(fileMenu);
+		fileMenu.setMenu(fileMenuContainer);
 		
-		MenuItem mntmExit = new MenuItem(menu_1, SWT.NONE);
-		mntmExit.setText("Exit");
+		MenuItem openLauncherFolderMenuItem = new MenuItem(fileMenuContainer, SWT.NONE);
+		openLauncherFolderMenuItem.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				try {
+					Util.openNative(Initializer.launcherPath.toFile());
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		openLauncherFolderMenuItem.setText("Open Launcher Folder");
+		
+		MenuItem exitMenuItem = new MenuItem(fileMenuContainer, SWT.NONE);
+		exitMenuItem.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				System.exit(0);
+			}
+		});
+		exitMenuItem.setText("Exit");
+		
+		MenuItem editMenu = new MenuItem(menu, SWT.CASCADE);
+		editMenu.setText("Edit");
+		
+		Menu editMenuContainer = new Menu(editMenu);
+		editMenu.setMenu(editMenuContainer);
+		
+		MenuItem optionsMenu = new MenuItem(menu, SWT.CASCADE);
+		optionsMenu.setText("Options");
+		
+		Menu optionsMenuContainer = new Menu(optionsMenu);
+		optionsMenu.setMenu(optionsMenuContainer);
+		
+		MenuItem helpMenu = new MenuItem(menu, SWT.CASCADE);
+		helpMenu.setText("Help");
+		
+		Menu helpMenuContainer = new Menu(helpMenu);
+		helpMenu.setMenu(helpMenuContainer);
+		
+		MenuItem aboutMenuItem = new MenuItem(helpMenuContainer, SWT.NONE);
+		aboutMenuItem.setText("About");
+		
+		MenuItem wikiMenuItem = new MenuItem(helpMenuContainer, SWT.NONE);
+		wikiMenuItem.setText("Wiki");
 		
 		Tree tree = new Tree(shlLauncher, SWT.BORDER);
 		tree.setLayoutData(BorderLayout.CENTER);
