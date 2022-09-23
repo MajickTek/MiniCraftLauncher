@@ -55,14 +55,27 @@ public class Debug {
 	 */
 	public static final int CANCEL = SWT.CANCEL;
 	
-	public static void callCrashDialog(String title, String message, int messagetype) {
+	/**
+	 * Standard popup dialog
+	 * @param title title of the window
+	 * @param message text body within the window
+	 * @param messagetype One of the integer constants {INF, ERR, TST, WARN, PROMPT, OK_CANCEL, OK, CANCEL}
+	 * @return ID of the dialog button clicked (OK, CANCEL, etc)
+	 */
+	public static int callCrashDialog(String title, String message, int messagetype) {
 		MessageBox dialog = new MessageBox(parent, messagetype);
 		dialog.setText(title);
 		dialog.setMessage(message);
 		
-		dialog.open();
+		return dialog.open();
 	}
 	
+	/**
+	 * This dialog will always have OK and CANCEL buttons
+	 * @param title the title of the window
+	 * @param message text body within the window
+	 * @return result of the dialog as a button ID (OK, CANCEL)
+	 */
 	public static int callConfirmDialog(String title, String message) {
 		MessageBox dialog = new MessageBox(parent, PROMPT | OK_CANCEL);
 		dialog.setText(title);

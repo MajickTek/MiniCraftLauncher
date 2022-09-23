@@ -121,6 +121,12 @@ public class LauncherWindowSWT {
 		helpMenu.setMenu(helpMenuContainer);
 		
 		MenuItem aboutMenuItem = new MenuItem(helpMenuContainer, SWT.NONE);
+		aboutMenuItem.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Debug.callCrashDialog("Test", "hello", Debug.INF);
+			}
+		});
 		aboutMenuItem.setText("About");
 		
 		MenuItem wikiMenuItem = new MenuItem(helpMenuContainer, SWT.NONE);
