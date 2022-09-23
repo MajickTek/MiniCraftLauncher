@@ -13,23 +13,30 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.TreeItem;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import com.mt.mclupdater.util.GithubReleaseParser;
 import com.mt.minilauncher.Initializer;
 import com.mt.minilauncher.LauncherWindow;
 import com.mt.minilauncher.downloader.Downloader;
 import com.mt.minilauncher.objects.ChannelObject;
 import com.mt.minilauncher.objects.VersionObject;
+
+import io.quicktype.Asset;
+import io.quicktype.GithubAPI;
 
 public class Util {
 	
@@ -185,6 +192,68 @@ public class Util {
 			}
 		}
 		return tempList;
+	}
+
+	public static void populateTree(ChannelObject channelObject) throws IOException {
+		if(channelObject.isLive()) {
+			TreeItem root = new TreeItem(LauncherWindow.instance.getTree(), SWT.NONE);
+			root.setText("Root");
+			TreeItem releasesRoot = new TreeItem(root, SWT.NONE);
+			releasesRoot.setText("Releases");
+			TreeItem preReleasesRoot = new TreeItem(root, SWT.NONE);
+			preReleasesRoot.setText("Pre-Releases");
+			
+			GithubAPI[] releaseTree = GithubReleaseParser.parseReleases(channelObject.liveUsername, channelObject.liveRepoName, 1);
+			ArrayList<GithubAPI> releases = new ArrayList<>(Arrays.asList(releaseTree));
+			
+			releases.stream().filter(r -> (r.getPrerelease() == false)).forEach(release -> {
+				VersionObject vo = new VersionObject();
+				vo.canEdit = false;
+				vo.description = release.getBody();
+				vo.version = release.getTagName();
+				
+				ArrayList<Asset> assets = new ArrayList<>(Arrays.asList(release.getAssets()));
+				assets.stream().filter(a -> (a.getName().contains(".jar"))).forEach(asset -> {
+					vo.url = asset.getBrowserDownloadURL();
+				});
+				assets.stream().filter(a -> (a.getName().equalsIgnoreCase("changelog.txt"))).forEach(asset -> {
+					vo.changelogURL = asset.getBrowserDownloadURL();
+				});
+				
+				TreeItem tempItem = new TreeItem(releasesRoot, SWT.NONE);
+				tempItem.setText(vo.version);
+				
+				tempItem.setData("VersionObject", vo);
+			});
+			
+			releases.stream().filter(r -> (r.getPrerelease() == true)).forEach(release -> {
+				VersionObject vo = new VersionObject();
+				vo.canEdit = false;
+				vo.description = release.getBody();
+				vo.version = release.getTagName();
+				
+				ArrayList<Asset> assets = new ArrayList<>(Arrays.asList(release.getAssets()));
+				assets.stream().filter(a -> (a.getName().contains(".jar"))).forEach(asset -> {
+					vo.url = asset.getBrowserDownloadURL();
+				});
+				assets.stream().filter(a -> (a.getName().equalsIgnoreCase("changelog.txt"))).forEach(asset -> {
+					vo.changelogURL = asset.getBrowserDownloadURL();
+				});
+				
+				TreeItem tempItem = new TreeItem(preReleasesRoot, SWT.NONE);
+				tempItem.setText(vo.version);
+				
+				tempItem.setData("VersionObject", vo);
+			});
+			
+		} else {
+			Path filePath = Paths.get(Initializer.indexPath.toString(), channelObject.target);
+			Util.downloadUsingNIO(channelObject.channelFile, filePath.toString());
+			
+		}
+		
+		LauncherWindow.instance.getTree().update();
+		LauncherWindow.instance.getTree().redraw();
 	}
 	
 }

@@ -141,7 +141,12 @@ public class LauncherWindow {
 				
 				ld.open();
 				
-				System.out.println(ld.getResult()[0]);
+				try {
+					Util.populateTree((ChannelObject) ld.getResult()[0]);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 			
 			
