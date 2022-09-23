@@ -5,21 +5,24 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import com.mt.minilauncher.objects.ChannelObject;
+import com.mt.minilauncher.objects.GenericLabelProvider;
 import com.mt.minilauncher.util.Util;
 
 import de.skuzzle.semantic.Version;
 import swing2swt.layout.BorderLayout;
 import org.eclipse.swt.widgets.Menu;
 
-import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.URL;
+import java.util.ArrayList;
 
+import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.ui.dialogs.ListDialog;
+import org.eclipse.ui.dialogs.ListSelectionDialog;
 import org.eclipse.swt.widgets.ToolBar;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.MenuItem;
@@ -115,6 +118,29 @@ public class LauncherWindow {
 		
 		Menu editMenuContainer = new Menu(editMenu);
 		editMenu.setMenu(editMenuContainer);
+		
+		MenuItem selectChannelMenuItem = new MenuItem(editMenuContainer, SWT.NONE);
+		selectChannelMenuItem.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				ListDialog ld = new ListDialog(getShell());
+				ld.setContentProvider(ArrayContentProvider.getInstance());
+				ld.setLabelProvider(GenericLabelProvider.getInstance());
+				
+				ArrayList<ChannelObject> test = new ArrayList<>();
+				ChannelObject co = new ChannelObject();
+				co.channelName = "hello";
+				test.add(co);
+				ld.setInput(test);
+				
+				ld.open();
+				
+				System.out.println(ld.getResult()[0]);
+			}
+			
+			
+		});
+		selectChannelMenuItem.setText("Select Channel");
 		
 		MenuItem optionsMenu = new MenuItem(menu, SWT.CASCADE);
 		optionsMenu.setText("Options");
