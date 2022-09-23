@@ -49,14 +49,16 @@ public class Util {
 		downloader.setLocalLocation(path);
 		
 		downloader.setDownloadProgressCallback((f) -> {
-			window.getProgressBar().setValue((int) Double.parseDouble(f.getPercentComplete().replace('%', ' ').strip()));
-			window.getProgressBarLabel().setText("Downloading: " + f.getPercentComplete());
+			//TODO
+//			window.getProgressBar().setValue((int) Double.parseDouble(f.getPercentComplete().replace('%', ' ').strip()));
+//			window.getProgressBarLabel().setText("Downloading: " + f.getPercentComplete());
 
 		});
 		downloader.setDownloadFinishedCallback((f) -> {
-			window.getProgressBarLabel().setText("Ready to Play! [" + vo.version + "]");
-			vo.isDownloaded = true;
-			window.getTree().updateUI();
+			//TODO
+//			window.getProgressBarLabel().setText("Ready to Play! [" + vo.version + "]");
+//			vo.isDownloaded = true;
+//			window.getTree().updateUI();
 		});
 		downloader.download();
 	}

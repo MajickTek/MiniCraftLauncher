@@ -5,6 +5,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
 
+import org.eclipse.jface.dialogs.MessageDialog;
+
 import com.mt.minilauncher.util.Util;
 
 public class Initializer {
@@ -52,9 +54,8 @@ public class Initializer {
 
 	
 	public static void cleanVersion(String version) {
-		int x = Debug.callConfirmDialog("Warning!", "This will clean all of the data associated with this version.\nThis includes save files and downloaded jars.");
-
-		if(x == Debug.OK) {
+		boolean x = MessageDialog.openConfirm(LauncherWindow.launcherShell, "Warning!", "This will clean all of the data associated with this version.\nThis includes save files and downloaded jars.");
+		if(x) {
 			String jar = version + ".jar";
 			File f = Paths.get(jarPath.toString(), jar).toFile();
 			if(f.exists()) {

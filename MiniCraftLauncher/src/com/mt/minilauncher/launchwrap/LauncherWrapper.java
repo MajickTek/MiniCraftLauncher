@@ -4,6 +4,8 @@ import java.nio.file.Paths;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import org.eclipse.swt.widgets.TreeItem;
+
 import com.mt.minilauncher.Initializer;
 import com.mt.minilauncher.LauncherWindow;
 import com.mt.minilauncher.objects.EmptyObject;
@@ -24,12 +26,12 @@ public class LauncherWrapper {
 	
 	public void launch() {
 		System.out.println(prompt + "Beginning launch process.");
-		DefaultMutableTreeNode node = (DefaultMutableTreeNode) window.getTree().getLastSelectedPathComponent();
-		if (node == null)
-			return;
-		if (node.isLeaf() && (!(node.getUserObject() instanceof EmptyObject) && node.getUserObject() instanceof VersionObject)) {
-			VersionObject vo = (VersionObject) node.getUserObject();
-			if (vo.isDownloaded) {
+		
+		TreeItem selectedItem = window.getTree().getSelection()[0];
+		if(selectedItem == null) {return;}
+		if(selectedItem.getData("VersionObject") instanceof VersionObject) {
+			VersionObject vo = (VersionObject) selectedItem.getData("VersionObject");
+			if(vo.isDownloaded) {
 				System.out.println(String.format("%sLaunching game using the [%s] system.", prompt, wrapper.getClass().getSimpleName()));
 				String jarPath = Paths.get(Initializer.jarPath.toString(), vo.version + ".jar").toString();
 				wrapper.launchJar(jarPath, vo.version, vo, window);
@@ -39,6 +41,7 @@ public class LauncherWrapper {
 				System.out.println(prompt + "Download complete.");
 			}
 		}
+		
 		System.out.println(prompt + "Leaving launch process.");
 	}
 	public IWrap getWrapper() {

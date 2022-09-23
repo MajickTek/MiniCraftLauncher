@@ -6,7 +6,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Paths;
 
-import com.mt.minilauncher.Debug;
+import org.eclipse.jface.dialogs.MessageDialog;
+
 import com.mt.minilauncher.Initializer;
 import com.mt.minilauncher.LauncherWindow;
 import com.mt.minilauncher.objects.VersionObject;
@@ -33,7 +34,8 @@ public class FabricWrap implements IWrap {
 				if (!f.exists()) {
 					String error = "Failed to use FabricWrap, could not find FabricBootstrap.jar!";
 					System.err.println(error);
-					Debug.callCrashDialog("Fabric Loader", error, Debug.ERR);
+					
+					MessageDialog.openError(LauncherWindow.getShell(), "Fabric Loader", error);
 				} else {
 					System.out.println("Found FabricBootstrap.jar! Attempting to launch Fabric. Assuming the parameters have not changed.");
 					try {
@@ -46,9 +48,9 @@ public class FabricWrap implements IWrap {
 						
 
 						vo.setRunning(true);
-						if (window.getHideLauncherMenuItem().isSelected()) {
-							window.frmLauncher.setVisible(false);
-						}
+//		TODO:				if (window.getHideLauncherMenuItem().isSelected()) {
+//							window.frmLauncher.setVisible(false);
+//						}
 
 						String line;
 						BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
@@ -64,9 +66,9 @@ public class FabricWrap implements IWrap {
 							e.printStackTrace();
 						}
 						vo.setRunning(false);
-						if (!window.frmLauncher.isVisible()) {
-							window.frmLauncher.setVisible(true);
-						}
+//		TODO:				if (!window.frmLauncher.isVisible()) {
+//							window.frmLauncher.setVisible(true);
+//						}
 
 					} catch (IOException e) {
 						// TODO Auto-generated catch block

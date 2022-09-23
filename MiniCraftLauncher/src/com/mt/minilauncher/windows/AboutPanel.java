@@ -3,7 +3,8 @@ package com.mt.minilauncher.windows;
 import javax.swing.JPanel;
 import javax.swing.event.HyperlinkEvent;
 
-import com.mt.minilauncher.Debug;
+import org.eclipse.jface.dialogs.MessageDialog;
+
 import com.mt.minilauncher.LauncherWindow;
 
 import java.awt.BorderLayout;
@@ -44,11 +45,11 @@ public class AboutPanel extends JPanel {
 				    try {
 						Desktop.getDesktop().browse(l.getURL().toURI());
 					} catch (IOException | URISyntaxException e) {
-						Debug.callCrashDialog("ERROR", "An error occurred opening a link. Check the console.", Debug.ERR);
+						MessageDialog.openError(LauncherWindow.getShell(), "ERROR", "An error occurred opening a link. Check the console.");
 						e.printStackTrace();
 					}
 				} else {
-					Debug.callCrashDialog("ERROR", "Sorry, using java.awt.Desktop is not allowed/supported in this environment!", Debug.ERR);
+					MessageDialog.openError(LauncherWindow.getShell(), "ERROR", "Sorry, using java.awt.Desktop is not allowed/supported in this environment!");
 				}
 			}
 		});

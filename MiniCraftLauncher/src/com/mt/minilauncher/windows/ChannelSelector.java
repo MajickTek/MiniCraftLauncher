@@ -164,17 +164,19 @@ public class ChannelSelector extends JDialog {
 					root.add(releaseNode);
 					root.add(preReleaseNode);
 					
-					
-					LauncherWindow.instance.getTree().setModel(dtm);
-					LauncherWindow.instance.getTree().updateUI();
-					LauncherWindow.instance.updateUI();
+					//TODO
+//					LauncherWindow.instance.getTree().setModel(dtm);
+//					LauncherWindow.instance.getTree().updateUI();
+//					LauncherWindow.instance.updateUI();
 				} else {
 					Path filePath = Paths.get(Initializer.indexPath.toString(), this.getList().getSelectedValue().target);
 					Util.downloadUsingNIO(this.getList().getSelectedValue().channelFile, filePath.toString());
 					DefaultTreeModel dtm = new DefaultTreeModel(XMLConverter.fromXML(filePath.toString()));
-					LauncherWindow.instance.getTree().setModel(dtm);
-					LauncherWindow.instance.getTree().updateUI();
-					LauncherWindow.instance.updateUI();
+					
+					//TODO
+//					LauncherWindow.instance.getTree().setModel(dtm);
+//					LauncherWindow.instance.getTree().updateUI();
+//					LauncherWindow.instance.updateUI();
 				}
 				
 			} catch (IOException | ParserConfigurationException | SAXException e1) {

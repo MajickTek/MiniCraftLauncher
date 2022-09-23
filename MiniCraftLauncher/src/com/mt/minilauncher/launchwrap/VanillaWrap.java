@@ -25,9 +25,9 @@ public class VanillaWrap implements IWrap{
 					
 					
 					vo.setRunning(true);
-					if(window.getHideLauncherMenuItem().isSelected()) {
-						window.frmLauncher.setVisible(false);
-					}
+//	TODO:				if(window.getHideLauncherMenuItem().isSelected()) {
+//						window.frmLauncher.setVisible(false);
+//					}
 					
 					String line;
 					BufferedReader in = new BufferedReader(new InputStreamReader(ps.getInputStream()));
@@ -43,9 +43,9 @@ public class VanillaWrap implements IWrap{
 						e.printStackTrace();
 					}
 					vo.setRunning(false);
-					if(!window.frmLauncher.isVisible()) {
-						window.frmLauncher.setVisible(true);
-					}
+//	TODO:				if(!window.frmLauncher.isVisible()) {
+//						window.frmLauncher.setVisible(true);
+//					}
 					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
