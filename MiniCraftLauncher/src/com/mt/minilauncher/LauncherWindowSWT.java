@@ -10,7 +10,10 @@ import com.mt.minilauncher.util.Util;
 import swing2swt.layout.BorderLayout;
 import org.eclipse.swt.widgets.Menu;
 
+import java.awt.Desktop;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Tree;
@@ -121,6 +124,17 @@ public class LauncherWindowSWT {
 		aboutMenuItem.setText("About");
 		
 		MenuItem wikiMenuItem = new MenuItem(helpMenuContainer, SWT.NONE);
+		wikiMenuItem.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				try {
+					Util.browseNative("https://github.com/MajickTek/MiniCraftLauncher/wiki");
+				} catch (IOException | URISyntaxException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 		wikiMenuItem.setText("Wiki");
 		
 		Tree tree = new Tree(shlLauncher, SWT.BORDER);

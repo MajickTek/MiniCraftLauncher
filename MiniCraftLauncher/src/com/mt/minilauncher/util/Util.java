@@ -4,6 +4,7 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.channels.Channels;
@@ -74,6 +75,12 @@ public class Util {
 	public static void openNative(File f) throws IOException {
 		if(Desktop.isDesktopSupported()) {
 			Desktop.getDesktop().open(f);
+		}
+	}
+	
+	public static void browseNative(String url) throws MalformedURLException, IOException, URISyntaxException{
+		if(Desktop.isDesktopSupported()) {
+			Desktop.getDesktop().browse(new URL(url).toURI());
 		}
 	}
 	
