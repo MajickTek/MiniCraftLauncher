@@ -16,8 +16,6 @@ import org.eclipse.swt.widgets.Menu;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -25,7 +23,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.dialogs.ListDialog;
-import org.eclipse.ui.dialogs.ListSelectionDialog;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.ToolItem;

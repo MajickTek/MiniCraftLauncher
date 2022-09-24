@@ -2,13 +2,10 @@ package com.mt.minilauncher.launchwrap;
 
 import java.nio.file.Paths;
 
-import javax.swing.tree.DefaultMutableTreeNode;
-
 import org.eclipse.swt.widgets.TreeItem;
 
 import com.mt.minilauncher.Initializer;
 import com.mt.minilauncher.LauncherWindow;
-import com.mt.minilauncher.objects.EmptyObject;
 import com.mt.minilauncher.objects.VersionObject;
 import com.mt.minilauncher.util.Util;
 
