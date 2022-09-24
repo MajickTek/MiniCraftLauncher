@@ -199,7 +199,7 @@ public class LauncherWindow {
 		tree.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
-				if(e.button <= 1) {
+				if(e.button == 1) {//left click
 					TreeItem selectedItem = tree.getItem(new Point(e.x, e.y));
 					
 					//Make sure the VersionObject exists! TYPE SAFETY!
@@ -216,9 +216,9 @@ public class LauncherWindow {
 
 			@Override
 			public void mouseDown(MouseEvent e) {
-				if (e.button == SWT.BUTTON3) {// right click
+				if (e.button == 3) {// right click
 					TreeItem selectedItem = tree.getItem(new Point(e.x, e.y));
-					
+					//TODO: popup menu
 				}
 			}
 		});
