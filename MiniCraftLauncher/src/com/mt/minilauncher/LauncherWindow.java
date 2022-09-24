@@ -8,6 +8,7 @@ import org.xml.sax.SAXException;
 
 import com.mt.minilauncher.objects.ChannelObject;
 import com.mt.minilauncher.objects.GenericLabelProvider;
+import com.mt.minilauncher.objects.VersionObject;
 import com.mt.minilauncher.util.Util;
 
 import de.skuzzle.semantic.Version;
@@ -29,6 +30,9 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 
 public class LauncherWindow {
 
@@ -36,12 +40,14 @@ public class LauncherWindow {
 	public static Shell launcherShell;
 	private Tree tree;
 	private ProgressBar progressBar;
-	
+
 	public static LauncherWindow instance;
-	
+
 	public static Version version = Version.parseVersion("1.6.4");
+
 	/**
 	 * Launch the application.
+	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
@@ -79,18 +85,18 @@ public class LauncherWindow {
 		shlLauncher.setImage(SWTResourceManager.getImage(getClass(), "/minicraftplus.png"));
 		shlLauncher.setMinimumSize(new Point(800, 600));
 		shlLauncher.setSize(800, 600);
-		shlLauncher.setText("Launcher");
+		shlLauncher.setText(String.format("Launcher [%s]", version));
 		shlLauncher.setLayout(new BorderLayout(0, 0));
-		
+
 		Menu menu = new Menu(shlLauncher, SWT.BAR);
 		shlLauncher.setMenuBar(menu);
-		
+
 		MenuItem fileMenu = new MenuItem(menu, SWT.CASCADE);
 		fileMenu.setText("File");
-		
+
 		Menu fileMenuContainer = new Menu(fileMenu);
 		fileMenu.setMenu(fileMenuContainer);
-		
+
 		MenuItem openLauncherFolderMenuItem = new MenuItem(fileMenuContainer, SWT.NONE);
 		openLauncherFolderMenuItem.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -104,7 +110,7 @@ public class LauncherWindow {
 			}
 		});
 		openLauncherFolderMenuItem.setText("Open Launcher Folder");
-		
+
 		MenuItem exitMenuItem = new MenuItem(fileMenuContainer, SWT.NONE);
 		exitMenuItem.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -113,13 +119,13 @@ public class LauncherWindow {
 			}
 		});
 		exitMenuItem.setText("Exit");
-		
+
 		MenuItem editMenu = new MenuItem(menu, SWT.CASCADE);
 		editMenu.setText("Edit");
-		
+
 		Menu editMenuContainer = new Menu(editMenu);
 		editMenu.setMenu(editMenuContainer);
-		
+
 		MenuItem selectChannelMenuItem = new MenuItem(editMenuContainer, SWT.NONE);
 		selectChannelMenuItem.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -127,7 +133,7 @@ public class LauncherWindow {
 				ListDialog ld = new ListDialog(getShell());
 				ld.setContentProvider(ArrayContentProvider.getInstance());
 				ld.setLabelProvider(GenericLabelProvider.getInstance());
-				
+
 				ld.setTitle("Channel Selector");
 				ld.setMessage("Please select a channel to download versions from:");
 				try {
@@ -136,46 +142,45 @@ public class LauncherWindow {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
+
 				ld.open();
-				
+
 				try {
-					for(TreeItem t: LauncherWindow.instance.getTree().getItems()) {
+					for (TreeItem t : LauncherWindow.instance.getTree().getItems()) {
 						t.dispose();
 					}
-					
+
 					Util.populateTree((ChannelObject) ld.getResult()[0]);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
-			
-			
+
 		});
 		selectChannelMenuItem.setText("Select Channel");
-		
+
 		MenuItem optionsMenu = new MenuItem(menu, SWT.CASCADE);
 		optionsMenu.setText("Options");
-		
+
 		Menu optionsMenuContainer = new Menu(optionsMenu);
 		optionsMenu.setMenu(optionsMenuContainer);
-		
+
 		MenuItem helpMenu = new MenuItem(menu, SWT.CASCADE);
 		helpMenu.setText("Help");
-		
+
 		Menu helpMenuContainer = new Menu(helpMenu);
 		helpMenu.setMenu(helpMenuContainer);
-		
+
 		MenuItem aboutMenuItem = new MenuItem(helpMenuContainer, SWT.NONE);
 		aboutMenuItem.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				
+				// TODO
 			}
 		});
 		aboutMenuItem.setText("About");
-		
+
 		MenuItem wikiMenuItem = new MenuItem(helpMenuContainer, SWT.NONE);
 		wikiMenuItem.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -189,31 +194,60 @@ public class LauncherWindow {
 			}
 		});
 		wikiMenuItem.setText("Wiki");
-		
+
 		tree = new Tree(shlLauncher, SWT.BORDER);
+		tree.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+				if(e.button <= 1) {
+					TreeItem selectedItem = tree.getItem(new Point(e.x, e.y));
+					
+					//Make sure the VersionObject exists! TYPE SAFETY!
+					VersionObject vo = (selectedItem.getData("VersionObject") != null
+							&& selectedItem.getData("VersionObject") instanceof VersionObject)
+									? (VersionObject) selectedItem.getData("VersionObject")
+									: null;
+
+					if(vo != null) {
+						vo.getLauncherWrapper().launch();
+					}
+				}
+			}
+
+			@Override
+			public void mouseDown(MouseEvent e) {
+				if (e.button == SWT.BUTTON3) {// right click
+					TreeItem selectedItem = tree.getItem(new Point(e.x, e.y));
+					
+				}
+			}
+		});
 		tree.setLayoutData(BorderLayout.CENTER);
-		
+
 		ToolBar toolBar = new ToolBar(shlLauncher, SWT.FLAT | SWT.RIGHT);
 		toolBar.setLayoutData(BorderLayout.SOUTH);
-		
+
 		ToolItem tltmRefresh = new ToolItem(toolBar, SWT.NONE);
 		tltmRefresh.setText("Refresh");
-		
+
 		ToolItem tltmToggleConsole = new ToolItem(toolBar, SWT.CHECK);
 		tltmToggleConsole.setText("Toggle Console");
-		
+
 		progressBar = new ProgressBar(shlLauncher, SWT.NONE);
 		progressBar.setLayoutData(BorderLayout.NORTH);
-		
+
 	}
-	
+
 	public static Shell getShell() {
 		return launcherShell;
 	}
+
 	public Tree getTree() {
 		return tree;
 	}
+
 	public ProgressBar getProgressBar() {
 		return progressBar;
 	}
+
 }
