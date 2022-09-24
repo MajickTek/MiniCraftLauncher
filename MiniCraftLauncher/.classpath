@@ -27,7 +27,7 @@
 	<classpathentry kind="lib" path="lib/org.eclipse.jface_3.27.0.v20220817-1444.jar" sourcepath="C:/Users/kingt/AppData/Local/Temp/.org.sf.feeling.decompiler1663958663973/source/org.eclipse.jface-3.27.0-sources.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.jface.text_3.21.0.v20220817-1340.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.osgi_3.18.100.v20220817-1601.jar"/>
-	<classpathentry kind="lib" path="lib/org.eclipse.swt.win32.win32.x86_64_3.121.0.v20220829-1402.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.swt.win32.win32.x86_64_3.121.0.v20220829-1402.jar" sourcepath="C:/Users/kingt/AppData/Local/Temp/.org.sf.feeling.decompiler1663958663973/source/org.eclipse.swt.win32.win32.x86_64-3.121.0-sources.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.text_3.12.200.v20220817-1340.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.ui.forms_3.11.400.v20220817-1444.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.ui.workbench_3.126.0.v20220823-0718.jar" sourcepath="C:/Users/kingt/AppData/Local/Temp/.org.sf.feeling.decompiler1663958663973/source/org.eclipse.ui.workbench-3.126.0-sources.jar"/>

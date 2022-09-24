@@ -23,6 +23,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.dialogs.ListDialog;
 import org.eclipse.ui.dialogs.ListSelectionDialog;
 import org.eclipse.swt.widgets.ToolBar;
@@ -142,6 +143,10 @@ public class LauncherWindow {
 				ld.open();
 				
 				try {
+					for(TreeItem t: LauncherWindow.instance.getTree().getItems()) {
+						t.dispose();
+					}
+					
 					Util.populateTree((ChannelObject) ld.getResult()[0]);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block

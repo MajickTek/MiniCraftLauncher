@@ -249,7 +249,12 @@ public class Util {
 		} else {
 			Path filePath = Paths.get(Initializer.indexPath.toString(), channelObject.target);
 			Util.downloadUsingNIO(channelObject.channelFile, filePath.toString());
-			
+			try {
+				XMLConverter.fromXML(filePath.toString(), LauncherWindow.instance.getTree());
+			} catch (ParserConfigurationException | SAXException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		LauncherWindow.instance.getTree().update();
