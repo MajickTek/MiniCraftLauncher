@@ -203,8 +203,8 @@ public class LauncherWindow {
 					TreeItem selectedItem = tree.getItem(new Point(e.x, e.y));
 					
 					//Make sure the VersionObject exists! TYPE SAFETY!
-					VersionObject vo = (selectedItem.getData("VersionObject") != null
-							&& selectedItem.getData("VersionObject") instanceof VersionObject)
+					VersionObject vo = (selectedItem != null && selectedItem.getData("VersionObject") != null)
+							&& selectedItem.getData("VersionObject") instanceof VersionObject
 									? (VersionObject) selectedItem.getData("VersionObject")
 									: null;
 
