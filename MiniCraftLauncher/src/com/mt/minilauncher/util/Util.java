@@ -22,8 +22,8 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -33,7 +33,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import com.mt.mclupdater.util.GithubReleaseParser;
 import com.mt.minilauncher.Initializer;
 import com.mt.minilauncher.LauncherWindow;
 import com.mt.minilauncher.downloader.Downloader;
@@ -99,7 +98,7 @@ public class Util {
 							"Ready to Play! [" + vo.version + "]");
 					vo.isDownloaded = true;
 					window.getProgressBar().setSelection(0);
-					
+
 				}
 
 			});
@@ -228,19 +227,29 @@ public class Util {
 		return tempList;
 	}
 
+	/**
+	 * Using the url from a ChannelObject, a Tree is populated with either GitHub or XML data
+	 * @param channelObject
+	 * @throws IOException
+	 */
 	public static void populateTree(ChannelObject channelObject) throws IOException {
+		Image base = SWTResourceManager.getImage(LauncherWindow.instance.getClass(), "/minicraftplus.png");
+		Image resized = resize(base, 16, 16);
+		
 		if (channelObject.isLive()) {
-			TreeItem root = new TreeItem(LauncherWindow.instance.getTree(), SWT.NONE);
-			root.setText("Root");
-			TreeItem releasesRoot = new TreeItem(root, SWT.NONE);
+			TreeItem releasesRoot = new TreeItem(LauncherWindow.instance.getTree(), SWT.NONE);
 			releasesRoot.setText("Releases");
-			TreeItem preReleasesRoot = new TreeItem(root, SWT.NONE);
+			releasesRoot.setImage(resized);
+			
+			TreeItem preReleasesRoot = new TreeItem(LauncherWindow.instance.getTree(), SWT.NONE);
 			preReleasesRoot.setText("Pre-Releases");
-
+			preReleasesRoot.setImage(resized);
+			
 			GithubAPI[] releaseTree = GithubReleaseParser.parseReleases(channelObject.liveUsername,
 					channelObject.liveRepoName, 1);
 			ArrayList<GithubAPI> releases = new ArrayList<>(Arrays.asList(releaseTree));
 
+			
 			releases.stream().filter(r -> (r.getPrerelease() == false)).forEach(release -> {
 				VersionObject vo = new VersionObject();
 				vo.canEdit = false;
@@ -259,6 +268,7 @@ public class Util {
 				tempItem.setText(vo.toString());
 
 				tempItem.setData("VersionObject", vo);
+				tempItem.setImage(resized);
 			});
 
 			releases.stream().filter(r -> (r.getPrerelease() == true)).forEach(release -> {
@@ -279,6 +289,7 @@ public class Util {
 				tempItem.setText(vo.toString());
 
 				tempItem.setData("VersionObject", vo);
+				tempItem.setImage(resized);
 			});
 
 		} else {
@@ -296,4 +307,21 @@ public class Util {
 		LauncherWindow.instance.getTree().redraw();
 	}
 
+	/**
+	 * Resizes an Image using the SWT graphics processing class
+	 * @param image the image to resize
+	 * @param width the new width
+	 * @param height the new height
+	 * @return a resized version of the inputed image
+	 */
+	public static Image resize(Image image, int width, int height) {
+		Image scaled = new Image(Display.getDefault(), width, height);
+		GC gc = new GC(scaled);
+		gc.setAntialias(SWT.ON);
+		gc.setInterpolation(SWT.HIGH);
+		gc.drawImage(image, 0, 0, image.getBounds().width, image.getBounds().height, 0, 0, width, height);
+		gc.dispose();
+		image.dispose(); // don't forget about me!
+		return scaled;
+	}
 }
