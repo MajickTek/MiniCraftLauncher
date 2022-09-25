@@ -14,17 +14,22 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-
+import java.util.List;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.MultiStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.w3c.dom.Document;
@@ -79,28 +84,21 @@ public class Util {
 		downloader.setDownloadProgressCallback((f) -> {
 			// TODO
 //			window.getProgressBarLabel().setText("Downloading: " + f.getPercentComplete());
-			Display.getDefault().asyncExec(new Runnable() {
 
-				@Override
-				public void run() {
-					window.getProgressBar()
-							.setSelection((int) Double.parseDouble(f.getPercentComplete().replace('%', ' ').strip()));
-				}
-
+			Display.getDefault().asyncExec(() -> {
+				window.getProgressBar()
+				.setSelection((int) Double.parseDouble(f.getPercentComplete().replace('%', ' ').strip()));
 			});
 		});
+		
 		downloader.setDownloadFinishedCallback((f) -> {
-			Display.getDefault().asyncExec(new Runnable() {
 
-				@Override
-				public void run() {
-					MessageDialog.openInformation(LauncherWindow.getShell(), "Launcher",
-							"Ready to Play! [" + vo.version + "]");
-					vo.isDownloaded = true;
-					window.getProgressBar().setSelection(0);
-
-				}
-
+			Display.getDefault().asyncExec(() -> {
+				MessageDialog.openInformation(LauncherWindow.getShell(), "Launcher",
+						"Ready to Play! [" + vo.version + "]");
+				
+				vo.isDownloaded = true;
+				window.getProgressBar().setSelection(0);
 			});
 		});
 		downloader.download();
@@ -324,4 +322,35 @@ public class Util {
 		image.dispose(); // don't forget about me!
 		return scaled;
 	}
+	
+	/**
+	 * Creates a crash/error dialog showing the full stack trace in a text area
+	 * @param parent the parent window to which the dialog is attached
+	 * @param title the title of the window
+	 * @param msg the human-readable message error
+	 * @param t the error from which the stack trace is thrown (traditionally, a variable called `e`)
+	 * @return the status code of the error dialog
+	 */
+	public static int openErrorDialog(Shell parent, String title, String msg, Throwable t) {
+		MultiStatus ms = createMultiStatus(msg, t);
+		return ErrorDialog.openError(parent, title, msg, ms);
+	}
+	
+	private static MultiStatus createMultiStatus(String msg, Throwable t) {
+		List<Status> childStatuses = new ArrayList<>();
+        StackTraceElement[] stackTraces = Thread.currentThread().getStackTrace();
+
+        for (StackTraceElement stackTrace: stackTraces) {
+            Status status = new Status(IStatus.ERROR,
+                    "com.vogella.tasks.ui", stackTrace.toString());
+            childStatuses.add(status);
+        }
+
+        MultiStatus ms = new MultiStatus("com.mt.minilauncher.util",
+                IStatus.ERROR, childStatuses.toArray(new Status[] {}),
+                t.toString(), t);
+        return ms;
+		
+	}
+	
 }
