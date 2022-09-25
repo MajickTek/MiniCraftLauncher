@@ -94,7 +94,7 @@ public class Util {
 		downloader.setDownloadFinishedCallback((f) -> {
 
 			Display.getDefault().asyncExec(() -> {
-				MessageDialog.openInformation(LauncherWindow.getShell(), "Launcher",
+				MessageDialog.openInformation(window.getShell(), "Launcher",
 						"Ready to Play! [" + vo.version + "]");
 				
 				vo.isDownloaded = true;
@@ -326,14 +326,13 @@ public class Util {
 	/**
 	 * Creates a crash/error dialog showing the full stack trace in a text area
 	 * @param parent the parent window to which the dialog is attached
-	 * @param title the title of the window
 	 * @param msg the human-readable message error
 	 * @param t the error from which the stack trace is thrown (traditionally, a variable called `e`)
 	 * @return the status code of the error dialog
 	 */
-	public static int openErrorDialog(Shell parent, String title, String msg, Throwable t) {
+	public static int openErrorDialog(Shell parent, String msg, Throwable t) {
 		MultiStatus ms = createMultiStatus(msg, t);
-		return ErrorDialog.openError(parent, title, msg, ms);
+		return ErrorDialog.openError(parent, t.getClass().getName(), msg, ms);
 	}
 	
 	private static MultiStatus createMultiStatus(String msg, Throwable t) {
@@ -353,4 +352,7 @@ public class Util {
 		
 	}
 	
+	public static void throwError(String msg) throws Exception {
+		throw new Exception(msg);
+	}
 }

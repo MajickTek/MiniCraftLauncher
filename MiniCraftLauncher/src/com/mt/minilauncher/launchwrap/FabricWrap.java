@@ -11,6 +11,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import com.mt.minilauncher.Initializer;
 import com.mt.minilauncher.LauncherWindow;
 import com.mt.minilauncher.objects.VersionObject;
+import com.mt.minilauncher.util.Util;
 
 public class FabricWrap implements IWrap {
 
@@ -35,7 +36,7 @@ public class FabricWrap implements IWrap {
 					String error = "Failed to use FabricWrap, could not find FabricBootstrap.jar!";
 					System.err.println(error);
 					
-					MessageDialog.openError(LauncherWindow.getShell(), "Fabric Loader", error);
+					MessageDialog.openError(window.getShell(), "Fabric Loader", error);
 				} else {
 					System.out.println("Found FabricBootstrap.jar! Attempting to launch Fabric. Assuming the parameters have not changed.");
 					try {
@@ -71,8 +72,8 @@ public class FabricWrap implements IWrap {
 //						}
 
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
+						Util.openErrorDialog(window.getShell(), "There was a problem opening the game process.", e);
 					}
 				}
 			}

@@ -36,7 +36,6 @@ import org.eclipse.swt.events.MouseEvent;
 public class LauncherWindow {
 
 	protected Shell shlLauncher;
-	public static Shell launcherShell;
 	private Tree tree;
 	private ProgressBar progressBar;
 
@@ -80,7 +79,6 @@ public class LauncherWindow {
 	 */
 	protected void createContents() {
 		shlLauncher = new Shell();
-		launcherShell = shlLauncher;
 		shlLauncher.setImage(SWTResourceManager.getImage(getClass(), "/minicraftplus.png"));
 		shlLauncher.setMinimumSize(new Point(800, 600));
 		shlLauncher.setSize(800, 600);
@@ -103,8 +101,8 @@ public class LauncherWindow {
 				try {
 					Util.openNative(Initializer.launcherPath.toFile());
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
+					Util.openErrorDialog(shlLauncher, "The launcher folder could not be opened.", e1);
 				}
 			}
 		});
@@ -138,8 +136,8 @@ public class LauncherWindow {
 				try {
 					ld.setInput(Util.buildChannelList());
 				} catch (ParserConfigurationException | SAXException | IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
+					Util.openErrorDialog(shlLauncher, "There was an error loading and/or parsing the list of channels.", e1);
 				}
 
 				ld.open();
@@ -149,10 +147,12 @@ public class LauncherWindow {
 						t.dispose();
 					}
 
-					Util.populateTree((ChannelObject) ld.getResult()[0]);
+					if(ld.getResult() != null && ld.getResult().length > 0) {
+						Util.populateTree((ChannelObject) ld.getResult()[0]);
+					}
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
+					Util.openErrorDialog(shlLauncher, "There was an error populating the tree with game versions.", e1);
 				}
 			}
 
@@ -187,8 +187,8 @@ public class LauncherWindow {
 				try {
 					Util.browseNative("https://github.com/MajickTek/MiniCraftLauncher/wiki");
 				} catch (IOException | URISyntaxException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
+					Util.openErrorDialog(shlLauncher, "There was an error locating a browser or navigating to the URL.", e1);
 				}
 			}
 		});
@@ -237,8 +237,8 @@ public class LauncherWindow {
 
 	}
 
-	public static Shell getShell() {
-		return launcherShell;
+	public Shell getShell() {
+		return shlLauncher;
 	}
 
 	public Tree getTree() {

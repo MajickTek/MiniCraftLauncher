@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import com.mt.minilauncher.Initializer;
 import com.mt.minilauncher.LauncherWindow;
 import com.mt.minilauncher.objects.VersionObject;
+import com.mt.minilauncher.util.Util;
 
 public class VanillaWrap implements IWrap{
 
@@ -48,8 +49,8 @@ public class VanillaWrap implements IWrap{
 //					}
 					
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
+					Util.openErrorDialog(window.getShell(), "There was a problem opening the game process", e);
 				}
 			}
 		};
