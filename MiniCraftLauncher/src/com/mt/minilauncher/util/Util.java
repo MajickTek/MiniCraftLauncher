@@ -81,7 +81,7 @@ public class Util {
 
 				@Override
 				public void run() {
-					LauncherWindow.instance.getProgressBar()
+					window.getProgressBar()
 							.setSelection((int) Double.parseDouble(f.getPercentComplete().replace('%', ' ').strip()));
 				}
 
@@ -95,7 +95,8 @@ public class Util {
 					MessageDialog.openInformation(LauncherWindow.getShell(), "Launcher",
 							"Ready to Play! [" + vo.version + "]");
 					vo.isDownloaded = true;
-					LauncherWindow.instance.getProgressBar().setSelection(0);
+					window.getProgressBar().setSelection(0);
+					
 				}
 
 			});
@@ -252,7 +253,7 @@ public class Util {
 				});
 
 				TreeItem tempItem = new TreeItem(releasesRoot, SWT.NONE);
-				tempItem.setText(vo.version);
+				tempItem.setText(vo.toString());
 
 				tempItem.setData("VersionObject", vo);
 			});
@@ -272,7 +273,7 @@ public class Util {
 				});
 
 				TreeItem tempItem = new TreeItem(preReleasesRoot, SWT.NONE);
-				tempItem.setText(vo.version);
+				tempItem.setText(vo.toString());
 
 				tempItem.setData("VersionObject", vo);
 			});

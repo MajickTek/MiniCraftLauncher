@@ -43,10 +43,6 @@ public class VersionObject implements Serializable {
 		return version;
 	}
 	
-	public String getDownloadStatus() {
-		return isDownloaded ? "Ready to launch!" : "Not yet downloaded.";
-	}
-	
 	public boolean isRunning() {
 		return isRunning;
 	}
@@ -109,7 +105,7 @@ public class VersionObject implements Serializable {
 
 	@Override
 	public String toString() {
-		return String.format("%s [%s]", version, getDownloadStatus());
+		return version;
 	}
 	
 }
