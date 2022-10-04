@@ -54,7 +54,7 @@ public class Initializer {
 
 	
 	public static void cleanVersion(String version) {
-		boolean x = MessageDialog.openConfirm(LauncherWindow.launcherShell, "Warning!", "This will clean all of the data associated with this version.\nThis includes save files and downloaded jars.");
+		boolean x = MessageDialog.openConfirm(LauncherWindow.instance.getShell(), "Warning!", "This will clean all of the data associated with this version.\nThis includes save files and downloaded jars.");
 		if(x) {
 			String jar = version + ".jar";
 			File f = Paths.get(jarPath.toString(), jar).toFile();
